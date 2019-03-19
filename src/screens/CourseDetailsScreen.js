@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image } from "react-native";
-import Modal from "react-native-modal";
-import { ColorPicker } from 'react-native-color-picker';
-import Images from '../../assets/images/index';
+import { View, StyleSheet } from "react-native";
+import BlueButton from '../components/BlueButton';
+import TextField from '../components/TextField';
+import TextArea from '../components/TextArea';
+import ColorField from '../components/ColorField';
 
 class CourseDetailsScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -17,6 +18,13 @@ class CourseDetailsScreen extends Component {
       isColorChooserVisible: false,
       isColorPickerVisible: false
     };
+    this._toggleColorChooser = this._toggleColorChooser.bind(this);
+    this._toggleColorPicker = this._toggleColorPicker.bind(this);
+    this._changeName = this._changeName.bind(this);
+    this._changeRoom = this._changeRoom.bind(this);
+    this._changeTeacher = this._changeTeacher.bind(this);
+    this._changeColor = this._changeColor.bind(this);
+    this._changeNotes = this._changeNotes.bind(this);
   }
 
   _toggleColorChooser = () =>
@@ -25,130 +33,64 @@ class CourseDetailsScreen extends Component {
   _toggleColorPicker = () =>
   this.setState({ isColorPickerVisible: !this.state.isColorPickerVisible });
 
+  _changeName = (newName) =>
+  this.setState({ courseName: newName });
+
+  _changeRoom = (newRoom) =>
+  this.setState({ courseRoom: newRoom });
+
+  _changeTeacher = (newTeacher) =>
+  this.setState({ courseTeacher: newTeacher });
+  
+  _changeColor = (newColor) =>
+  this.setState({ courseColor: newColor });
+
+  _changeNotes = (newNotes) =>
+  this.setState({ courseNotes: newNotes });
+
   render() {
     return (
       <View style={styles.courseDetailsContainer}>
-        <TextInput
-          style={styles.textInputStyle}
-          placeholder="Class Name"
-          onChangeText={(className) => this.setState({className: className})}
-          value={this.state.className}
+        <TextField
+          placeholder="Course Name"
+          _change={(courseName) => this._changeName(courseName)}
+          value={this.state.courseName}
         />
 
-        <TextInput
-          style={styles.textInputStyle}
+        <TextField
           placeholder="Room"
-          onChangeText={(classRoom) => this.setState({classRoom: classRoom})}
-          value={this.state.classRoom}
+          _change={(courseRoom) => this._changeRoom(courseRoom)}
+          value={this.state.courseName}
         />
 
-        <TextInput
-          style={styles.textInputStyle}
+        <TextField
           placeholder="Teacher"
-          onChangeText={(classTeacher) => this.setState({classTeacher: classTeacher})}
-          value={this.state.classTeacher}
+          _change={(courseTeacher) => this._changeTeacher(courseTeacher)}
+          value={this.state.courseTeacher}
         />
 
-        <View style={styles.colorContainer}>
-          <TouchableOpacity
-            onPress={this._toggleColorChooser}
-            style={styles.colorInputContainer}>
-            <View pointerEvents='none'>
-              <TextInput
-                style={styles.colorTextInputStyle}
-                placeholder="Color"
-                onChangeText={(classColor) => this.setState({classColor: classColor})}
-                value={this.state.classColor}
-                editable={false} 
-                selectTextOnFocus={false}
-              />
-            </View>
-          </TouchableOpacity>
-          
-          <Modal 
-            isVisible={this.state.isColorChooserVisible}
-            style={styles.modal}>
-            <View style={styles.coloChooserContainer}>
-              <View style={styles.textAndCloseButtonRow}>
-                <Text style={styles.chooseColorText}>Choose Color</Text>
-                <View>
-                  <TouchableOpacity onPress={this._toggleColorChooser}>
-                    <View style={styles.closeButton1}>
-                    <Image 
-                      source={Images.icon.close}
-                      style={styles.closeButtoneImage}/>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </View>
-              
-              <View style={styles.blockColorColumn}>
-                <View style={styles.blockColorRow}>
-                  <View style={colorBlockStyle("#ff8282")}/>
-                  <View style={colorBlockStyle("#a2ffa8")}/>
-                  <View style={colorBlockStyle("#dda7ff")}/>
-                </View>
-                <View style={styles.blockColorRow}>
-                  <View style={colorBlockStyle("#b8c3ff")}/>
-                  <View style={colorBlockStyle("#ffc9f0")}/>
-                  <View style={colorBlockStyle("#fff08b")}/>
-                </View>
-                <View style={styles.blockColorRow}>
-                  <View style={colorBlockStyle("#ffcc91")}/>
-                  <View style={colorBlockStyle("#9ef9ff")}/>
-                  <TouchableOpacity onPress={this._toggleColorPicker}>
-                    <View style={styles.addButton}>
-                      <Image 
-                        source={Images.icon.add}
-                        style={styles.addButtonImage}/>
-                    </View>
-                  </TouchableOpacity>
-                  <Modal 
-                    isVisible={this.state.isColorPickerVisible}
-                    style={styles.modal}>
-                    <View>
-                      <TouchableOpacity onPress={this._toggleColorPicker}>
-                        <View style={styles.closeButton2}>
-                        <Image 
-                          source={Images.icon.close}
-                          style={styles.closeButtoneImage}/>
-                        </View>
-                      </TouchableOpacity>
-                      <View style={styles.colorPickerContainer}>
-                        <ColorPicker
-                          onColorSelected={(classColor) => {
-                            this.setState({classColor: classColor});
-                            this._toggleColorPicker();
-                          }}
-                          style={styles.colorPicker}
-                        />
-                      </View>
-                    </View>
-                  </Modal>
-                </View>
-              </View>
-            </View>
-          </Modal>
-        </View>
+        <ColorField 
+          _toggleColorChooser = {this._toggleColorChooser}
+          isColorChooserVisible={this.state.isColorChooserVisible}
+          isColorPickerVisible={this.state.isColorPickerVisible}
+          _toggleColorChooser={this._toggleColorChooser}
+          _toggleColorPicker={this._toggleColorPicker}
+          _change={(courseColor) => this._changeColor(courseColor)}
+          value={this.state.courseColor}
+        />
 
-        <View style={styles.textAreaContainer} >
-          <TextInput
-            style={styles.textArea}
-            underlineColorAndroid="transparent"
-            placeholder="Additional Notes"
-            numberOfLines={10}
-            multiline={true}
-            onChangeText={(classNotes) => this.setState({classNotes: classNotes})}
-            value={this.state.classNotes}
-          />
-        </View>
+        <TextArea
+          placeholder="Additional Notes"
+          _change={(courseNotes) => this._changeNotes(courseNotes)}
+          value={this.state.courseNotes}
+        />
 
-        <TouchableOpacity 
-          onPress={() => this.props.navigation.navigate('Settings')}>
-          <View style={styles.doneButton}>
-              <Text style={styles.doneButtonText}>Done</Text>
-          </View>
-        </TouchableOpacity>
+        <BlueButton 
+          routeName='Settings'
+          width={70}
+          height={50}
+          margin={55}
+          content='DONE'/>
       </View>
     );
   }
@@ -166,122 +108,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray', 
     borderBottomWidth: 2, 
     marginBottom: 40
-  },
-  colorContainer: {
-    width: '80%'
-  },
-  colorInputContainer: {
-    width: "100%",  
-    height: 40, 
-    marginBottom: 40
-  },
-  colorTextInputStyle: {
-    width: '100%', 
-    height: 40, 
-    borderColor: 'gray', 
-    borderBottomWidth: 2, 
-    marginBottom: 40
-  },
-  textAreaContainer: {
-    width: '80%',
-    borderBottomWidth: 2,
-    paddingBottom: 10 
-  },
-  textArea: {
-    height: 150,
-    justifyContent: "flex-start"
-  },
-  doneButton: {
-    width: 70, 
-    height: 50, 
-    borderRadius: 10, 
-    backgroundColor: '#140bb9', 
-    margin: 55, 
-    justifyContent: 'center', 
-    alignItems: 'center'
-  },
-  doneButtonText: {
-    fontSize: 16, 
-    color: "white"
-  },
-  modal: {
-    alignItems: "center", 
-    justifyContent: "center"
-  },
-  coloChooserContainer: {
-    width: 320, 
-    height: 320, 
-    backgroundColor: 'white', 
-    alignItems: "center", 
-    justifyContent: "center", 
-    borderRadius: 20
-  },
-  textAndCloseButtonRow: {
-    flexDirection: 'row', 
-    marginBottom: 20
-  },
-  chooseColorText: {
-    fontSize: 20
-  },
-  closeButton1: {
-    width: 30, 
-    height: 30, 
-    borderRadius: 100, 
-    backgroundColor: "#eeeded",
-    marginLeft: 120,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  closeButtoneImage: {
-    width: 15, height: 15
-  },
-  blockColorColumn: {
-    flex: 0.8, flexDirection: 'column'
-  },
-  blockColorRow: {
-    flexDirection: 'row'
-  },
-  closeButton2: {
-    width: 30,
-    height: 30,
-    borderRadius: 100,
-    backgroundColor: "#eeeded",
-    marginLeft: 290,
-    marginTop: 15,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  addButton: {
-    margin: 10,
-    width: 50,
-    height: 50,
-    borderRadius: 100,
-    backgroundColor: "#c6c3c3",
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  addButtonImage: {
-    width: 25, 
-    height: 25
-  },
-  colorPickerContainer: {
-    flex: 1,
-    padding: 15,
-    marginTop: 150
-  },
-  colorPicker: {
-    flex: 0.8
   }
 });
-
-function colorBlockStyle(color) {
-  return {
-    margin: 10, 
-    width: 50, 
-    height: 50, 
-    borderRadius: 100, 
-    backgroundColor: color
-  }
-}
 
 export default CourseDetailsScreen;
