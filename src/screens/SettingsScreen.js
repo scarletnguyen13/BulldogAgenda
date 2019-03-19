@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import Images from '../../assets/images/index';
 
 class SettingsScreen extends Component {
   static navigationOptions = {
@@ -114,7 +115,7 @@ class SettingsScreen extends Component {
             onPress={() => this.props.navigation.navigate('Settings')}>
             <View style={styles.nextButton}>
               <Image 
-                source={require('../../assets/images/arrow.png')}
+                source={Images.icon.arrow}
                 style={styles.nextButtonImage}/>
             </View>
           </TouchableOpacity>

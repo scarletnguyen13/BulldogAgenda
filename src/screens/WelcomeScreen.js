@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import Images from '../../assets/images/index';
 
 class WelcomeScreen extends Component {
   render() {
     return (
       <View style={styles.welcomeView}>
         <Image 
-          source={require('../../assets/images/bulldog-logo.png')}
+          source={Images.bulldog}
         />
         <TouchableOpacity 
           onPress={() => this.props.navigation.navigate('Settings')}>
