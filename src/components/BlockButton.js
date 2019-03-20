@@ -6,7 +6,7 @@ class BlockButton extends Component {
   render() {
         return(
           <TouchableOpacity
-            onPress={() => {this.props.navigation.navigate(this.props.routeName, {
+            onPress={() => {this.props.navigation.navigate('CourseDetails', {
               key: this.props.block
             })}}>
             <View style={styles.blockButton}>

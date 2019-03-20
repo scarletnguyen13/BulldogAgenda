@@ -26,21 +26,17 @@ class SettingsScreen extends Component {
           <View style={styles.columnView}>
             <View style={styles.rowView}>
               <BlockButton 
-                routeName='CourseDetails1_1'
                 block='1 - 1'/>
 
               <BlockButton 
-                routeName='CourseDetails1_2'
                 block='1 - 2'/>
             </View>
 
             <View style={styles.rowView}>
               <BlockButton 
-                routeName='CourseDetails1_3'
                 block='1 - 3'/>
 
               <BlockButton 
-                routeName='CourseDetails1_4'
                 block='1 - 4'/>
             </View>
           </View>
@@ -52,21 +48,17 @@ class SettingsScreen extends Component {
           <View style={styles.columnView}>
             <View style={styles.rowView}>
               <BlockButton 
-                routeName='CourseDetails2_1'
                 block='2 - 1'/>
 
               <BlockButton 
-                routeName='CourseDetails2_2'
                 block='2 - 2'/>
             </View>
 
             <View style={styles.rowView}>
               <BlockButton 
-                routeName='CourseDetails2_3'
                 block='2 - 3'/>
               
               <BlockButton 
-                routeName='CourseDetails2_4'
                 block='2 - 4'/>
             </View>
           </View>

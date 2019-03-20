@@ -7,14 +7,7 @@ const AppNavigator = createStackNavigator(
   {
     Welcome: WelcomeScreen,
     Settings: SettingsScreen,
-    CourseDetails1_1: CourseDetailsScreen,
-    CourseDetails1_2: CourseDetailsScreen,
-    CourseDetails1_3: CourseDetailsScreen,
-    CourseDetails1_4: CourseDetailsScreen,
-    CourseDetails2_1: CourseDetailsScreen,
-    CourseDetails2_2: CourseDetailsScreen,
-    CourseDetails2_3: CourseDetailsScreen,
-    CourseDetails2_4: CourseDetailsScreen
+    CourseDetails: CourseDetailsScreen
   },
   {
     initialRouteName: "Welcome",
