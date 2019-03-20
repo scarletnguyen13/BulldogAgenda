@@ -6,7 +6,8 @@ import Images from '../../assets/images/index';
 class CloseButton extends Component {
   render() {
     return (
-      <TouchableOpacity onPress={this.props._toggle}>
+      <TouchableOpacity 
+        onPress={this.props._toggle}>
         <View style={buttonStyle(this.props.marginLeft, this.props.marginTop)}>
         <Image 
           source={Images.icon.close}
