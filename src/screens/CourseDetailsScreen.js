@@ -15,11 +15,10 @@ class CourseDetailsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isColorChooserVisible: false,
-      isColorPickerVisible: false
+      isColorChooserVisible: false
     };
+
     this._toggleColorChooser = this._toggleColorChooser.bind(this);
-    this._toggleColorPicker = this._toggleColorPicker.bind(this);
     this._changeName = this._changeName.bind(this);
     this._changeRoom = this._changeRoom.bind(this);
     this._changeTeacher = this._changeTeacher.bind(this);
@@ -29,9 +28,6 @@ class CourseDetailsScreen extends Component {
 
   _toggleColorChooser = () =>
     this.setState({ isColorChooserVisible: !this.state.isColorChooserVisible });
-
-  _toggleColorPicker = () =>
-  this.setState({ isColorPickerVisible: !this.state.isColorPickerVisible });
 
   _changeName = (newName) =>
   this.setState({ courseName: newName });
@@ -72,9 +68,6 @@ class CourseDetailsScreen extends Component {
         <ColorField 
           _toggleColorChooser = {this._toggleColorChooser}
           isColorChooserVisible={this.state.isColorChooserVisible}
-          isColorPickerVisible={this.state.isColorPickerVisible}
-          _toggleColorChooser={this._toggleColorChooser}
-          _toggleColorPicker={this._toggleColorPicker}
           _change={(courseColor) => this._changeColor(courseColor)}
           value={this.state.courseColor}
         />

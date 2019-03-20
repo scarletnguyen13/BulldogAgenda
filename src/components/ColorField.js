@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, TextInput, Image } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, TextInput } from 'react-native';
 import CloseButton from '../components/CloseButton';
 import Modal from "react-native-modal";
-import { ColorPicker } from 'react-native-color-picker';
-import Images from '../../assets/images/index';
+import ColorPicker from './ColorPicker';
 
 class ColorField extends Component {
+  state = {
+    colors: ["#F44336", "#E91E63", "#9C27B0", "#673AB7", "#3F51B5", "#2196F3", "#03A9F4", "#00BCD4", "#009688", "#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800", "#FF5722", "#795548", "#9E9E9E", "#607D8B"],
+    selectedColor: '#F44336',
+  };
+
+  onSelect = color => {
+    this.setState({ selectedColor: color });
+    this.props._change(color);
+  }
+
   render() {
     return (
       <View style={styles.colorContainer}>
@@ -16,7 +25,6 @@ class ColorField extends Component {
             <TextInput
               style={styles.colorTextInputStyle}
               placeholder="Color"
-              onChangeText={(courseColor) => this.props._change(courseColor)}
               value={this.props.value}
               editable={false} 
               selectTextOnFocus={false}
@@ -38,50 +46,11 @@ class ColorField extends Component {
                 />
               </View>
             </View>
-            
-            <View style={styles.blockColorColumn}>
-              <View style={styles.blockColorRow}>
-                <View style={colorBlockStyle("#ff8282")}/>
-                <View style={colorBlockStyle("#a2ffa8")}/>
-                <View style={colorBlockStyle("#dda7ff")}/>
-              </View>
-              <View style={styles.blockColorRow}>
-                <View style={colorBlockStyle("#b8c3ff")}/>
-                <View style={colorBlockStyle("#ffc9f0")}/>
-                <View style={colorBlockStyle("#fff08b")}/>
-              </View>
-              <View style={styles.blockColorRow}>
-                <View style={colorBlockStyle("#ffcc91")}/>
-                <View style={colorBlockStyle("#9ef9ff")}/>
-                <TouchableOpacity onPress={this.props._toggleColorPicker}>
-                  <View style={styles.addButton}>
-                    <Image 
-                      source={Images.icon.add}
-                      style={styles.addButtonImage}/>
-                  </View>
-                </TouchableOpacity>
-                <Modal 
-                  isVisible={this.props.isColorPickerVisible}
-                  style={styles.modal}>
-                  <View>
-                    <CloseButton
-                      _toggle={this.props._toggleColorPicker}
-                      marginLeft={290}
-                      marginTop={15}
-                    />
-                    <View style={styles.colorPickerContainer}>
-                      <ColorPicker
-                        onColorSelected={(courseColor) => {
-                          this.props._change(courseColor);
-                          this.props._toggleColorPicker;
-                        }}
-                        style={styles.colorPicker}
-                      />
-                    </View>
-                  </View>
-                </Modal>
-              </View>
-            </View>
+            <ColorPicker
+              colors={this.state.colors}
+              selectedColor={this.state.selectedColor}
+              onSelect={this.onSelect}
+            />
           </View>
         </Modal>
       </View>
@@ -119,7 +88,8 @@ const styles = StyleSheet.create({
   },
   textAndCloseButtonRow: {
     flexDirection: 'row', 
-    marginBottom: 20
+    marginBottom: 15,
+    marginTop: 10
   },
   chooseColorText: {
     fontSize: 20
