@@ -5,10 +5,12 @@ import Modal from "react-native-modal";
 import ColorPicker from './ColorPicker';
 
 class ColorField extends Component {
-  state = {
-    colors: ["#F44336", "#E91E63", "#9C27B0", "#673AB7", "#3F51B5", "#2196F3", "#03A9F4", "#00BCD4", "#009688", "#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800", "#FF5722", "#795548", "#9E9E9E", "#607D8B"],
-    selectedColor: '#F44336',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      colors: ["#F44336", "#E91E63", "#9C27B0", "#673AB7", "#3F51B5", "#2196F3", "#03A9F4", "#00BCD4", "#009688", "#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800", "#FF5722", "#795548", "#9E9E9E", "#607D8B"]
+    };
+  }
 
   onSelect = color => {
     this.setState({ selectedColor: color });
@@ -20,14 +22,15 @@ class ColorField extends Component {
       <View style={styles.colorContainer}>
         <TouchableOpacity
           onPress={this.props._toggleColorChooser}
-          style={styles.colorInputContainer}>
+          style={[styles.colorInputContainer, colorTextInputStyleBackground(this.props.value)]}>
           <View pointerEvents='none'>
             <TextInput
-              style={styles.colorTextInputStyle}
+              style={[styles.colorTextInputStyle, colorTextInputStyle(this.props.value)]}
               placeholder="Color"
               value={this.props.value}
               editable={false} 
               selectTextOnFocus={false}
+              onChangeText = {(color) => this.props._change(color)}
             />
           </View>
         </TouchableOpacity>
@@ -48,7 +51,7 @@ class ColorField extends Component {
             </View>
             <ColorPicker
               colors={this.state.colors}
-              selectedColor={this.state.selectedColor}
+              selectedColor={this.props.value}
               onSelect={this.onSelect}
             />
           </View>
@@ -80,7 +83,7 @@ const styles = StyleSheet.create({
   },
   coloChooserContainer: {
     width: 320, 
-    height: 320, 
+    height: 600, 
     backgroundColor: 'white', 
     alignItems: "center", 
     justifyContent: "center", 
@@ -93,44 +96,27 @@ const styles = StyleSheet.create({
   },
   chooseColorText: {
     fontSize: 20
-  },
-  blockColorColumn: {
-    flex: 0.8, flexDirection: 'column'
-  },
-  blockColorRow: {
-    flexDirection: 'row'
-  },
-  addButton: {
-    margin: 10,
-    width: 50,
-    height: 50,
-    borderRadius: 100,
-    backgroundColor: "#c6c3c3",
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  addButtonImage: {
-    width: 25, 
-    height: 25
-  },
-  colorPickerContainer: {
-    flex: 1,
-    padding: 15,
-    marginTop: 150
-  },
-  colorPicker: {
-    flex: 0.8
   }
 });
 
-function colorBlockStyle(color) {
+function colorTextInputStyleBackground(color) {
   return {
-    margin: 10, 
-    width: 50, 
-    height: 50, 
-    borderRadius: 100, 
     backgroundColor: color
   }
 }
+
+function colorTextInputStyle(color) {
+  return {
+    color: getContrastYIQ(color)
+  }
+}
+
+const getContrastYIQ = hexcolor => {
+  var r = parseInt(hexcolor.substring(1, 3), 16);
+  var g = parseInt(hexcolor.substring(3, 5), 16);
+  var b = parseInt(hexcolor.substring(5, 7), 16);
+  var yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return yiq >= 128 ? '#444' : '#fff';
+};
 
 export default ColorField;

@@ -25,7 +25,7 @@ export default class ColorPicker extends Component {
 
   render() {
     return (
-      <View style={{flex: 0.9, margin: 20, marginTop: 0}}>
+      <View style={styles.container}>
           <FlatList
           data={this.state.colors}
           extraData={this.state}
@@ -40,6 +40,11 @@ export default class ColorPicker extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 0.9, 
+    margin: 20, 
+    marginTop: 0
+  },
   circle: {
     width: 50,
     height: 50,
@@ -49,9 +54,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   }, 
   selectedCircle: {
-    width: 20, 
-    height: 20, 
-    borderRadius: 20, 
+    width: 30, 
+    height: 30, 
+    borderRadius: 30, 
     backgroundColor: 'white'
   }
 });
