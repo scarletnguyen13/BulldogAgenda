@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
-import BlockButton from '../components/BlockButton';
-import NextButton from '../components/NextButton';
-import DayText from '../components/DayText';
+import BlockButton from '../components/Buttons/BlockButton';
+import NextButton from '../components/Buttons/NextButton';
+import DayText from '../components/Texts/DayText';
+import { connect } from 'react-redux';
 
 class SettingsScreen extends Component {
   static navigationOptions = {
@@ -26,18 +27,18 @@ class SettingsScreen extends Component {
           <View style={styles.columnView}>
             <View style={styles.rowView}>
               <BlockButton 
-                block='1 - 1'/>
+                courseInfo={this.props.blocks.block1_1}/>
 
               <BlockButton 
-                block='1 - 2'/>
+                courseInfo={this.props.blocks.block1_2}/>
             </View>
 
             <View style={styles.rowView}>
               <BlockButton 
-                block='1 - 3'/>
+                courseInfo={this.props.blocks.block1_3}/>
 
               <BlockButton 
-                block='1 - 4'/>
+                courseInfo={this.props.blocks.block1_4}/>
             </View>
           </View>
         </View>
@@ -48,18 +49,18 @@ class SettingsScreen extends Component {
           <View style={styles.columnView}>
             <View style={styles.rowView}>
               <BlockButton 
-                block='2 - 1'/>
+                courseInfo={this.props.blocks.block2_1}/>
 
               <BlockButton 
-                block='2 - 2'/>
+                courseInfo={this.props.blocks.block2_2}/>
             </View>
 
             <View style={styles.rowView}>
               <BlockButton 
-                block='2 - 3'/>
+                courseInfo={this.props.blocks.block2_3}/>
               
               <BlockButton 
-                block='2 - 4'/>
+                courseInfo={this.props.blocks.block2_4}/>
             </View>
           </View>
         </View>
@@ -86,4 +87,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SettingsScreen;
+const mapStateToProps = (state) => {
+  const { blocks } = state
+  return { blocks }
+};
+
+export default connect(mapStateToProps)(SettingsScreen);

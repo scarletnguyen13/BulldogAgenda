@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Alert } from "react-native";
 import AsyncStorage from '@react-native-community/async-storage';
-import BlueButton from '../components/BlueButton';
-import TextField from '../components/TextField';
-import TextArea from '../components/TextArea';
-import ColorField from '../components/ColorField';
+import BlueButton from '../components/Buttons/BlueButton';
+import TextField from '../components/InputFields/TextField';
+import TextArea from '../components/InputFields/TextArea';
+import ColorField from '../components/InputFields/ColorField';
 
 const courseNameKey = '@BulldogAgenda:courseName';
 const courseRoomKey = '@BulldogAgenda:courseRoom';
@@ -15,7 +15,7 @@ const courseNotesKey = '@BulldogAgenda:courseNotes';
 class CourseDetailsScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam('key', 'ERROR'),
+      title: navigation.getParam('courseInfo', 'ERROR').courseBlock,
     };
   };  
 
@@ -97,39 +97,40 @@ class CourseDetailsScreen extends Component {
   this.setState({ courseNotes: newNotes });
 
   render() {
-    const { block, name, room, teacher, color, notes } = this.props.navigation.state.params;
+    const { courseInfo } = this.props.navigation.state.params;
 
     return (
       <View style={styles.courseDetailsContainer}>
         <TextField
           placeholder="Course Name"
           _change={(courseName) => this._changeName(courseName)}
-          value={this.state.courseName}
+          value={courseInfo.courseName}
         />
 
         <TextField
           placeholder="Room"
           _change={(courseRoom) => this._changeRoom(courseRoom)}
-          value={this.state.courseRoom}
+          value={courseInfo.courseRoom}
         />
 
         <TextField
           placeholder="Teacher"
           _change={(courseTeacher) => this._changeTeacher(courseTeacher)}
-          value={this.state.courseTeacher}
+          value={courseInfo.courseTeacher}
         />
 
         <ColorField 
           _toggleColorChooser = {this._toggleColorChooser}
           isColorChooserVisible={this.state.isColorChooserVisible}
           _change={(courseColor) => this._changeColor(courseColor)}
-          value={this.state.courseColor}
+          value={courseInfo.courseColor}
+          block={courseInfo.courseBlock}
         />
 
         <TextArea
           placeholder="Additional Notes"
           _change={(courseNotes) => this._changeNotes(courseNotes)}
-          value={this.state.courseNotes}
+          value={courseInfo.courseNotes}
         />
 
         <BlueButton 

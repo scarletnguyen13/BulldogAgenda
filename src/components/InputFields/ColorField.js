@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, TextInput } from 'react-native';
-import CloseButton from '../components/CloseButton';
+import CloseButton from '../Buttons/CloseButton';
 import Modal from "react-native-modal";
-import ColorPicker from './ColorPicker';
+import ColorPicker from '../InputFields/ColorPicker';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { changeColor } from '../InputActions';
+import getContrastYIQ from '../ContrastHelper';
 
 class ColorField extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      colors: ["#F44336", "#E91E63", "#9C27B0", "#673AB7", "#3F51B5", "#2196F3", "#03A9F4", "#00BCD4", "#009688", "#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800", "#FF5722", "#795548", "#9E9E9E", "#607D8B"]
+      colors: ["#F44336", "#E91E63", "#9C27B0", "#673AB7", "#3F51B5", "#2196F3", "#03A9F4", "#00BCD4", "#009688", "#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800", "#FF5722", "#795548", "#9E9E9E", "#607D8B", "#C6C3C3"]
     };
   }
 
   onSelect = color => {
-    this.setState({ selectedColor: color });
-    this.props._change(color);
+    console.log("block: " +this.props.block + ", color: " + color )
+    this.props.changeColor(this.props.block, color);
   }
 
   render() {
@@ -30,7 +34,7 @@ class ColorField extends Component {
               value={this.props.value}
               editable={false} 
               selectTextOnFocus={false}
-              onChangeText = {(color) => this.props._change(color)}
+              onChangeText = {this.onSelect}
             />
           </View>
         </TouchableOpacity>
@@ -111,12 +115,15 @@ function colorTextInputStyle(color) {
   }
 }
 
-const getContrastYIQ = hexcolor => {
-  var r = parseInt(hexcolor.substring(1, 3), 16);
-  var g = parseInt(hexcolor.substring(3, 5), 16);
-  var b = parseInt(hexcolor.substring(5, 7), 16);
-  var yiq = (r * 299 + g * 587 + b * 114) / 1000;
-  return yiq >= 128 ? '#444' : '#fff';
+const mapStateToProps = (state) => {
+  const { blocks } = state
+  return { blocks }
 };
 
-export default ColorField;
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    changeColor,
+  }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ColorField);

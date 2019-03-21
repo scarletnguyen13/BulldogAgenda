@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import Images from '../../assets/images/index';
-import BlueButton from '../components/BlueButton';
+import BlueButton from '../components/Buttons/BlueButton';
 
 class WelcomeScreen extends Component {
   render() {
