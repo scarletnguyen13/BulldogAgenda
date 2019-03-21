@@ -36,24 +36,51 @@ const INITIAL_STATE = {
 };
 
 const blockReducer = (state = INITIAL_STATE, action) => {
+  const stateKeys = Object.keys(state);
+  const values = Object.values(state);
+  const newState = {};
+
   switch (action.type) {
-    case 'CHANGE_COLOR':
-      const {block, color} = action.payload;
-
-      const values = Object.values(state);
-      values.forEach(function(blockObj) {
-        if(blockObj.courseBlock === block) {
-          blockObj.courseColor = color;
-        }
+    case 'CHANGE_NAME': {
+      const {block, name} = action.payload;
+      values.forEach(blockObj => {
+        if(blockObj.courseBlock === block) blockObj.courseName = name;
       });
-
-      const newState = {};
-      for (let i = 0; i < values.length; i++) {
-        newState[Object.keys(state)[i]] = values[i];
-      }
-
+      for (let i = 0; i < values.length; i++) newState[stateKeys[i]] = values[i];
       return newState;
-
+    }
+    case 'CHANGE_ROOM': {
+      const {block, room} = action.payload;
+      values.forEach(blockObj => {
+        if(blockObj.courseBlock === block) blockObj.courseRoom = room;
+      });
+      for (let i = 0; i < values.length; i++) newState[stateKeys[i]] = values[i];
+      return newState;
+    }
+    case 'CHANGE_TEACHER': {
+      const {block, teacher} = action.payload;
+      values.forEach(blockObj => {
+        if(blockObj.courseBlock === block) blockObj.courseTeacher = teacher;
+      });
+      for (let i = 0; i < values.length; i++) newState[stateKeys[i]] = values[i];
+      return newState;
+    }
+    case 'CHANGE_COLOR': {
+      const {block, color} = action.payload;
+      values.forEach(blockObj => {
+        if(blockObj.courseBlock === block) blockObj.courseColor = color;
+      });
+      for (let i = 0; i < values.length; i++) newState[stateKeys[i]] = values[i];
+      return newState;
+    }
+    case 'CHANGE_NOTES': {
+      const {block, notes} = action.payload;
+      values.forEach(blockObj => {
+        if(blockObj.courseBlock === block) blockObj.courseNotes = notes;
+      });
+      for (let i = 0; i < values.length; i++) newState[stateKeys[i]] = values[i];
+      return newState;
+    }
     default:
       return state
   }

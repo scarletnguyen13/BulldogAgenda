@@ -3,9 +3,6 @@ import { View, TouchableOpacity, Text, StyleSheet, TextInput } from 'react-nativ
 import CloseButton from '../Buttons/CloseButton';
 import Modal from "react-native-modal";
 import ColorPicker from '../InputFields/ColorPicker';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { changeColor } from '../InputActions';
 import getContrastYIQ from '../ContrastHelper';
 
 class ColorField extends Component {
@@ -14,11 +11,6 @@ class ColorField extends Component {
     this.state = {
       colors: ["#F44336", "#E91E63", "#9C27B0", "#673AB7", "#3F51B5", "#2196F3", "#03A9F4", "#00BCD4", "#009688", "#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800", "#FF5722", "#795548", "#9E9E9E", "#607D8B", "#C6C3C3"]
     };
-  }
-
-  onSelect = color => {
-    console.log("block: " +this.props.block + ", color: " + color )
-    this.props.changeColor(this.props.block, color);
   }
 
   render() {
@@ -34,7 +26,7 @@ class ColorField extends Component {
               value={this.props.value}
               editable={false} 
               selectTextOnFocus={false}
-              onChangeText = {this.onSelect}
+              onChangeText = {(value) => this.props._change(this.props.block, value)}
             />
           </View>
         </TouchableOpacity>
@@ -56,7 +48,7 @@ class ColorField extends Component {
             <ColorPicker
               colors={this.state.colors}
               selectedColor={this.props.value}
-              onSelect={this.onSelect}
+              onSelect={(value) => this.props._change(this.props.block, value)}
             />
           </View>
         </Modal>
@@ -115,15 +107,4 @@ function colorTextInputStyle(color) {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { blocks } = state
-  return { blocks }
-};
-
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({
-    changeColor,
-  }, dispatch)
-);
-
-export default connect(mapStateToProps, mapDispatchToProps)(ColorField);
+export default ColorField;

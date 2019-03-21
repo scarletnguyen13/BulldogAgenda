@@ -1,16 +1,13 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Alert } from "react-native";
-import AsyncStorage from '@react-native-community/async-storage';
+import { View, StyleSheet } from "react-native";
 import BlueButton from '../components/Buttons/BlueButton';
 import TextField from '../components/InputFields/TextField';
 import TextArea from '../components/InputFields/TextArea';
 import ColorField from '../components/InputFields/ColorField';
 
-const courseNameKey = '@BulldogAgenda:courseName';
-const courseRoomKey = '@BulldogAgenda:courseRoom';
-const courseTeacherKey = '@BulldogAgenda:courseTeacher';
-const courseColorKey = '@BulldogAgenda:courseColor';
-const courseNotesKey = '@BulldogAgenda:courseNotes';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {changeName, changeRoom, changeTeacher, changeColor, changeNotes} from '../components/InputActions';
 
 class CourseDetailsScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -22,79 +19,14 @@ class CourseDetailsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isColorChooserVisible: false,
-      courseColor: '#FFF'
+      isColorChooserVisible: false
     };
 
     this._toggleColorChooser = this._toggleColorChooser.bind(this);
-    this._changeName = this._changeName.bind(this);
-    this._changeRoom = this._changeRoom.bind(this);
-    this._changeTeacher = this._changeTeacher.bind(this);
-    this._changeColor = this._changeColor.bind(this);
-    this._changeNotes = this._changeNotes.bind(this);
-  }
-
-  componentWillMount() {
-    this.onLoad();
-  }
-
-  onLoad = async () => {
-    try {
-      const storedValues = await AsyncStorage.multiGet([
-        courseNameKey, 
-        courseRoomKey, 
-        courseTeacherKey, 
-        courseColorKey, 
-        courseNotesKey
-      ]);
-      this.setState({
-        courseName: storedValues[0][1],
-        courseRoom: storedValues[1][1],
-        courseTeacher: storedValues[2][1],
-        courseColor: storedValues[3][1],
-        courseNotes: storedValues[4][1]
-      });
-    } catch (error) {
-      Alert.alert('Error', 'There was an error while loading the data');
-    }
-  }
-
-  onSave = async () => {
-    let name = JSON.stringify(this.state.courseName);  
-    let room = JSON.stringify(this.state.courseRoom);   
-    let teacher = JSON.stringify(this.state.courseTeacher);
-    let color = JSON.stringify(this.state.courseColor);
-    let notes = JSON.stringify(this.state.courseNotes);
-    try {
-      await AsyncStorage.multiSet([
-        [courseNameKey, name.substring(1, name.length-1)], 
-        [courseRoomKey, room.substring(1, room.length-1)],
-        [courseTeacherKey, teacher.substring(1, teacher.length-1)],
-        [courseColorKey, color.substring(1, color.length-1)],
-        [courseNotesKey, notes.substring(1, notes.length-1)]
-      ]);
-    } catch (error) {
-      // Alert.alert('Error', 'There was an error while saving the data');
-    }
   }
 
   _toggleColorChooser = () =>
     this.setState({ isColorChooserVisible: !this.state.isColorChooserVisible });
-
-  _changeName = (newName) =>
-  this.setState({ courseName: newName });
-
-  _changeRoom = (newRoom) =>
-  this.setState({ courseRoom: newRoom });
-
-  _changeTeacher = (newTeacher) =>
-  this.setState({ courseTeacher: newTeacher });
-  
-  _changeColor = (newColor) =>
-  this.setState({ courseColor: newColor });
-
-  _changeNotes = (newNotes) =>
-  this.setState({ courseNotes: newNotes });
 
   render() {
     const { courseInfo } = this.props.navigation.state.params;
@@ -103,39 +35,42 @@ class CourseDetailsScreen extends Component {
       <View style={styles.courseDetailsContainer}>
         <TextField
           placeholder="Course Name"
-          _change={(courseName) => this._changeName(courseName)}
+          _change={(block, courseName) => this.props.changeName(block, courseName)}
+          block={courseInfo.courseBlock}
           value={courseInfo.courseName}
         />
 
         <TextField
           placeholder="Room"
-          _change={(courseRoom) => this._changeRoom(courseRoom)}
+          _change={(block, courseRoom) => this.props.changeRoom(block, courseRoom)}
+          block={courseInfo.courseBlock}
           value={courseInfo.courseRoom}
         />
 
         <TextField
           placeholder="Teacher"
-          _change={(courseTeacher) => this._changeTeacher(courseTeacher)}
+          _change={(block, courseTeacher) => this.props.changeTeacher(block, courseTeacher)}
+          block={courseInfo.courseBlock}
           value={courseInfo.courseTeacher}
         />
 
         <ColorField 
           _toggleColorChooser = {this._toggleColorChooser}
           isColorChooserVisible={this.state.isColorChooserVisible}
-          _change={(courseColor) => this._changeColor(courseColor)}
-          value={courseInfo.courseColor}
+          _change={(block, courseColor) => this.props.changeColor(block, courseColor)}
           block={courseInfo.courseBlock}
+          value={courseInfo.courseColor}
         />
 
         <TextArea
           placeholder="Additional Notes"
-          _change={(courseNotes) => this._changeNotes(courseNotes)}
+          _change={(block, courseNotes) => this.props.changeNotes(block, courseNotes)}
+          block={courseInfo.courseBlock}
           value={courseInfo.courseNotes}
         />
 
         <BlueButton 
           routeName='Settings'
-          functions={this.onSave()}
           width={70}
           height={50}
           margin={55}
@@ -160,4 +95,19 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CourseDetailsScreen;
+const mapStateToProps = (state) => {
+  const { blocks } = state
+  return { blocks }
+};
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    changeName,
+    changeRoom,
+    changeTeacher,
+    changeColor,
+    changeNotes
+  }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CourseDetailsScreen);

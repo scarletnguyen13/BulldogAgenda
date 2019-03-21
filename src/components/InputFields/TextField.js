@@ -7,7 +7,7 @@ class TextField extends Component {
       <TextInput
         style = {styles.textInputStyle}
         placeholder = {this.props.placeholder}
-        onChangeText = {(value) => this.props._change(value)}
+        onChangeText = {(value) => this.props._change(this.props.block, value)}
         value = {this.props.value}
       />
     );
