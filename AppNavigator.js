@@ -39,7 +39,7 @@ const timetableTopTab = createMaterialTopTabNavigator(
         backgroundColor: 'white'
       }
     },
-    initialRouteName: 'Daily',
+    initialRouteName: 'Monthly',
     transitionConfig : () => ({
       transitionSpec: {
         duration: 0
@@ -131,8 +131,8 @@ const AppNavigator = createStackNavigator(
         headerLeft: (
           <IconButton 
             name="ios-menu"
-            margin={10}
-            size={35} 
+            margin={15}
+            size={40} 
             color='white' />
         ),
       })
