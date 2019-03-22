@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import { TouchableOpacity, View, StyleSheet, Image } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import Images from '../../assets/images/index';
+import Images from '../../../assets/images/index';
 
 class NextButton extends Component {
   render() {
         return(
           <View style={styles.nextButtonView}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Settings')}>
+              onPress={() => this.props.navigation.navigate('Main')}>
               <View style={styles.nextButton}>
                 <Image 
                   source={Images.icon.arrow}

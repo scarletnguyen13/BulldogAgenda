@@ -10,7 +10,7 @@ class TextArea extends Component {
           placeholder={this.props.placeholder}
           numberOfLines={10}
           multiline={true}
-          onChangeText={(value) => this.props._change(value)}
+          onChangeText={(value) => this.props._change(this.props.block, value)}
           value={this.props.value}
         />
       </View>

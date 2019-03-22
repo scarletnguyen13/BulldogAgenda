@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Image, View, StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import Images from '../../assets/images/index';
+import Images from '../../../assets/images/index';
 
 class CloseButton extends Component {
   render() {
