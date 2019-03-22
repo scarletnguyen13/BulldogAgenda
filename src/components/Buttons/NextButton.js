@@ -8,7 +8,7 @@ class NextButton extends Component {
         return(
           <View style={styles.nextButtonView}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Settings')}>
+              onPress={() => this.props.navigation.navigate('Main')}>
               <View style={styles.nextButton}>
                 <Image 
                   source={Images.icon.arrow}
