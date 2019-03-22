@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     backgroundColor: "#140bb9",
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent:'center',
+    marginBottom: 30
   },
   addButtonImage: {
     width: 27, 

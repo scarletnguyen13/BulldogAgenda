@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator, createBottomTabNavigator, createAppContainer } from "react-navigation";
+import { createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator } from "react-navigation";
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import WelcomeScreen from './src/screens/WelcomeScreen';
@@ -7,12 +7,52 @@ import SettingsScreen from './src/screens/SettingsScreen';
 import CourseDetailsScreen from './src/screens/CourseDetailsScreen';
 
 import AgendaScreen from './src/screens/AgendaScreen';
-import TimetableScreen from "./src/screens/TimetableScreen";
+import TimetableDailyScreen from "./src/screens/TimetableDailyScreen";
+import TimetableWeeklyScreen from "./src/screens/TimetableWeeklyScreen";
 import NotificationScreen from "./src/screens/NotificationScreen";
 import CalendarScreen from "./src/screens/CalendarScreen";
 import AddButton from './src/components/Buttons/AddButton';
+import IconButton from './src/components/Buttons/IconButton';
+import NewsfeedScreen from './src/screens/NewsfeedScreen';
 
-const TabNavigator = createBottomTabNavigator({
+const timetableTopTab = createMaterialTopTabNavigator(
+  {
+    Daily: {
+      screen: TimetableDailyScreen
+    },
+    Weekly: {
+      screen: TimetableWeeklyScreen
+    },
+    Monthly: {
+      screen: CalendarScreen
+    }
+  },
+  {
+    tabBarOptions: {
+      pressOpacity: 1,
+      upperCaseLabel: false,
+      style: {
+        backgroundColor: 'black',
+        height: '7%'
+      },
+      indicatorStyle: {
+        backgroundColor: 'white'
+      }
+    },
+    initialRouteName: 'Daily',
+    transitionConfig : () => ({
+      transitionSpec: {
+        duration: 0
+      },
+    }),
+    animationEnabled: false,
+  }
+);
+
+
+
+const TabNavigator = createBottomTabNavigator(
+{
   Agenda: {
     screen: AgendaScreen,
     navigationOptions: {
@@ -22,7 +62,7 @@ const TabNavigator = createBottomTabNavigator({
     }
   },
   Timetable: {
-    screen: TimetableScreen,
+    screen: timetableTopTab,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Icon name="ios-journal" size={35} color={tintColor} />
@@ -44,27 +84,23 @@ const TabNavigator = createBottomTabNavigator({
       )
     }
   },
-  Calendar: {
-    screen: CalendarScreen,
+  Newsfeed: {
+    screen: NewsfeedScreen,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-calendar" size={35} color={tintColor} />
+        <Icon name="ios-paper" size={35} color={tintColor} />
       )
     }
   }
 },
 {
-  defaultNavigationOptions: ({ navigation }) => ({
-    tabBarIcon: ({ focused, horizontal, tintColor }) => {
-
-    },
-  }),
   tabBarOptions: {
     showLabel: false,
     activeTintColor: '#140bb9',
     inactiveTintColor: 'grey',
     activeBackgroundColor: '#d9d9d9'
   },
+  initialRouteName: 'Timetable'
 }
 );
 
@@ -85,6 +121,20 @@ const AppNavigator = createStackNavigator(
         headerTitleStyle: {
           fontWeight: 'normal',
         },
+        headerRight: (
+          <IconButton 
+            name="ios-settings"
+            margin={20}
+            size={27} 
+            color='white'/>
+        ),
+        headerLeft: (
+          <IconButton 
+            name="ios-menu"
+            margin={10}
+            size={35} 
+            color='white' />
+        ),
       })
     }
   },

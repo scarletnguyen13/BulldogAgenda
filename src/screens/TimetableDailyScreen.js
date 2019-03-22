@@ -1,27 +1,40 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import IconButton from '../components/Buttons/IconButton';
 import TimetableDailyBlock from '../components/TimetableDailyBlock';
 
-class TimetableScreen extends Component {
+class TimetableDailyScreen extends Component {
   render() {
     return (
       <View style={styles.welcomeView}>
-        <View style={{width: '100%', height: "10%", backgroundColor: '#dbdbdb', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', paddingRight: 30, paddingLeft: 30}}>
-            <Text>DAY 1</Text>
-            <Text>MONDAY</Text>
-            <Text>FEB 17</Text>
+        <View style={styles.blockContainer}>
+            <IconButton 
+            name="ios-arrow-dropleft-circle"
+            margin={0}
+            size={20}
+            color='gray' />
+
+            <Text style={styles.todayText}>DAY 1</Text>
+            <Text style={styles.todayText}>MONDAY</Text>
+            <Text style={styles.todayText}>FEB 17</Text>
+
+            <IconButton 
+            name="ios-arrow-dropright-circle"
+            margin={0}
+            size={20}
+            color='gray' />
         </View>
-        <View style={{width: '100%', height: '90%', flexDirection: 'column'}}>
+
+        <View style={{width: '100%', height: '93%', flexDirection: 'column'}}>
           <TimetableDailyBlock 
-            courseColor='#F44336'
+            courseColor='#2196F3'
             flex={1}
             courseBlock='1 - 1'
             courseName='Physics 12'
             courseRoom='Rm. 109'/>
 
           <TimetableDailyBlock 
-            courseColor='#E91E63'
+            courseColor='#FFEB3B'
             flex={1}
             courseBlock='1 - 1'
             courseName='Physics 12'
@@ -33,14 +46,14 @@ class TimetableScreen extends Component {
             courseBlock='LUNCH'/>
 
           <TimetableDailyBlock 
-            courseColor='#9C27B0'
+            courseColor='#8BC34A'
             flex={1}
             courseBlock='1 - 1'
             courseName='Physics 12'
             courseRoom='Rm. 109'/>
 
           <TimetableDailyBlock 
-            courseColor='#673AB7'
+            courseColor='#E91E63'
             flex={1}
             courseBlock='1 - 1'
             courseName='Physics 12'
@@ -56,8 +69,21 @@ const styles = StyleSheet.create({
     flex: 1, 
     flexDirection: 'column', 
     alignItems: "center", 
-    // justifyContent: "center"
+    justifyContent: "center"
+  },
+  blockContainer: {
+    width: '100%',
+    height: "7%",
+    backgroundColor: '#dbdbdb',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    paddingRight: 18,
+    paddingLeft: 18
+  },
+  todayText: {
+    fontSize: 14
   }
 });
 
-export default TimetableScreen;
+export default TimetableDailyScreen;
