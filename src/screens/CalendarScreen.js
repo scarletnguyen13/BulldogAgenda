@@ -1,22 +1,30 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, ScrollView } from 'react-native';
-import { Calendar } from 'react-native-calendars';
 import CalendarBlock from '../components/CalendarBlock';
+import { Calendar } from 'react-native-calendars';
 
 class CalendarScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.onDayPress = this.onDayPress.bind(this);
+  }
+
+  onDayPress(day) {
+    this.setState({
+      selected: day.dateString
+    });
+  }
+
   render() {
     return (
-      <View style={styles.welcomeView}>
-        <Calendar 
-        style={styles.calendar} 
-        markedDates={{
-          '2019-03-16': {selected: true, marked: true, selectedColor: '#8BC34A'},
-          '2019-05-17': {marked: true},
-          '2019-05-18': {marked: true, dotColor: 'red', activeOpacity: 0},
-          '2019-05-19': {disabled: true, disableTouchEvent: true}
-        }}
+      <View>
+        <Calendar
+          onDayPress={this.onDayPress}
+          style={styles.calendar}
+          hideExtraDays
+          markedDates={{[this.state.selected]: {selected: true}}}
         />
-
         <View style={styles.eventsContainer}>
           <View style={styles.textContainer}>
             <View style={styles.eventCircle}>
@@ -61,8 +69,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   eventCircle: {
-    width: 35,
-    height: 35,
+    width: 30,
+    height: 30,
     backgroundColor: '#3E3E3E',
     borderRadius: 100,
     alignItems: 'center',
