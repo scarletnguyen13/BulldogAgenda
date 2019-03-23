@@ -8,7 +8,6 @@ import CourseDetailsScreen from './src/screens/CourseDetailsScreen';
 
 import AgendaScreen from './src/screens/AgendaScreen';
 import TimetableDailyScreen from "./src/screens/TimetableDailyScreen";
-import TimetableWeeklyScreen from "./src/screens/TimetableWeeklyScreen";
 import NotificationScreen from "./src/screens/NotificationScreen";
 import CalendarScreen from "./src/screens/CalendarScreen";
 import AddButton from './src/components/Buttons/AddButton';
@@ -17,13 +16,10 @@ import NewsfeedScreen from './src/screens/NewsfeedScreen';
 
 const timetableTopTab = createMaterialTopTabNavigator(
   {
-    Daily: {
+    Today: {
       screen: TimetableDailyScreen
     },
-    Weekly: {
-      screen: TimetableWeeklyScreen
-    },
-    Monthly: {
+    Calendar: {
       screen: CalendarScreen
     }
   },
@@ -39,7 +35,7 @@ const timetableTopTab = createMaterialTopTabNavigator(
         backgroundColor: 'white'
       }
     },
-    initialRouteName: 'Monthly',
+    initialRouteName: 'Today',
     transitionConfig : () => ({
       transitionSpec: {
         duration: 0
