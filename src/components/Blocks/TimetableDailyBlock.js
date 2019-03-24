@@ -1,47 +1,60 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, LayoutAnimation, UIManager, Platform } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight, LayoutAnimation } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import getContrastYIQ from '../ContrastHelper';
+import CalendarBlock from './CalendarBlock';
 
 class TimetableDailyBlock extends Component {
   constructor(props) {
       super(props);
       this.state = { 
-         textLayoutHeight: 0,
-         updatedHeight: 0, 
-         expand: false
+         expand: true,
+         containerHeight: this.props.height,
+         expandedViewHeight: 0,
+         icon: 'ios-arrow-down'
       }
+      this.isExpanded = this.isExpanded.bind(this);
+      this.changeHeight = this.changeHeight.bind(this);
   }
 
-  expandCollapse = () => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    if (this.state.expand) {
-      this.setState({ 
-        updatedHeight: 0, 
-        expand: false, 
-      });
-    } else {
-      this.setState({ 
-        updatedHeight: this.state.textLayoutHeight, 
-        expand: true, 
-      }); 
-    }
+  isExpanded = () => { 
+    const { expand } = this.state;
+    this.setState({ 
+      icon: expand ? 'ios-arrow-up' : 'ios-arrow-down',
+      expand: !expand
+    })
   }
- 
-  getHeight(height) {
-    this.setState({ textLayoutHeight: height });
+
+  changeHeight(height) {
+    var CustomLayoutLinear = {
+      duration: 30,
+      create: {
+        type: LayoutAnimation.Types.linear,
+        property: LayoutAnimation.Properties.opacity,
+      },
+      update: {
+        type: LayoutAnimation.Types.curveEaseInEaseOut,
+      },
+    };
+    LayoutAnimation.configureNext(CustomLayoutLinear);
+    this.setState({ 
+      expandedViewHeight: height,
+      containerHeight: this.props.height + height
+    });
   }
 
   render() {
     const color = this.props.courseColor;
     return (
-      <View style={[{borderWidth: 2,
-        borderColor: color,
-        margin: 1}, setSize(this.props.flex)]}>
-        <TouchableOpacity 
+      <View style={[
+        styles.outerContainer, 
+        setHeight(this.state.containerHeight),
+        setBorderColor(color)
+      ]}>
+        <TouchableHighlight 
           style={{flex: 1}}
-          onPress = { this.expandCollapse }>
-          <View style={[styles.container, setbBackgroundColor(color)]}>
+          onPress = { this.isExpanded }>
+          <View style={[styles.innerContainer, setbBackgroundColor(color)]}>
             <View style={[
               styles.indicator, 
               setBackgroundContrastColor(color),
@@ -54,17 +67,16 @@ class TimetableDailyBlock extends Component {
               </Text>
               <Text style={setContrastColor(color)}>{this.props.courseRoom}</Text>
             </View>
-              <Icon name="ios-arrow-down" size={35} color={getContrastYIQ(color)} />
+              <Icon name={this.state.icon} size={35} color={getContrastYIQ(color)} />
           </View>
-        </TouchableOpacity>
+        </TouchableHighlight>
 
-        <View style = {{ height: this.state.updatedHeight, overflow: 'hidden' }}>
-          <Text style = { styles.ExpandViewInsideText } 
-                onLayout = {( value ) => this.getHeight( value.nativeEvent.layout.height )}>
-              
-              Hello Developers, A warm welcome on ReactNativeCode.com, The best website for react native developers.
-              You can find high quality dynamic type of tutorials with examples on my website and to support us please like our Facebook page.
-          </Text>
+        <View 
+          style={{display: this.state.expand ? 'none' : 'flex'}}
+          onLayout = {( value ) => this.changeHeight( value.nativeEvent.layout.height )}>
+          <CalendarBlock courseColor = '#8BC34A'/>
+          <CalendarBlock courseColor = '#E91E63'/>
+          <CalendarBlock courseColor = '#FFEB3B'/>
         </View>
       </View>
     );
@@ -72,7 +84,11 @@ class TimetableDailyBlock extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  outerContainer: {
+    borderWidth: 10,
+    margin: 1
+  },
+  innerContainer: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -97,18 +113,11 @@ const styles = StyleSheet.create({
   courseText: {
     marginBottom: 20, 
     fontSize: 23
-  },
-  ExpandViewInsideText: {
-      fontSize: 16,
-      color: '#000',
-      padding: 12
   }
 });
 
 function setbBackgroundColor(color) {
-  return {
-    backgroundColor: color
-  }
+  return { backgroundColor: color }
 }
 
 function setContrastColor(color) {
@@ -129,9 +138,15 @@ function setVisible(bool) {
   }
 }
 
-function setSize(size) {
+function setHeight(number) {
   return {
-    flex: size
+    height: number
+  }
+}
+
+function setBorderColor(color) {
+  return {
+    borderColor: color
   }
 }
 
