@@ -5,7 +5,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 class IconButton extends Component {
   render() {
     return (
-      <TouchableOpacity style={changeMargin(this.props.margin)}>
+      <TouchableOpacity 
+        style={changeMargin(this.props.margin)}
+        onPress={this.props.onPress}>
         <Icon name={this.props.name} size={this.props.size} color={this.props.color} />
       </TouchableOpacity>
     );
