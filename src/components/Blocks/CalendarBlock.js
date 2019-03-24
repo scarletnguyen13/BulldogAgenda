@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     height: 80,
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 15,
+    marginTop: 10,
+    marginBottom: 10,
   },
   outerCircle: {
     width: 20,
