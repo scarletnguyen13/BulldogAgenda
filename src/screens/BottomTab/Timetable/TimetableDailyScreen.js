@@ -79,7 +79,12 @@ class TimetableDailyScreen extends Component {
     return (
       <View style={styles.welcomeView}>
         <CalendarStrip 
+<<<<<<< HEAD
           currentDate={this.state.currentDate}/>
+=======
+          currentDate={this.state.currentDate}
+          currentTime={this.state.currentTime}/>
+>>>>>>> 9b93ad89bec58082e48981b74ba835b4302bb9ad
 
         <ScrollView 
           style={styles.scrollStyle}>
