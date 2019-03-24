@@ -85,8 +85,7 @@ class TimetableDailyBlock extends Component {
 
 const styles = StyleSheet.create({
   outerContainer: {
-    borderWidth: 10,
-    margin: 1
+    borderWidth: 10
   },
   innerContainer: {
     flex: 1,
