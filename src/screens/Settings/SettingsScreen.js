@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
-import BlockButton from '../components/Buttons/BlockButton';
-import NextButton from '../components/Buttons/NextButton';
-import DayText from '../components/Texts/DayText';
+import BlockButton from '../../components/Buttons/BlockButton';
+import NextButton from '../../components/Buttons/NextButton';
+import DayText from '../../components/Texts/DayText';
 import { connect } from 'react-redux';
 
 class SettingsScreen extends Component {

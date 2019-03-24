@@ -3,16 +3,16 @@ import { createStackNavigator, createBottomTabNavigator, createAppContainer, cre
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import WelcomeScreen from './src/screens/WelcomeScreen';
-import SettingsScreen from './src/screens/SettingsScreen';
-import CourseDetailsScreen from './src/screens/CourseDetailsScreen';
+import SettingsScreen from './src/screens/Settings/SettingsScreen';
+import CourseDetailsScreen from './src/screens/Settings/CourseDetailsScreen';
 
-import AgendaScreen from './src/screens/AgendaScreen';
-import TimetableDailyScreen from "./src/screens/TimetableDailyScreen";
-import NotificationScreen from "./src/screens/NotificationScreen";
-import CalendarScreen from "./src/screens/CalendarScreen";
+import AgendaScreen from './src/screens/BottomTab/AgendaScreen';
+import TimetableDailyScreen from "./src/screens/BottomTab/Timetable/TimetableDailyScreen";
+import NotificationScreen from "./src/screens/BottomTab/NotificationScreen";
+import CalendarScreen from "./src/screens/BottomTab/Timetable/CalendarScreen";
 import AddButton from './src/components/Buttons/AddButton';
 import IconButton from './src/components/Buttons/IconButton';
-import NewsfeedScreen from './src/screens/NewsfeedScreen';
+import NewsfeedScreen from './src/screens/BottomTab/NewsfeedScreen';
 
 const timetableTopTab = createMaterialTopTabNavigator(
   {
