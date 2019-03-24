@@ -149,5 +149,4 @@ function setBorderColor(color) {
     borderColor: color
   }
 }
-
 export default TimetableDailyBlock;
