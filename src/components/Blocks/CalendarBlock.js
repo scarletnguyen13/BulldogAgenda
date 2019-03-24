@@ -2,6 +2,18 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 class CalendarBlock extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      containerHeight: 0
+    }
+    this.changeHeight = this.changeHeight.bind(this);
+  }
+
+  changeHeight(height) {
+    this.setState({containerHeight: height});
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -10,7 +22,10 @@ class CalendarBlock extends Component {
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.courseText}>Biology</Text>
-          <Text style={styles.contentText}>Researching about resistance bacteria</Text>
+          <Text 
+            style={styles.contentText}
+            onLayout = {( value ) => this.changeHeight( value.nativeEvent.layout.height )}>
+              Researching about resistance bacteria</Text>
         </View>
       </View>
     );
@@ -20,7 +35,6 @@ class CalendarBlock extends Component {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 80,
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 10,
