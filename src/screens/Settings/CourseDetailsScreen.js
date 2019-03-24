@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { View, StyleSheet } from "react-native";
-import BlueButton from '../components/Buttons/BlueButton';
-import TextField from '../components/InputFields/TextField';
-import TextArea from '../components/InputFields/TextArea';
-import ColorField from '../components/InputFields/ColorField';
+import BlueButton from '../../components/Buttons/BlueButton';
+import TextField from '../../components/InputFields/TextField';
+import TextArea from '../../components/InputFields/TextArea';
+import ColorField from '../../components/InputFields/ColorField';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {changeName, changeRoom, changeTeacher, changeColor, changeNotes} from '../components/InputActions';
+import {changeName, changeRoom, changeTeacher, changeColor, changeNotes} from '../../components/InputActions';
 
 class CourseDetailsScreen extends Component {
   static navigationOptions = ({ navigation }) => {

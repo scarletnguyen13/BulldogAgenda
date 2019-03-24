@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import IconButton from '../components/Buttons/IconButton';
-import TimetableDailyBlock from '../components/TimetableDailyBlock';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import IconButton from '../../../components/Buttons/IconButton';
+import TimetableDailyBlock from '../../../components/Blocks/TimetableDailyBlock';
 
 class TimetableDailyScreen extends Component {
   render() {
@@ -25,40 +25,47 @@ class TimetableDailyScreen extends Component {
             color='gray' />
         </View>
 
-        <View style={{width: '100%', height: '93%', flexDirection: 'column'}}>
+        <ScrollView 
+          style={styles.scrollStyle} 
+          contentContainerStyle={styles.scrollContentStyle}>
           <TimetableDailyBlock 
             courseColor='#2196F3'
             flex={1}
             courseBlock='1 - 1'
             courseName='Physics 12'
-            courseRoom='Rm. 109'/>
+            courseRoom='Rm. 109'
+            isVisible={true}/>
 
           <TimetableDailyBlock 
             courseColor='#FFEB3B'
             flex={1}
-            courseBlock='1 - 1'
-            courseName='Physics 12'
-            courseRoom='Rm. 109'/>
+            courseBlock='1 - 2'
+            courseName='Calculus 12'
+            courseRoom='Rm. 109'
+            isVisible={false}/>
 
           <TimetableDailyBlock 
             courseColor='#3E3E3E'
             flex={0.6}
-            courseBlock='LUNCH'/>
+            courseBlock='LUNCH'
+            isVisible={false}/>
 
           <TimetableDailyBlock 
             courseColor='#8BC34A'
             flex={1}
-            courseBlock='1 - 1'
-            courseName='Physics 12'
-            courseRoom='Rm. 109'/>
+            courseBlock='1 - 3'
+            courseName='Chemistry 12'
+            courseRoom='Rm. 109'
+            isVisible={false}/>
 
           <TimetableDailyBlock 
             courseColor='#E91E63'
             flex={1}
-            courseBlock='1 - 1'
-            courseName='Physics 12'
-            courseRoom='Rm. 109'/>
-        </View>
+            courseBlock='1 - 4'
+            courseName='English 12'
+            courseRoom='Rm. 109'
+            isVisible={false}/>
+        </ScrollView>
       </View>
     );
   }
@@ -83,6 +90,12 @@ const styles = StyleSheet.create({
   },
   todayText: {
     fontSize: 14
+  }, 
+  scrollStyle: {
+    width: '100%'
+  },
+  scrollContentStyle: {
+    height: '100%'
   }
 });
 
