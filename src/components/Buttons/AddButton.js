@@ -6,7 +6,7 @@ import Images from '../../../assets/images/index';
 class AddButton extends Component {
   render() {
     return (
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={this.props.onPress}>
         <View style={styles.addButton}>
           <Image 
             source={Images.icon.add}

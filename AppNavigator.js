@@ -13,6 +13,7 @@ import CalendarScreen from "./src/screens/BottomTab/Timetable/CalendarScreen";
 import AddButton from './src/components/Buttons/AddButton';
 import IconButton from './src/components/Buttons/IconButton';
 import NewsfeedScreen from './src/screens/BottomTab/NewsfeedScreen';
+import AddTodoScreen from './src/screens/BottomTab/AddTodoScreen';
 
 const timetableTopTab = createMaterialTopTabNavigator(
   {
@@ -67,8 +68,8 @@ const TabNavigator = createBottomTabNavigator(
   },
   AddButton: {
 		screen: () => null,
-		navigationOptions: () => ({
-			tabBarIcon: (<AddButton/>),
+		navigationOptions: ({ navigation }) => ({
+			tabBarIcon: (<AddButton onPress={() => navigation.navigate('TodoDetails')}/>),
 			tabBarOnPress: () => {}
 		})
 	},
@@ -105,6 +106,7 @@ const AppNavigator = createStackNavigator(
     Welcome: WelcomeScreen,
     Settings: SettingsScreen,
     CourseDetails: CourseDetailsScreen,
+    TodoDetails: AddTodoScreen,
     Main: {
       screen: TabNavigator,
       navigationOptions: ({ navigation }) => ({
@@ -122,7 +124,8 @@ const AppNavigator = createStackNavigator(
             name="ios-settings"
             margin={20}
             size={27} 
-            color='white'/>
+            color='white'
+            onPress={() => navigation.navigate('Settings')}/>
         ),
         headerLeft: (
           <IconButton 
@@ -135,7 +138,7 @@ const AppNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: "Main",
+    initialRouteName: "TodoDetails",
     transitionConfig : () => ({
       transitionSpec: {
         duration: 0

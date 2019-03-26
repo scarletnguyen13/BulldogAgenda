@@ -16,6 +16,7 @@ class ColorField extends Component {
   render() {
     return (
       <View style={styles.colorContainer}>
+        <Text style={styles.label}>{this.props.label}</Text>
         <TouchableOpacity
           onPress={this.props._toggleColorChooser}
           style={[styles.colorInputContainer, colorTextInputStyleBackground(this.props.value)]}>
@@ -59,12 +60,18 @@ class ColorField extends Component {
 
 const styles = StyleSheet.create({
   colorContainer: {
-    width: '80%'
+    width: '80%',
+    marginBottom: 40
+  },
+  label: {
+    fontWeight: '500',
+    fontSize: 13,
+    marginBottom: 10,
+    color: '#717171'
   },
   colorInputContainer: {
     width: "100%",  
-    height: 40, 
-    marginBottom: 40
+    height: 40
   },
   modal: {
     alignItems: "center", 
