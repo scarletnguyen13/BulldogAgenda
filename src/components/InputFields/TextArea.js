@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
   textAreaContainer: {
     width: '80%',
     borderBottomWidth: 2,
-    paddingBottom: 10 
+    paddingBottom: 10 ,
+    marginTop: 10
   },
   textArea: {
     height: 150,

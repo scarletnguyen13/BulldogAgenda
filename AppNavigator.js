@@ -97,7 +97,7 @@ const TabNavigator = createBottomTabNavigator(
     inactiveTintColor: 'grey',
     activeBackgroundColor: '#d9d9d9'
   },
-  initialRouteName: 'Agenda'
+  initialRouteName: 'Timetable'
 }
 );
 
@@ -138,7 +138,7 @@ const AppNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: "TodoDetails",
+    initialRouteName: "Main",
     transitionConfig : () => ({
       transitionSpec: {
         duration: 0
