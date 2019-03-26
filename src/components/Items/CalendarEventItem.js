@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-class CalendarBlock extends Component {
+class CalendarEventItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -75,4 +75,4 @@ function setBackgroundColor(color) {
   };
 }
 
-export default CalendarBlock;
+export default CalendarEventItem;

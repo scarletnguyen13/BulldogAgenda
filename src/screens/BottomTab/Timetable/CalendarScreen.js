@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, ScrollView } from 'react-native';
-import CalendarBlock from '../../../components/Blocks/CalendarBlock';
+import CalendarBlock from '../../../components/Items/CalendarEventItem';
 import { Calendar } from 'react-native-calendars';
 
 class CalendarScreen extends Component {

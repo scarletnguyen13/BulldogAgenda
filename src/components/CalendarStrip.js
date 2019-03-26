@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import IconButton from '../Buttons/IconButton';
+import IconButton from './Buttons/IconButton';
 import moment from 'moment';
 
 class CalendarStrip extends Component {

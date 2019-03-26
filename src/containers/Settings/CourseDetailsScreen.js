@@ -34,31 +34,27 @@ class CourseDetailsScreen extends Component {
     return (
       <View style={styles.courseDetailsContainer}>
         <TextField
-          label="Course"
-          placeholder="e.g. Calculus 12"
+          placeholder="Course Name (e.g. Calculus 12)"
           _change={(block, courseName) => this.props.changeName(block, courseName)}
           block={courseInfo.courseBlock}
           value={courseInfo.courseName}
         />
 
         <TextField
-          label="Room"
-          placeholder="e.g. Rm. 109"
+          placeholder="Room (e.g. Room 109)"
           _change={(block, courseRoom) => this.props.changeRoom(block, courseRoom)}
           block={courseInfo.courseBlock}
           value={courseInfo.courseRoom}
         />
 
         <TextField
-          label="Teacher"
-          placeholder="e.g. Mr. Smith"
+          placeholder="Teacher (e.g. Mr. Smith)"
           _change={(block, courseTeacher) => this.props.changeTeacher(block, courseTeacher)}
           block={courseInfo.courseBlock}
           value={courseInfo.courseTeacher}
         />
 
         <ColorField 
-          label="Color"
           _toggleColorChooser = {this._toggleColorChooser}
           isColorChooserVisible={this.state.isColorChooserVisible}
           _change={(block, courseColor) => this.props.changeColor(block, courseColor)}
@@ -77,7 +73,7 @@ class CourseDetailsScreen extends Component {
           routeName='Settings'
           width={70}
           height={50}
-          margin={25}
+          margin={55}
           content='DONE'/>
       </View>
     );

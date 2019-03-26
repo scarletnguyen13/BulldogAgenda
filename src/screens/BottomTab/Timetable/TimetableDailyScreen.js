@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import TimetableDailyBlock from '../../../components/Blocks/TimetableDailyBlock';
-import CalendarStrip from '../../../components/Blocks/CalendarStrip';
+import CollapsibleView from '../../../components/CollapsibleView';
+import CalendarStrip from '../../../components/CalendarStrip';
+import CalendarBlock from '../../../components/Items/CalendarEventItem';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
  
@@ -28,6 +29,14 @@ const block3EndTime   = " 1:38 PM";
 
 const block4StartTime = " 1:39 PM";
 const block4EndTime   = " 3:03 PM";
+
+const children = (
+  <View>
+    <CalendarBlock courseColor = '#8BC34A'/>
+    <CalendarBlock courseColor = '#E91E63'/>
+    <CalendarBlock courseColor = '#FFEB3B'/>
+  </View>
+)
 
 class TimetableDailyScreen extends Component {
   constructor(props) {
@@ -83,49 +92,67 @@ class TimetableDailyScreen extends Component {
 
         <ScrollView 
           style={styles.scrollStyle}>
-          <TimetableDailyBlock 
+          <CollapsibleView 
             courseColor='#2196F3'
             height={COURSE_DEFAULT_HEIGHT}
             courseBlock='1 - 1'
             courseName="Physics 12"
             courseRoom='Rm. 109'
-            isVisible={block_1_range.contains(todayCurrentTime)}/>
+            isVisible={block_1_range.contains(todayCurrentTime)}
+            expand={true}
+            borderWidth={10}
+            children={children}/>
 
-          <TimetableDailyBlock 
+          <CollapsibleView 
             courseColor='#3E3E3E'
             height={BREAK_DEFAULT_HEIGHT}
             courseBlock='BREAK'
-            isVisible={break_range.contains(todayCurrentTime)}/>
+            isVisible={break_range.contains(todayCurrentTime)}
+            expand={true}
+            borderWidth={10}
+            children={children}/>
 
-          <TimetableDailyBlock 
+          <CollapsibleView 
             courseColor='#FFEB3B'
             height={COURSE_DEFAULT_HEIGHT}
             courseBlock='1 - 2'
             courseName='Calculus 12'
             courseRoom='Rm. 109'
-            isVisible={block_2_range.contains(todayCurrentTime)}/>
+            isVisible={block_2_range.contains(todayCurrentTime)}
+            expand={true}
+            borderWidth={10}
+            children={children}/>
 
-          <TimetableDailyBlock 
+          <CollapsibleView 
             courseColor='#3E3E3E'
             height={LUNCH_DEFAULT_HEIGHT}
             courseBlock='LUNCH'
-            isVisible={lunch_range.contains(todayCurrentTime)}/>
+            isVisible={lunch_range.contains(todayCurrentTime)}
+            expand={true}
+            borderWidth={10}
+            children={children}/>
 
-          <TimetableDailyBlock 
+          <CollapsibleView 
             courseColor='#8BC34A'
             height={COURSE_DEFAULT_HEIGHT}
             courseBlock='1 - 3'
             courseName='Chemistry 12'
             courseRoom='Rm. 109'
-            isVisible={block_3_range.contains(todayCurrentTime)}/>
+            isVisible={block_3_range.contains(todayCurrentTime)}
+            expand={true}
+            borderWidth={10}
+            children={children}/>
 
-          <TimetableDailyBlock 
+          <CollapsibleView 
             courseColor='#E91E63'
             height={COURSE_DEFAULT_HEIGHT}
             courseBlock='1 - 4'
             courseName='English 12'
             courseRoom='Rm. 109'
-            isVisible={block_4_range.contains(todayCurrentTime)}/>
+            isVisible={block_4_range.contains(todayCurrentTime)}
+            expand={true}
+            borderWidth={10}
+            children={children}/>
         </ScrollView>
       </View>
     );
