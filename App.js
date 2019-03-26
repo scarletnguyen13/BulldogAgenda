@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import blockReducer from './src/components/BlockReducer';
+import store from './src/store/index';
 import AppNavigator from './AppNavigator';
 
-const store = createStore(blockReducer);
 
 class App extends Component {
   render() {

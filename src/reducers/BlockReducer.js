@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux';
-
 const INITIAL_STATE = {
   block1_1: {
     courseBlock: '1 - 1', courseName: '', courseRoom: '', 
@@ -35,7 +33,7 @@ const INITIAL_STATE = {
   }
 };
 
-const blockReducer = (state = INITIAL_STATE, action) => {
+export default blockReducer = (state = INITIAL_STATE, action) => {
   const stateKeys = Object.keys(state);
   const values = Object.values(state);
   const newState = {};
@@ -86,6 +84,3 @@ const blockReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default combineReducers({
-  blocks: blockReducer,
-});

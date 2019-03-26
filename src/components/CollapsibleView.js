@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableHighlight, LayoutAnimation } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import getContrastYIQ from '../ContrastHelper';
-import CalendarBlock from './CalendarBlock';
+import getContrastYIQ from './ContrastHelper';
 
-class TimetableDailyBlock extends Component {
+class CollapsibleView extends Component {
   constructor(props) {
       super(props);
       this.state = { 
-         expand: true,
+         expand: this.props.expand,
          containerHeight: this.props.height,
          expandedViewHeight: 0,
-         icon: 'ios-arrow-down'
+         icon: this.props.expand ? 'ios-arrow-down' : 'ios-arrow-up'
       }
       this.isExpanded = this.isExpanded.bind(this);
       this.changeHeight = this.changeHeight.bind(this);
@@ -27,7 +26,7 @@ class TimetableDailyBlock extends Component {
 
   changeHeight(height) {
     var CustomLayoutLinear = {
-      duration: 30,
+      duration: 20,
       create: {
         type: LayoutAnimation.Types.linear,
         property: LayoutAnimation.Properties.opacity,
@@ -47,7 +46,7 @@ class TimetableDailyBlock extends Component {
     const color = this.props.courseColor;
     return (
       <View style={[
-        styles.outerContainer, 
+        setBorderWidth(this.props.borderWidth), 
         setHeight(this.state.containerHeight),
         setBorderColor(color)
       ]}>
@@ -74,9 +73,7 @@ class TimetableDailyBlock extends Component {
         <View 
           style={{display: this.state.expand ? 'none' : 'flex'}}
           onLayout = {( value ) => this.changeHeight( value.nativeEvent.layout.height )}>
-          <CalendarBlock courseColor = '#8BC34A'/>
-          <CalendarBlock courseColor = '#E91E63'/>
-          <CalendarBlock courseColor = '#FFEB3B'/>
+            {this.props.children}
         </View>
       </View>
     );
@@ -84,9 +81,6 @@ class TimetableDailyBlock extends Component {
 }
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    borderWidth: 10
-  },
   innerContainer: {
     flex: 1,
     flexDirection: 'row',
@@ -98,7 +92,7 @@ const styles = StyleSheet.create({
     height: '60%'
   },
   blockText: {
-    fontSize: 15,
+    fontSize: 17,
     marginLeft: '10%'
   },
   centerContainer: {
@@ -148,4 +142,10 @@ function setBorderColor(color) {
     borderColor: color
   }
 }
-export default TimetableDailyBlock;
+
+function setBorderWidth(number) {
+  return {
+    borderWidth: number
+  }
+}
+export default CollapsibleView;

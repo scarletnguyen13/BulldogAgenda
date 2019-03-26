@@ -96,7 +96,7 @@ const TabNavigator = createBottomTabNavigator(
     inactiveTintColor: 'grey',
     activeBackgroundColor: '#d9d9d9'
   },
-  initialRouteName: 'Timetable'
+  initialRouteName: 'Agenda'
 }
 );
 
