@@ -138,7 +138,7 @@ const AppNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: "Main",
+    initialRouteName: "TodoDetails",
     transitionConfig : () => ({
       transitionSpec: {
         duration: 0
