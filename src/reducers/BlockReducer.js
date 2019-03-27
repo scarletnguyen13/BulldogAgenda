@@ -1,19 +1,19 @@
 const INITIAL_STATE = {
   block1_1: {
-    courseBlock: '1 - 1', courseName: '', courseRoom: '', 
-    courseTeacher: '', courseColor: '#C6C3C3', courseNotes: ''
+    courseBlock: '1 - 1', courseName: 'Physics 12', courseRoom: 'Rm. 209', 
+    courseTeacher: 'Mr. Klaassen', courseColor: '#2196F3', courseNotes: ''
   },
   block1_2: {
-    courseBlock: '1 - 2', courseName: '', courseRoom: '', 
-    courseTeacher: '', courseColor: '#C6C3C3', courseNotes: ''
+    courseBlock: '1 - 2', courseName: 'Calculus 12', courseRoom: 'Rm. 112', 
+    courseTeacher: 'Mrs. Kobi', courseColor: '#FFEB3B', courseNotes: ''
   },
   block1_3: {
-    courseBlock: '1 - 3', courseName: '', courseRoom: '', 
-    courseTeacher: '', courseColor: '#C6C3C3', courseNotes: ''
+    courseBlock: '1 - 3', courseName: 'Chemistry 12', courseRoom: 'Rm. 310A', 
+    courseTeacher: 'Mr. Benson', courseColor: '#8BC34A', courseNotes: ''
   },
   block1_4: {
-    courseBlock: '1 - 4', courseName: '', courseRoom: '', 
-    courseTeacher: '', courseColor: '#C6C3C3', courseNotes: ''
+    courseBlock: '1 - 4', courseName: 'English 12', courseRoom: 'Rm. 203', 
+    courseTeacher: 'Mr. Hauck', courseColor: '#E91E63', courseNotes: ''
   },
   block2_1: {
     courseBlock: '2 - 1', courseName: '', courseRoom: '', 
