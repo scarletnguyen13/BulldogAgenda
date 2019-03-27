@@ -2,42 +2,14 @@ import React, { Component } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import CollapsibleView from '../../components/CollapsibleView';
 import TodoItem from '../../components/Items/TodoItem';
-
-function randomNumGenerator() {
-  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-}
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { toggleTodo } from '../../actions/TodoActions';
+import store from '../../store/index';
 
 class AgendaScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      todos: [
-        {
-          description: 'Lab 20A Write Up',
-          id: randomNumGenerator(),
-          check: true
-        },
-        {
-          description: 'Lab 20A Test',
-          id: randomNumGenerator(),
-          check: true
-        },
-      ]
-    }
-    this.onTodoChange = this.onTodoChange.bind(this);
-  }
-
-  onTodoChange(id, check) {
-    this.state.todos.map((item, index) => {
-      if (item.id === id) {
-        this.setState(state => (state.todos[index].check = !check, state))
-      }
-    })
-  }
-  
-
   render() {
-    console.log(this.state);
+    console.log(store.getState());
     return (
       <ScrollView 
           style={styles.scrollStyle}>
@@ -47,9 +19,15 @@ class AgendaScreen extends Component {
             courseBlock='Todo'
             expand={false}
             children={
-              this.state.todos.map((item) => {
+              this.props.todos.todoList.map((item) => {
+                console.log(item.check);
                 if (item.check === true) {
-                  return (<TodoItem key={item.id} id={item.id} description={item.description} check={item.check} onChange={this.onTodoChange}/>)
+                  return (
+                    <TodoItem 
+                      key={item.id}
+                      item={item}
+                      onChange={(id) => this.props.toggleTodo(id)}/>
+                  )
                 } else {
                   return null;
                 }
@@ -61,9 +39,15 @@ class AgendaScreen extends Component {
             courseBlock='Completed'
             expand={false}
             children={
-              this.state.todos.map((item, index) => {
+              this.props.todos.todoList.map((item) => {
+                console.log(item.check);
                 if (item.check === false) {
-                  return (<TodoItem key={item.id} id={item.id} description={item.description} check={item.check} onChange={this.onTodoChange}/>)
+                  return (
+                    <TodoItem 
+                      key={item.id}
+                      item={item}
+                      onChange={(id) => this.props.toggleTodo(id)}/>
+                  )
                 } else {
                   return null;
                 }
@@ -80,4 +64,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AgendaScreen;
+const mapStateToProps = (state) => {
+  const { todos } = state
+  return { todos }
+};
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    toggleTodo
+   }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(AgendaScreen);

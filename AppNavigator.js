@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator } from "react-navigation";
 import Icon from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
 
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import SettingsScreen from './src/screens/Settings/SettingsScreen';
@@ -69,7 +70,20 @@ const TabNavigator = createBottomTabNavigator(
   AddButton: {
 		screen: () => null,
 		navigationOptions: ({ navigation }) => ({
-			tabBarIcon: (<AddButton onPress={() => navigation.navigate('TodoDetails')}/>),
+			tabBarIcon: (<AddButton onPress={() => navigation.navigate('TodoDetails', {
+        todoInfo: {
+          id: null,
+          description: '',
+          course: -1,
+          type: -1,
+          dueDate: checkDefaultDaysLater(),
+          dueTime: undefined,
+          priority: -1,
+          reminder: -1,
+          additionalNotes: '',
+          check: true
+        }
+      })}/>),
 			tabBarOnPress: () => {}
 		})
 	},
@@ -97,7 +111,7 @@ const TabNavigator = createBottomTabNavigator(
     inactiveTintColor: 'grey',
     activeBackgroundColor: '#d9d9d9'
   },
-  initialRouteName: 'Timetable'
+  initialRouteName: 'Agenda'
 }
 );
 
@@ -147,5 +161,12 @@ const AppNavigator = createStackNavigator(
   }
 );
 
+function checkDefaultDaysLater() {
+  const today = new Date()
+  if (moment(today).format('dddd') === 'Friday') {
+    return moment(moment(new Date()).add(4, 'days').toDate()).format("YYYY-MM-DD");
+  }
+  return moment(moment(new Date()).add(2, 'days').toDate()).format("YYYY-MM-DD");
+}
 
 export default createAppContainer(AppNavigator);
