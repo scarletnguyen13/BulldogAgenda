@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import CheckBox from '../CheckBox';
 import Icon from 'react-native-vector-icons/Ionicons';
+import moment from 'moment';
+import { withNavigation } from 'react-navigation';
+import {  COURSES,
+          TODO_TYPES } from '../../constants/todoDefaults';
 
 class TodoItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      check: this.props.check
+      check: this.props.item.check
     }
     this.handleClick = this.handleClick.bind(this);
   }
@@ -16,7 +20,7 @@ class TodoItem extends Component {
     this.setState({
       check: !this.state.check 
     })
-    this.props.onChange(this.props.id, this.state.check);
+    this.props.onChange(this.props.item.id);
   }
 
   render() {
@@ -29,14 +33,18 @@ class TodoItem extends Component {
             <Icon name='ios-square-outline' size={32} color='black'/> 
             : 
             <Icon name='ios-checkbox' size={26} color='green'/>}/>
-        <TouchableOpacity style={styles.content}>
+        <TouchableOpacity 
+          style={styles.content}
+          onPress={() => {this.props.navigation.navigate('TodoDetails', {
+            todoInfo: this.props.item
+          })}}>
           <View style={styles.textContainer}>
-            <Text style={crossedText(this.state.check)}>{this.props.description}</Text>
-            <Text style={[{color: '#ff6b00'}, crossedText(this.state.check)]}>Tomorrow</Text>
+            <Text style={crossedText(this.state.check)}>{this.props.item.description}</Text>
+            <Text style={[{color: '#ff6b00'}, crossedText(this.state.check)]}>{moment(this.props.item.dueDate).format('ddd, MMM DD')}</Text>
           </View>
           <View style={styles.textContainer}>
-            <Text style={[styles.courseAndTypeTextColor, crossedText(this.state.check)]}>Chemistry 12</Text>
-            <Text style={[styles.courseAndTypeTextColor, crossedText(this.state.check)]}>Test</Text>
+            <Text style={[styles.courseAndTypeTextColor, crossedText(this.state.check)]}>{COURSES[this.props.item.course]}</Text>
+            <Text style={[styles.courseAndTypeTextColor, crossedText(this.state.check)]}>{TODO_TYPES[this.props.item.type]}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -94,4 +102,4 @@ function crossedText(bool) {
   }
 }
 
-export default TodoItem;
+export default withNavigation(TodoItem);

@@ -7,7 +7,7 @@ class BlueButton extends Component {
     return (
       <TouchableOpacity 
         onPress={() => {
-          this.props.functions;
+          this.props.functions();
           this.props.navigation.navigate(this.props.routeName);
         }}>
         <View style={buttonStyle(this.props.width, this.props.height, this.props.margin)}>
