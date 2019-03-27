@@ -6,8 +6,7 @@ import CloseButton from '../../components/Buttons/CloseButton';
 import { Calendar } from 'react-native-calendars';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
-import {  COURSES,
-          TODO_TYPES,
+import {  TODO_TYPES,
           PRIORITY_TYPES,
           REMINDER_TYPES } from '../../constants/todoDefaults';
 
@@ -78,6 +77,12 @@ class AddTodoScreen extends Component {
   }   
 
   render() {
+    const values = Object.values(this.props.blocks);
+    let COURSES = [] 
+    values.forEach(blockObj => {
+      COURSES.push(blockObj.courseName);
+    });
+    
     return (
       <ScrollView>
         <View style={styles.todoDetailsContainer}>
@@ -356,8 +361,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  const { todos } = state
-  return { todos }
+  const { todos, blocks } = state
+  return { todos, blocks }
 };
 
 const mapDispatchToProps = dispatch => (

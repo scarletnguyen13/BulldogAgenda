@@ -4,8 +4,8 @@ import CheckBox from '../CheckBox';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import { withNavigation } from 'react-navigation';
-import {  COURSES,
-          TODO_TYPES } from '../../constants/todoDefaults';
+import {  TODO_TYPES } from '../../constants/todoDefaults';
+import { connect } from 'react-redux';
 
 class TodoItem extends Component {
   constructor(props) {
@@ -24,9 +24,18 @@ class TodoItem extends Component {
   }
 
   render() {
+    const values = Object.values(this.props.blocks);
+    let COURSES = [] 
+    values.forEach(blockObj => {
+      COURSES.push({
+        name: blockObj.courseName,
+        color: blockObj.courseColor
+      });
+    });
+
     return (
       <View style={styles.outerContainer}>
-        <View style={styles.indicator}></View>
+        <View style={[styles.indicator, {backgroundColor: COURSES[this.props.item.course].color}]}></View>
         <CheckBox
           handleClick={this.handleClick}
           boxImage={this.state.check ? 
@@ -43,7 +52,7 @@ class TodoItem extends Component {
             <Text style={[{color: '#ff6b00'}, crossedText(this.state.check)]}>{moment(this.props.item.dueDate).format('ddd, MMM DD')}</Text>
           </View>
           <View style={styles.textContainer}>
-            <Text style={[styles.courseAndTypeTextColor, crossedText(this.state.check)]}>{COURSES[this.props.item.course]}</Text>
+            <Text style={[styles.courseAndTypeTextColor, crossedText(this.state.check)]}>{COURSES[this.props.item.course].name}</Text>
             <Text style={[styles.courseAndTypeTextColor, crossedText(this.state.check)]}>{TODO_TYPES[this.props.item.type]}</Text>
           </View>
         </TouchableOpacity>
@@ -64,8 +73,7 @@ const styles = StyleSheet.create({
   },
   indicator: {
     width: '2%',
-    height: '80%',
-    backgroundColor: '#8BC34A'
+    height: '80%'
   },
   content: {
     width: '85%',
@@ -102,4 +110,9 @@ function crossedText(bool) {
   }
 }
 
-export default withNavigation(TodoItem);
+const mapStateToProps = (state) => {
+  const { todos, blocks } = state
+  return { todos, blocks }
+};
+
+export default connect(mapStateToProps)(withNavigation(TodoItem));

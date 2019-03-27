@@ -5,6 +5,7 @@ import CalendarStrip from '../../../components/CalendarStrip';
 import CalendarBlock from '../../../components/Items/CalendarEventItem';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
+import { connect } from 'react-redux';
  
 const moment = extendMoment(Moment)
 
@@ -43,9 +44,17 @@ class TimetableDailyScreen extends Component {
     super(props);
     this.state = {
       currentDate: moment().toDate(),
-      currentTime: moment().format('LTS')
+      currentTime: moment().format('LTS'),
+      day: ''
     }
+    this._onChangeDay = this._onChangeDay.bind(this);
   }
+
+  _onChangeDay = (day) => {
+    console.log(day === 'Day');
+    this.setState({day: day})
+  }
+
 
   componentDidMount() {
     setInterval( () => {
@@ -85,19 +94,42 @@ class TimetableDailyScreen extends Component {
 
     const todayCurrentTime = moment(today + " " + this.state.currentTime);
 
+    let block1, block2, block3, block4;
+    const emptyBlock = {
+      courseBlock: '', courseName: '', courseRoom: '', 
+      courseTeacher: '', courseColor: '#C6C3C3', courseNotes: ''
+    }
+    if (this.state.day === 'Day 1') { 
+      block1 = this.props.blocks.block1_1;
+      block2 = this.props.blocks.block1_2;
+      block3 = this.props.blocks.block1_3;
+      block4 = this.props.blocks.block1_4;
+    } else if (this.state.day === 'Day 2') {
+      block1 = this.props.blocks.block2_1;
+      block2 = this.props.blocks.block2_2;
+      block3 = this.props.blocks.block2_3;
+      block4 = this.props.blocks.block2_4;
+    } else {
+      block1 = emptyBlock;
+      block2 = emptyBlock;
+      block3 = emptyBlock;
+      block4 = emptyBlock;
+    }
+
     return (
       <View style={styles.welcomeView}>
         <CalendarStrip 
-          currentDate={this.state.currentDate}/>
+          currentDate={this.state.currentDate}
+          _onChangeDay={(day) => this._onChangeDay(day)}/>
 
         <ScrollView 
           style={styles.scrollStyle}>
           <CollapsibleView 
-            courseColor='#2196F3'
+            courseColor={block1.courseColor}
             height={COURSE_DEFAULT_HEIGHT}
-            courseBlock='1 - 1'
-            courseName="Physics 12"
-            courseRoom='Rm. 109'
+            courseBlock={block1.courseBlock}
+            courseName={block1.courseName}
+            courseRoom={block1.courseRoom}
             isVisible={block_1_range.contains(todayCurrentTime)}
             expand={true}
             borderWidth={10}
@@ -113,11 +145,11 @@ class TimetableDailyScreen extends Component {
             children={children}/>
 
           <CollapsibleView 
-            courseColor='#FFEB3B'
+            courseColor={block2.courseColor}
             height={COURSE_DEFAULT_HEIGHT}
-            courseBlock='1 - 2'
-            courseName='Calculus 12'
-            courseRoom='Rm. 109'
+            courseBlock={block2.courseBlock}
+            courseName={block2.courseName}
+            courseRoom={block2.courseRoom}
             isVisible={block_2_range.contains(todayCurrentTime)}
             expand={true}
             borderWidth={10}
@@ -133,22 +165,22 @@ class TimetableDailyScreen extends Component {
             children={children}/>
 
           <CollapsibleView 
-            courseColor='#8BC34A'
+            courseColor={block3.courseColor}
             height={COURSE_DEFAULT_HEIGHT}
-            courseBlock='1 - 3'
-            courseName='Chemistry 12'
-            courseRoom='Rm. 109'
+            courseBlock={block3.courseBlock}
+            courseName={block3.courseName}
+            courseRoom={block3.courseRoom}
             isVisible={block_3_range.contains(todayCurrentTime)}
             expand={true}
             borderWidth={10}
             children={children}/>
 
           <CollapsibleView 
-            courseColor='#E91E63'
+            courseColor={block4.courseColor}
             height={COURSE_DEFAULT_HEIGHT}
-            courseBlock='1 - 4'
-            courseName='English 12'
-            courseRoom='Rm. 109'
+            courseBlock={block4.courseBlock}
+            courseName={block4.courseName}
+            courseRoom={block4.courseRoom}
             isVisible={block_4_range.contains(todayCurrentTime)}
             expand={true}
             borderWidth={10}
@@ -174,4 +206,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TimetableDailyScreen;
+const mapStateToProps = (state) => {
+  const { blocks } = state
+  return { blocks }
+};
+
+export default connect(mapStateToProps)(TimetableDailyScreen);
