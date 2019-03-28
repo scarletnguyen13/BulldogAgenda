@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Text, FlatList, List } from 'react-native';
 import CollapsibleView from '../../../components/CollapsibleView';
 import CalendarStrip from '../../../components/CalendarStrip';
 import CalendarBlock from '../../../components/Items/CalendarEventItem';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 import { connect } from 'react-redux';
@@ -45,14 +46,17 @@ class TimetableDailyScreen extends Component {
     this.state = {
       currentDate: moment().toDate(),
       currentTime: moment().format('LTS'),
-      day: ''
+      day: '',
+      events: []
     }
     this._onChangeDay = this._onChangeDay.bind(this);
   }
 
-  _onChangeDay = (day) => {
-    console.log(day === 'Day');
-    this.setState({day: day})
+  _onChangeDay = (day, events) => {
+    this.setState({
+      day: day,
+      events: events
+    })
   }
 
 
@@ -120,71 +124,93 @@ class TimetableDailyScreen extends Component {
       <View style={styles.welcomeView}>
         <CalendarStrip 
           currentDate={this.state.currentDate}
-          _onChangeDay={(day) => this._onChangeDay(day)}/>
-
+          _onChangeDay={(day, events) => this._onChangeDay(day, events)}/>
+        
+        {(this.state.events.length > 0) && 
+        <View style={{width: '100%', backgroundColor: 'pink', justifyContent: 'center', alignItems: 'center', borderWidth: 2, borderColor: 'red'}}>
+          <FlatList
+            data={this.state.events}
+            renderItem={({ item }) => (
+              <Text style={{paddingTop: 5, paddingBottom: 5}}>{this.state.events.length > 1 && <Text>•</Text>} {item}</Text>
+            )}
+            keyExtractor={item => item}
+          />
+        </View>}
+        
         <ScrollView 
-          style={styles.scrollStyle}>
-          <CollapsibleView 
-            courseColor={block1.courseColor}
-            height={COURSE_DEFAULT_HEIGHT}
-            courseBlock={block1.courseBlock}
-            courseName={block1.courseName}
-            courseRoom={block1.courseRoom}
-            isVisible={block_1_range.contains(todayCurrentTime)}
-            expand={true}
-            borderWidth={10}
-            children={children}/>
+          style={styles.scrollStyle} scrollEnabled={(this.state.day === 'Day 1' || this.state.day === 'Day 2')}>
+          
+          {(this.state.day !== 'Day 1' && this.state.day !== 'Day 2') && 
+          <View style={{height: 500, justifyContent: 'center', alignItems: 'center'}}>
+            <Icon name="ios-school" size={105} color='#bbbbbb' />
+            <Text style={{color: '#bbbbbb', fontSize: 20}}>No Classes</Text>
+          </View>}
 
-          <CollapsibleView 
-            courseColor='#3E3E3E'
-            height={BREAK_DEFAULT_HEIGHT}
-            courseBlock='BREAK'
-            isVisible={break_range.contains(todayCurrentTime)}
-            expand={true}
-            borderWidth={10}
-            children={children}/>
+          {(this.state.day === 'Day 1' || this.state.day === 'Day 2') &&
+          <View>
+            <CollapsibleView 
+              courseColor={block1.courseColor}
+              height={COURSE_DEFAULT_HEIGHT}
+              courseBlock={block1.courseBlock}
+              courseName={block1.courseName}
+              courseRoom={block1.courseRoom}
+              isVisible={block_1_range.contains(todayCurrentTime)}
+              expand={true}
+              borderWidth={10}
+              children={children}/>
 
-          <CollapsibleView 
-            courseColor={block2.courseColor}
-            height={COURSE_DEFAULT_HEIGHT}
-            courseBlock={block2.courseBlock}
-            courseName={block2.courseName}
-            courseRoom={block2.courseRoom}
-            isVisible={block_2_range.contains(todayCurrentTime)}
-            expand={true}
-            borderWidth={10}
-            children={children}/>
+            <CollapsibleView 
+              courseColor='#3E3E3E'
+              height={BREAK_DEFAULT_HEIGHT}
+              courseBlock='BREAK'
+              isVisible={break_range.contains(todayCurrentTime)}
+              expand={true}
+              borderWidth={10}
+              children={children}/>
 
-          <CollapsibleView 
-            courseColor='#3E3E3E'
-            height={LUNCH_DEFAULT_HEIGHT}
-            courseBlock='LUNCH'
-            isVisible={lunch_range.contains(todayCurrentTime)}
-            expand={true}
-            borderWidth={10}
-            children={children}/>
+            <CollapsibleView 
+              courseColor={block2.courseColor}
+              height={COURSE_DEFAULT_HEIGHT}
+              courseBlock={block2.courseBlock}
+              courseName={block2.courseName}
+              courseRoom={block2.courseRoom}
+              isVisible={block_2_range.contains(todayCurrentTime)}
+              expand={true}
+              borderWidth={10}
+              children={children}/>
 
-          <CollapsibleView 
-            courseColor={block3.courseColor}
-            height={COURSE_DEFAULT_HEIGHT}
-            courseBlock={block3.courseBlock}
-            courseName={block3.courseName}
-            courseRoom={block3.courseRoom}
-            isVisible={block_3_range.contains(todayCurrentTime)}
-            expand={true}
-            borderWidth={10}
-            children={children}/>
+            <CollapsibleView 
+              courseColor='#3E3E3E'
+              height={LUNCH_DEFAULT_HEIGHT}
+              courseBlock='LUNCH'
+              isVisible={lunch_range.contains(todayCurrentTime)}
+              expand={true}
+              borderWidth={10}
+              children={children}/>
 
-          <CollapsibleView 
-            courseColor={block4.courseColor}
-            height={COURSE_DEFAULT_HEIGHT}
-            courseBlock={block4.courseBlock}
-            courseName={block4.courseName}
-            courseRoom={block4.courseRoom}
-            isVisible={block_4_range.contains(todayCurrentTime)}
-            expand={true}
-            borderWidth={10}
-            children={children}/>
+            <CollapsibleView 
+              courseColor={block3.courseColor}
+              height={COURSE_DEFAULT_HEIGHT}
+              courseBlock={block3.courseBlock}
+              courseName={block3.courseName}
+              courseRoom={block3.courseRoom}
+              isVisible={block_3_range.contains(todayCurrentTime)}
+              expand={true}
+              borderWidth={10}
+              children={children}/>
+
+            <CollapsibleView 
+              courseColor={block4.courseColor}
+              height={COURSE_DEFAULT_HEIGHT}
+              courseBlock={block4.courseBlock}
+              courseName={block4.courseName}
+              courseRoom={block4.courseRoom}
+              isVisible={block_4_range.contains(todayCurrentTime)}
+              expand={true}
+              borderWidth={10}
+              children={children}/>
+          </View>
+          }
         </ScrollView>
       </View>
     );
