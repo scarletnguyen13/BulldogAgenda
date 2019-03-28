@@ -119,6 +119,8 @@ class TimetableDailyScreen extends Component {
       block3 = emptyBlock;
       block4 = emptyBlock;
     }
+    
+    const isSchoolDay = this.state.day === 'Day 1' || this.state.day === 'Day 2';
 
     return (
       <View style={styles.welcomeView}>
@@ -126,27 +128,27 @@ class TimetableDailyScreen extends Component {
           currentDate={this.state.currentDate}
           _onChangeDay={(day, events) => this._onChangeDay(day, events)}/>
         
-        {(this.state.events.length > 0) && 
-        <View style={{width: '100%', backgroundColor: 'pink', justifyContent: 'center', alignItems: 'center', borderWidth: 2, borderColor: 'red'}}>
-          <FlatList
-            data={this.state.events}
-            renderItem={({ item }) => (
-              <Text style={{paddingTop: 5, paddingBottom: 5}}>{this.state.events.length > 1 && <Text>•</Text>} {item}</Text>
-            )}
-            keyExtractor={item => item}
-          />
-        </View>}
-        
         <ScrollView 
-          style={styles.scrollStyle} scrollEnabled={(this.state.day === 'Day 1' || this.state.day === 'Day 2')}>
+          style={styles.scrollStyle} scrollEnabled={isSchoolDay}>
           
-          {(this.state.day !== 'Day 1' && this.state.day !== 'Day 2') && 
-          <View style={{height: 500, justifyContent: 'center', alignItems: 'center'}}>
+          {(this.state.events.length > 0) && 
+          <View style={styles.eventsContainer}>
+            <FlatList
+              data={this.state.events}
+              renderItem={({ item }) => (
+                <Text style={styles.eventsText}>{this.state.events.length > 1 && <Text>•</Text>} {item}</Text>
+              )}
+              keyExtractor={item => item}
+            />
+          </View>}
+          
+          {!isSchoolDay && 
+          <View style={styles.noClassesContainer}>
             <Icon name="ios-school" size={105} color='#bbbbbb' />
-            <Text style={{color: '#bbbbbb', fontSize: 20}}>No Classes</Text>
+            <Text style={styles.noClassesText}>No Classes</Text>
           </View>}
 
-          {(this.state.day === 'Day 1' || this.state.day === 'Day 2') &&
+          {(isSchoolDay) &&
           <View>
             <CollapsibleView 
               courseColor={block1.courseColor}
@@ -229,6 +231,28 @@ const styles = StyleSheet.create({
   },
   scrollContentStyle: {
     height: '100%'
+  },
+  eventsContainer: {
+    width: '100%',
+    backgroundColor: '#ffccdf',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 3,
+    borderColor: '#ff778e',
+    marginBottom: 0.5
+  },
+  eventsText: {
+    paddingTop: 8,
+    paddingBottom: 8
+  },
+  noClassesContainer: {
+    height: 500,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  noClassesText: {
+    color: '#bbbbbb',
+    fontSize: 20
   }
 });
 

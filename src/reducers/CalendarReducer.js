@@ -9,7 +9,7 @@ const INITIAL_STATE = {
     {date: "06-01-2019", day: 'Weekend', events: []},
 
     {date: "07-01-2019", day: 'Day 1', events: ['School Re-Opens']},
-    {date: "08-01-2019", day: 'Day 2', events: ['Collab / Flex', 'Gr.11 CLE 1:50 PM in Auditorium', 'Gr.9 Career 1:50 PM in Cafeteria']},
+    {date: "08-01-2019", day: 'Day 2', events: ['Collab / Flex', 'Gr. 11 CLE 1:50 PM in Auditorium', 'Gr. 9 Career 1:50 PM in Cafeteria']},
     {date: "09-01-2019", day: 'Day 1', events: ['Bulldog Classic']},
     {date: "10-01-2019", day: 'Day 2', events: ['Bulldog Classic', 'P/T Comf - Reg Opens']},
     {date: "11-01-2019", day: 'Day 1', events: ['Bulldog Classic']},
@@ -26,7 +26,7 @@ const INITIAL_STATE = {
     {date: "19-01-2019", day: 'Weekend', events: []},
     {date: "20-01-2019", day: 'Weekend', events: []},
 
-    {date: "21-01-2019", day: 'Day 1', events: ['Flex Day', 'Assemblies & Tutorials', 'Gr.11 Numeracy Assessment']},
+    {date: "21-01-2019", day: 'Day 1', events: ['Flex Day', 'Assemblies & Tutorials', 'Gr. 11 Numeracy Assessment']},
     {date: "22-01-2019", day: 'Day 2', events: ['Evaluation Week', '2 - 34']},
     {date: "23-01-2019", day: 'Day 1', events: ['Evaluation Week', '1 - 34']},
     {date: "24-01-2019", day: 'Day 2', events: ['Evaluation Week', '2 - 12']},
@@ -46,7 +46,7 @@ const INITIAL_STATE = {
 
     {date: "04-02-2019", day: 'Day 1', events: []},
     {date: "05-02-2019", day: 'Day 2', events: ['One Act Plays 7:00 PM in Auditorium']},
-    {date: "06-02-2019", day: 'Day 1', events: ['Collab / Flex', '1:50 PM - Gr.8 in Cafeteria, Gr.10 in Auditorium', 'One Act Plays 7:00 PM in Auditorium']},
+    {date: "06-02-2019", day: 'Day 1', events: ['Collab / Flex', '1:50 PM - Gr. 8 in Cafeteria, Gr. 10 in Auditorium', 'One Act Plays 7:00 PM in Auditorium']},
     {date: "07-02-2019", day: 'Day 2', events: ['American Math Competition 10A', 'One Act Plays 7:00 PM in Auditorium']},
     {date: "08-02-2019", day: 'Day 1', events: ['One Act Plays 7:00 PM in Auditorium']},
 
@@ -92,7 +92,7 @@ const INITIAL_STATE = {
     {date: "11-03-2019", day: 'Day 2', events: []},
     {date: "12-03-2019", day: 'Day 1', events: ['District International Choral Festival 6:00 - 8:30 PM in Auditorium']},
     {date: "13-03-2019", day: 'Day 2', events: []},
-    {date: "14-03-2019", day: 'Day 1', events: ['Term 2 Report Cards Available Online', 'Gr.12 Assembly Last Half Block 1-3']},
+    {date: "14-03-2019", day: 'Day 1', events: ['Term 2 Report Cards Available Online', 'Gr. 12 Assembly Last Half Block 1-3']},
     {date: "15-03-2019", day: 'Day 2', events: ['Last Day before Break']},
 
     {date: "16-03-2019", day: 'Weekend', events: []},
@@ -126,7 +126,7 @@ const INITIAL_STATE = {
     {date: "07-04-2019", day: 'Weekend', events: []},
 
     {date: "08-04-2019", day: 'Day 2', events: []},
-    {date: "09-04-2019", day: 'Day 1', events: ['Collab / Flex', 'Gr.8 Assembly 1:50 PM in Auditorium']},
+    {date: "09-04-2019", day: 'Day 1', events: ['Collab / Flex', 'Gr. 8 Assembly 1:50 PM in Auditorium']},
     {date: "10-04-2019", day: 'Day 2', events: []},
     {date: "11-04-2019", day: 'Day 1', events: ['FGH Math Competition']},
     {date: "12-04-2019", day: 'Day 2', events: []},
@@ -165,7 +165,7 @@ const INITIAL_STATE = {
     {date: "07-05-2019", day: 'Day 2', events: ['Collab / Flex', 'Spring Play Matinee 7:00 PM in Auditorium']},
     {date: "08-05-2019", day: 'Day 1', events: ['Spring Play Matinee 7:00 PM in Auditorium']},
     {date: "09-05-2019", day: 'Day 2', events: ['Spring Play Matinee 7:00 PM in Auditorium']},
-    {date: "10-05-2019", day: 'Day 1', events: ['Gr.8 Outdoor Track Meet in the Morning', 'Spring Play Matinee 7:00 PM in Auditorium']},
+    {date: "10-05-2019", day: 'Day 1', events: ['Gr. 8 Outdoor Track Meet in the Morning', 'Spring Play Matinee 7:00 PM in Auditorium']},
 
     {date: "11-05-2019", day: 'Weekend', events: []},
     {date: "12-05-2019", day: 'Weekend', events: []},
@@ -219,7 +219,7 @@ const INITIAL_STATE = {
     {date: "18-06-2019", day: 'Day 2', events: []},
     {date: "19-06-2019", day: 'Day 1', events: []},
     {date: "20-06-2019", day: 'Day 2', events: ['Term 3 Ends']},
-    {date: "21-06-2019", day: 'Day 1', events: ['Gr.10 Numeracy Assessment']},
+    {date: "21-06-2019", day: 'Day 1', events: ['Gr. 10 Numeracy Assessment']},
 
     {date: "22-06-2019", day: 'Weekend', events: []},
     {date: "23-06-2019", day: 'Weekend', events: []},
