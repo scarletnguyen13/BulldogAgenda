@@ -129,7 +129,7 @@ class TimetableDailyScreen extends Component {
           _onChangeDay={(day, events) => this._onChangeDay(day, events)}/>
         
         <ScrollView 
-          style={styles.scrollStyle} scrollEnabled={isSchoolDay}>
+          style={styles.scrollStyle}>
           
           {(this.state.events.length > 0) && 
           <View style={styles.eventsContainer}>

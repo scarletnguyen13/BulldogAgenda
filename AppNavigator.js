@@ -15,6 +15,7 @@ import AddButton from './src/components/Buttons/AddButton';
 import IconButton from './src/components/Buttons/IconButton';
 import NewsfeedScreen from './src/screens/BottomTab/NewsfeedScreen';
 import AddTodoScreen from './src/screens/BottomTab/AddTodoScreen';
+import NotificationIconBadge from './src/components/NotificationIconBadge';
 
 const timetableTopTab = createMaterialTopTabNavigator(
   {
@@ -70,7 +71,8 @@ const TabNavigator = createBottomTabNavigator(
   AddButton: {
 		screen: () => null,
 		navigationOptions: ({ navigation }) => ({
-			tabBarIcon: (<AddButton onPress={() => navigation.navigate('TodoDetails', {
+			tabBarIcon: (
+      <AddButton onPress={() => navigation.navigate('TodoDetails', {
         todoInfo: {
           id: null,
           description: '',
@@ -89,12 +91,15 @@ const TabNavigator = createBottomTabNavigator(
 	},
   Notification: {
     screen: NotificationScreen,
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-notifications" size={35} color={tintColor} />
-      )
+        <NotificationIconBadge tintColor={tintColor} />
+      ),
+      tabBarOnPress: ({ previousScene, scene, jumpToIndex }) => {
+        navigation.navigate('Notification');
+      }
     }
-  },
+  )},
   Newsfeed: {
     screen: NewsfeedScreen,
     navigationOptions: {
@@ -111,7 +116,7 @@ const TabNavigator = createBottomTabNavigator(
     inactiveTintColor: 'grey',
     activeBackgroundColor: '#d9d9d9'
   },
-  initialRouteName: 'Timetable'
+  initialRouteName: 'Notification'
 }
 );
 
@@ -152,7 +157,7 @@ const AppNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: "Settings",
+    initialRouteName: "Main",
     transitionConfig : () => ({
       transitionSpec: {
         duration: 0

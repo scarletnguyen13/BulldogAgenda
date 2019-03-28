@@ -1,24 +1,43 @@
 import React, { Component } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
-import Images from '../../../assets/images/index';
-import BlueButton from '../../components/Buttons/BlueButton';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import NotificationItem from '../../components/Items/NotificationItem';
 
 class NotificationScreen extends Component {
   render() {
     return (
-      <View style={styles.welcomeView}>
-        
+      <View style={styles.container}>
+        <View style={styles.labelContainer}>
+          <Text style={styles.label}>Notifications</Text>
+        </View>
+        <ScrollView style={{width: '100%'}}>
+          <NotificationItem />
+          <NotificationItem />
+          <NotificationItem />
+          <NotificationItem />
+          <NotificationItem />
+          <NotificationItem />
+          <NotificationItem />
+        </ScrollView>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  welcomeView: {
+  container: {
     flex: 1, 
     flexDirection: 'column', 
-    alignItems: "center", 
-    justifyContent: "center"
+    alignItems: "center"
+  },
+  labelContainer: {
+    width: '100%',
+    padding: 15,
+    borderBottomColor: '#bbbbbb',
+    borderBottomWidth: 1
+  },
+  label: {
+    fontWeight: 'bold', 
+    fontSize: 15
   }
 });
 
