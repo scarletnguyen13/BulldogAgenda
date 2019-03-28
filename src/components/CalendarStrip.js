@@ -17,6 +17,10 @@ class CalendarStrip extends Component {
     this.changeContent = this.changeContent.bind(this);
   }
 
+  componentDidMount() {
+    this.changeContent(this.props.currentDate);
+  }
+
   prevDate = () => {
     const prevDate = moment(this.state.currentDate).subtract(1, 'days').toDate();
     this.setState({ currentDate: prevDate });

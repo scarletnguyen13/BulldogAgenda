@@ -1,5 +1,121 @@
 const INITIAL_STATE = {
   calendar: [
+    {date: "01-01-2019", day: 'Break'},
+    {date: "02-01-2019", day: 'Break'},
+    {date: "03-01-2019", day: 'Break'},
+    {date: "04-01-2019", day: 'Break'},
+    
+    {date: "05-01-2019", day: 'Weekend'},
+    {date: "06-01-2019", day: 'Weekend'},
+
+    {date: "07-01-2019", day: 'Day 1', events: ['School Re-Opens']},
+    {date: "08-01-2019", day: 'Day 2', events: ['Collab / Flex', 'Gr.11 CLE 1:50 PM in Auditorium', 'Gr.9 Career 1:50 PM in Cafeteria']},
+    {date: "09-01-2019", day: 'Day 1', events: ['Bulldog Classic']},
+    {date: "10-01-2019", day: 'Day 2', events: ['Bulldog Classic', 'P/T Comf - Reg Opens']},
+    {date: "11-01-2019", day: 'Day 1', events: ['Bulldog Classic']},
+    
+    {date: "12-01-2019", day: 'Weekend'},
+    {date: "13-01-2019", day: 'Weekend'},
+
+    {date: "14-01-2019", day: 'Day 2'},
+    {date: "15-01-2019", day: 'Day 1'},
+    {date: "16-01-2019", day: 'Day 2'},
+    {date: "17-01-2019", day: 'Day 1', events: ['Early Dismissal 1:30 PM', 'Parent — Teacher Conference']},
+    {date: "18-01-2019", day: 'Day 2', events: ['Collab']},
+
+    {date: "19-01-2019", day: 'Weekend'},
+    {date: "20-01-2019", day: 'Weekend'},
+
+    {date: "21-01-2019", day: 'Day 1', events: ['Flex Day', 'Assemblies & Tutorials', 'Gr.11 Numeracy Assessment']},
+    {date: "22-01-2019", day: 'Day 2', events: ['Evaluation Week', '2 - 34']},
+    {date: "23-01-2019", day: 'Day 1', events: ['Evaluation Week', '1 - 34']},
+    {date: "24-01-2019", day: 'Day 2', events: ['Evaluation Week', '2 - 12']},
+    {date: "25-01-2019", day: 'Day 1', events: ['Evaluation Week', '1 - 12']},
+
+    {date: "26-01-2019", day: 'Weekend'},
+    {date: "27-01-2019", day: 'Weekend'},
+    
+    {date: "28-01-2019", day: 'Day Off', events: ['PRO-D DAY']},
+    {date: "29-01-2019", day: 'Day 1', events: ['Rotation #3 —— 2143']},
+    {date: "30-01-2019", day: 'Day 2'},
+    {date: "31-01-2019", day: 'Day 1'},
+    {date: "01-02-2019", day: 'Day 2'},
+    
+    {date: "02-02-2019", day: 'Weekend'},
+    {date: "03-02-2019", day: 'Weekend'},
+
+    {date: "04-02-2019", day: 'Day 1'},
+    {date: "05-02-2019", day: 'Day 2', events: ['One Act Plays 7:00 PM in Auditorium']},
+    {date: "06-02-2019", day: 'Day 1', events: ['Collab / Flex', '1:50 PM - Gr.8 in Cafeteria, Gr.10 in Auditorium', 'One Act Plays 7:00 PM in Auditorium']},
+    {date: "07-02-2019", day: 'Day 2', events: ['American Math Competition 10A', 'One Act Plays 7:00 PM in Auditorium']},
+    {date: "08-02-2019", day: 'Day 1', events: ['One Act Plays 7:00 PM in Auditorium']},
+
+    {date: "09-02-2019", day: 'Weekend'},
+    {date: "10-02-2019", day: 'Weekend'},
+
+    {date: "11-02-2019", day: 'Day 2'},
+    {date: "12-02-2019", day: 'Day 1'},
+    {date: "13-02-2019", day: 'Day 2', events: ['American Math Competition 12B']},
+    {date: "14-02-2019", day: 'Day 1'},
+    {date: "15-02-2019", day: 'Day Off', events: ['PRO-D DAY']},
+
+    {date: "16-02-2019", day: 'Weekend'},
+    {date: "17-02-2019", day: 'Weekend'},
+
+    {date: "18-02-2019", day: 'Day Off', events: ['Holiday: Family Day']},
+    {date: "19-02-2019", day: 'Day 2', events: ['Cdn. National Math Competition 8']},
+    {date: "20-02-2019", day: 'Day 1', events: ['Canadian Computing Competition 8:15 AM in Rm. 109']},
+    {date: "21-02-2019", day: 'Day 2'},
+    {date: "22-02-2019", day: 'Day 1'},
+
+    {date: "23-02-2019", day: 'Weekend'},
+    {date: "24-02-2019", day: 'Weekend'},
+
+    {date: "25-02-2019", day: 'Day 2'},
+    {date: "26-02-2019", day: 'Day 1'},
+    {date: "27-02-2019", day: 'Day 2', events: ['PCF Math Competition']},
+    {date: "28-02-2019", day: 'Day 1', events: ['Jazz Caberet 7:00 PM in Cafeteria']},
+    {date: "01-03-2019", day: 'Day 2'},
+    
+    {date: "02-03-2019", day: 'Weekend'},
+    {date: "03-03-2019", day: 'Weekend'},
+
+    {date: "04-03-2019", day: 'Day 1'},
+    {date: "05-03-2019", day: 'Day 2', events: ['Collab / Flex', 'Term 2 Ends']},
+    {date: "06-03-2019", day: 'Day 1'},
+    {date: "07-03-2019", day: 'Day 2'},
+    {date: "08-03-2019", day: 'Day 1'},
+
+    {date: "09-03-2019", day: 'Weekend'},
+    {date: "10-03-2019", day: 'Weekend'},
+
+    {date: "11-03-2019", day: 'Day 2'},
+    {date: "12-03-2019", day: 'Day 1', events: ['District International Choral Festival 6:00 - 8:30 PM in Auditorium']},
+    {date: "13-03-2019", day: 'Day 2'},
+    {date: "14-03-2019", day: 'Day 1', events: ['Term 2 Report Cards Available Online', 'Gr.12 Assembly Last Half Block 1-3']},
+    {date: "15-03-2019", day: 'Day 2', events: ['Last Day before Break']},
+
+    {date: "16-03-2019", day: 'Weekend'},
+    {date: "17-03-2019", day: 'Weekend'},
+
+    {date: "18-03-2019", day: 'Break', events: ['Spring Break']},
+    {date: "19-03-2019", day: 'Break', events: ['Spring Break']},
+    {date: "20-03-2019", day: 'Break', events: ['Spring Break']},
+    {date: "21-03-2019", day: 'Break', events: ['Spring Break']},
+    {date: "22-03-2019", day: 'Break', events: ['Spring Break']},
+
+    {date: "23-03-2019", day: 'Weekend'},
+    {date: "24-03-2019", day: 'Weekend'},
+    
+    {date: "25-03-2019", day: 'Break', events: ['Spring Break']},
+    {date: "26-03-2019", day: 'Break', events: ['Spring Break']},
+    {date: "27-03-2019", day: 'Break', events: ['Spring Break']},
+    {date: "28-03-2019", day: 'Break', events: ['Spring Break']},
+    {date: "29-03-2019", day: 'Break', events: ['Spring Break']},
+
+    {date: "30-03-2019", day: 'Weekend'},
+    {date: "31-03-2019", day: 'Weekend'},
+
     {date: "01-04-2019", day: 'Day 1', events: ['School Re-Opens']},
     {date: "02-04-2019", day: 'Day 2'},
     {date: "03-04-2019", day: 'Day 1'},
@@ -108,10 +224,10 @@ const INITIAL_STATE = {
     {date: "22-06-2019", day: 'Weekend'},
     {date: "23-06-2019", day: 'Weekend'},
 
-    {date: "24-06-2019", day: 3, events: ['English 12 Provincials Exam 9:00 — 12:00 PM']},
-    {date: "25-06-2019", day: 3, events: ['FRAL 12 Provincials Exam 1:00 — 4:00 PM']},
-    {date: "26-06-2019", day: 3, events: ['Com 12 Provincials Exam 9:00 — 12:00 PM']},
-    {date: "27-06-2019", day: 3, events: ['Term 3 Report Card Available Online']}
+    {date: "24-06-2019", day: 'Exam', events: ['English 12 Provincials Exam 9:00 — 12:00 PM']},
+    {date: "25-06-2019", day: 'Exam', events: ['FRAL 12 Provincials Exam 1:00 — 4:00 PM']},
+    {date: "26-06-2019", day: 'Exam', events: ['Com 12 Provincials Exam 9:00 — 12:00 PM']},
+    {date: "27-06-2019", day: 'Exam', events: ['Term 3 Report Card Available Online']}
 ]}
 
 export default blockReducer = (state = INITIAL_STATE, action) => {

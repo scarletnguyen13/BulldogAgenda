@@ -3,7 +3,8 @@ function randomNumGenerator() {
 }
 
 const INITIAL_STATE = {
-  todoList: [{
+  todoList: [
+  {
     id: randomNumGenerator(),
     description: 'Lab 20A Write Up',
     dueDate: new Date(2019, 4, 16),
@@ -34,7 +35,7 @@ const INITIAL_STATE = {
     type: 0,
     priority: 0,
     reminder: 0,
-    check: true
+    check: false
   },
   {
     id: randomNumGenerator(),
@@ -42,6 +43,50 @@ const INITIAL_STATE = {
     dueDate: new Date(2019, 2, 16),
     dueTime: undefined,
     course: 3,
+    type: 0,
+    priority: 0,
+    reminder: 0,
+    check: true
+  },
+  {
+    id: randomNumGenerator(),
+    description: 'Lab 20A Write Up',
+    dueDate: new Date(2019, 4, 16),
+    dueTime: undefined,
+    course: 5,
+    type: 0,
+    priority: 0,
+    reminder: 0,
+    check: false
+  },
+  {
+    id: randomNumGenerator(),
+    description: 'Lab 20A Write Up',
+    dueDate: new Date(2019, 8, 16),
+    dueTime: undefined,
+    course: 4,
+    type: 0,
+    priority: 0,
+    reminder: 0,
+    check: true
+  },
+  {
+    id: randomNumGenerator(),
+    description: 'Lab 20A Write Up',
+    dueDate: new Date(2019, 1, 16),
+    dueTime: undefined,
+    course: 6,
+    type: 0,
+    priority: 0,
+    reminder: 0,
+    check: true
+  },
+  {
+    id: randomNumGenerator(),
+    description: 'Lab 20A Write Up',
+    dueDate: new Date(2019, 2, 16),
+    dueTime: undefined,
+    course: 7,
     type: 0,
     priority: 0,
     reminder: 0,
