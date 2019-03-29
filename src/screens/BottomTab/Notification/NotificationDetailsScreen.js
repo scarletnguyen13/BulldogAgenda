@@ -22,7 +22,7 @@ class NotificationDetailsScreen extends Component {
   render() {
     return(
       <ScrollView style={{backgroundColor: '#e5e5e5'}}>
-        <View style={{flex: 1, alignItems: 'center', marginBottom: 150}}>
+        <View style={{flex: 1, alignItems: 'center', marginBottom: 100}}>
           <View style={{width: '100%', backgroundColor: 'white', padding: 20}}>
             
             <View style={{flexDirection: 'row', marginBottom: 15}}>
