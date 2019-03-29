@@ -1,49 +1,30 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, Text, FlatList, List } from 'react-native';
+import { View, StyleSheet, ScrollView, Text, FlatList } from 'react-native';
 import CollapsibleView from '../../../components/CollapsibleView';
 import CalendarStrip from '../../../components/CalendarStrip';
-import CalendarBlock from '../../../components/Items/CalendarEventItem';
+import CalendarEventItem from '../../../components/Items/CalendarEventItem';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 import { connect } from 'react-redux';
+import {COURSE_DEFAULT_HEIGHT,
+        LUNCH_DEFAULT_HEIGHT,
+        BREAK_DEFAULT_HEIGHT,
+        BLOCK_1_START, BLOCK_1_END,
+        BREAK_START, BREAK_END,
+        BLOCK_2_START, BLOCK_2_END,
+        LUNCH_START, LUNCH_END,
+        BLOCK_3_START, BLOCK_3_END,
+        BLOCK_4_START, BLOCK_4_END,
+        EMPTY_BLOCK } from '../../../constants/dailyConstants';
  
 const moment = extendMoment(Moment)
-
-const COURSE_DEFAULT_HEIGHT = 105;
-const LUNCH_DEFAULT_HEIGHT = 80;
-const BREAK_DEFAULT_HEIGHT = 55;
-
-const block1StartTime = " 8:35 AM";
-const block1EndTime   = " 10:00 AM";
-
-const breakStartTime  = " 10:01 AM";
-const breakEndTime    = " 10:15 AM";
-
-const block2StartTime = " 10:16 AM";
-const block2EndTime   = " 11:35 AM";
-
-const lunchStartTime  = " 11:36 AM";
-const lunchEndTime    = " 12:15 PM";
-
-const block3StartTime = " 12:16 PM";
-const block3EndTime   = " 1:38 PM";
-
-const block4StartTime = " 1:39 PM";
-const block4EndTime   = " 3:03 PM";
-
-const children = (
-  <View>
-    <CalendarBlock courseColor = '#8BC34A'/>
-    <CalendarBlock courseColor = '#E91E63'/>
-    <CalendarBlock courseColor = '#FFEB3B'/>
-  </View>
-)
 
 class TimetableDailyScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      today: moment().toDate(),
       currentDate: moment().toDate(),
       currentTime: moment().format('LTS'),
       day: '',
@@ -52,8 +33,9 @@ class TimetableDailyScreen extends Component {
     this._onChangeDay = this._onChangeDay.bind(this);
   }
 
-  _onChangeDay = (day, events) => {
+  _onChangeDay = (date, day, events) => {
     this.setState({
+      currentDate: date,
       day: day,
       events: events
     })
@@ -63,46 +45,41 @@ class TimetableDailyScreen extends Component {
   componentDidMount() {
     setInterval( () => {
       this.setState({
-        currentDate: moment(new Date()),
+        today: moment(new Date()),
         currentTime : moment(new Date()).format('LT')
       })
     }, 1000)
   }
 
   render() {
-    const today = moment(this.state.currentDate).format("MM/DD/YYYY");
+    const today = moment(this.state.today).format("MM/DD/YYYY");
     const block_1_range = moment.range(
-      moment(today + block1StartTime), 
-      moment(today + block1EndTime)
+      moment(today + BLOCK_1_START), 
+      moment(today + BLOCK_1_END)
     );
     const break_range = moment.range(
-      moment(today + breakStartTime), 
-      moment(today + breakEndTime)
+      moment(today + BREAK_START), 
+      moment(today + BREAK_END)
     );
     const block_2_range = moment.range(
-      moment(today + block2StartTime), 
-      moment(today + block2EndTime)
+      moment(today + BLOCK_2_START), 
+      moment(today + BLOCK_2_END)
     );
     const lunch_range = moment.range(
-      moment(today + lunchStartTime), 
-      moment(today + lunchEndTime)
+      moment(today + LUNCH_START), 
+      moment(today + LUNCH_END)
     );
     const block_3_range = moment.range(
-      moment(today + block3StartTime), 
-      moment(today + block3EndTime)
+      moment(today + BLOCK_3_START), 
+      moment(today + BLOCK_3_END)
     );
     const block_4_range = moment.range(
-      moment(today + block4StartTime), 
-      moment(today + block4EndTime)
+      moment(today + BLOCK_4_START), 
+      moment(today + BLOCK_4_END)
     );
 
     const todayCurrentTime = moment(today + " " + this.state.currentTime);
-
     let block1, block2, block3, block4;
-    const emptyBlock = {
-      courseBlock: '', courseName: '', courseRoom: '', 
-      courseTeacher: '', courseColor: '#C6C3C3', courseNotes: ''
-    }
     if (this.state.day === 'Day 1') { 
       block1 = this.props.blocks.block1_1;
       block2 = this.props.blocks.block1_2;
@@ -114,19 +91,25 @@ class TimetableDailyScreen extends Component {
       block3 = this.props.blocks.block2_3;
       block4 = this.props.blocks.block2_4;
     } else {
-      block1 = emptyBlock;
-      block2 = emptyBlock;
-      block3 = emptyBlock;
-      block4 = emptyBlock;
+      block1 = EMPTY_BLOCK;
+      block2 = EMPTY_BLOCK;
+      block3 = EMPTY_BLOCK;
+      block4 = EMPTY_BLOCK;
     }
     
     const isSchoolDay = this.state.day === 'Day 1' || this.state.day === 'Day 2';
 
+    const values = Object.values(this.props.blocks);
+    let COURSES = [] 
+    values.forEach(blockObj => {
+      COURSES.push(blockObj.courseName);
+    });
+
     return (
       <View style={styles.welcomeView}>
         <CalendarStrip 
-          currentDate={this.state.currentDate}
-          _onChangeDay={(day, events) => this._onChangeDay(day, events)}/>
+          today={this.state.today}
+          _onChangeDay={(date, day, events) => this._onChangeDay(date, day, events)}/>
         
         <ScrollView 
           style={styles.scrollStyle}>
@@ -159,7 +142,17 @@ class TimetableDailyScreen extends Component {
               isVisible={block_1_range.contains(todayCurrentTime)}
               expand={true}
               borderWidth={10}
-              children={children}/>
+              children={
+                this.props.todos.todoList.map((todo) => {
+                  if (moment(todo.dueDate).format('DD-MM-YYYY') === moment(this.state.currentDate).format('DD-MM-YYYY') && COURSES[todo.course] === block1.courseName) {
+                    return (
+                      <CalendarEventItem courseColor={block1.courseColor} content={todo.description}/>
+                    )
+                  } else {
+                    return null;
+                  }
+                })
+              }/>
 
             <CollapsibleView 
               courseColor='#3E3E3E'
@@ -168,7 +161,7 @@ class TimetableDailyScreen extends Component {
               isVisible={break_range.contains(todayCurrentTime)}
               expand={true}
               borderWidth={10}
-              children={children}/>
+              children={<View/>}/>
 
             <CollapsibleView 
               courseColor={block2.courseColor}
@@ -179,7 +172,17 @@ class TimetableDailyScreen extends Component {
               isVisible={block_2_range.contains(todayCurrentTime)}
               expand={true}
               borderWidth={10}
-              children={children}/>
+              children={
+                this.props.todos.todoList.map((todo) => {
+                  if (moment(todo.dueDate).format('DD-MM-YYYY') === moment(this.state.currentDate).format('DD-MM-YYYY') && COURSES[todo.course] === block2.courseName) {
+                    return (
+                      <CalendarEventItem courseColor={block2.courseColor} content={todo.description}/>
+                    )
+                  } else {
+                    return null;
+                  }
+                })
+              }/>
 
             <CollapsibleView 
               courseColor='#3E3E3E'
@@ -188,7 +191,7 @@ class TimetableDailyScreen extends Component {
               isVisible={lunch_range.contains(todayCurrentTime)}
               expand={true}
               borderWidth={10}
-              children={children}/>
+              children={<View/>}/>
 
             <CollapsibleView 
               courseColor={block3.courseColor}
@@ -199,7 +202,17 @@ class TimetableDailyScreen extends Component {
               isVisible={block_3_range.contains(todayCurrentTime)}
               expand={true}
               borderWidth={10}
-              children={children}/>
+              children={
+                this.props.todos.todoList.map((todo) => {
+                  if (moment(todo.dueDate).format('DD-MM-YYYY') === moment(this.state.currentDate).format('DD-MM-YYYY') && COURSES[todo.course] === block3.courseName) {
+                    return (
+                      <CalendarEventItem courseColor={block3.courseColor} content={todo.description}/>
+                    )
+                  } else {
+                    return null;
+                  }
+                })
+              }/>
 
             <CollapsibleView 
               courseColor={block4.courseColor}
@@ -210,7 +223,17 @@ class TimetableDailyScreen extends Component {
               isVisible={block_4_range.contains(todayCurrentTime)}
               expand={true}
               borderWidth={10}
-              children={children}/>
+              children={
+                this.props.todos.todoList.map((todo) => {
+                  if (moment(todo.dueDate).format('DD-MM-YYYY') === moment(this.state.currentDate).format('DD-MM-YYYY') && COURSES[todo.course] === block4.courseName) {
+                    return (
+                      <CalendarEventItem courseColor={block4.courseColor} content={todo.description}/>
+                    )
+                  } else {
+                    return null;
+                  }
+                })
+              }/>
           </View>
           }
         </ScrollView>
@@ -238,7 +261,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 3,
-    borderColor: '#ff778e',
+    borderColor: 'red',
     marginBottom: 0.5
   },
   eventsText: {
@@ -257,8 +280,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  const { blocks } = state
-  return { blocks }
+  const { blocks, todos } = state
+  return { blocks, todos }
 };
 
 export default connect(mapStateToProps)(TimetableDailyScreen);

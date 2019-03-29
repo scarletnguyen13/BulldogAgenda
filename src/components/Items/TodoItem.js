@@ -48,7 +48,7 @@ class TodoItem extends Component {
             todoInfo: this.props.item
           })}}>
           <View style={styles.textContainer}>
-            <Text style={crossedText(this.state.check)}>{this.props.item.description}</Text>
+            <View style={{width: '60%'}}><Text style={crossedText(this.state.check)}>{this.props.item.description}</Text></View>
             <Text style={[{color: '#ff6b00'}, crossedText(this.state.check)]}>{moment(this.props.item.dueDate).format('ddd, MMM DD')}</Text>
           </View>
           <View style={styles.textContainer}>
@@ -64,7 +64,6 @@ class TodoItem extends Component {
 const styles = StyleSheet.create({
   outerContainer: {
     width: '100%',
-    height: 70,
     borderWidth: 1,
     borderColor: 'white',
     alignItems: 'center',
@@ -88,10 +87,11 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     width: '100%',
-    height: '50%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 2,
+    marginTop: 2
   },
   courseAndTypeTextColor: {
     color: '#6f6f6f'

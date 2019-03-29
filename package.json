@@ -21,6 +21,7 @@
     "react-native-modal": "^9.0.0",
     "react-native-paper": "^2.14.0",
     "react-native-picker-module": "^0.1.2",
+    "react-native-read-more-text": "^1.1.0",
     "react-native-vector-icons": "^6.4.2",
     "react-navigation": "^3.4.1",
     "react-navigation-material-bottom-tabs": "^1.0.0",

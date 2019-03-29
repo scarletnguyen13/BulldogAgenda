@@ -20,7 +20,6 @@ class AgendaScreen extends Component {
             expand={false}
             children={
               this.props.todos.todoList.map((item) => {
-                console.log(item.check);
                 if (item.check === true) {
                   return (
                     <TodoItem 
@@ -40,7 +39,6 @@ class AgendaScreen extends Component {
             expand={false}
             children={
               this.props.todos.todoList.map((item) => {
-                console.log(item.check);
                 if (item.check === false) {
                   return (
                     <TodoItem 

@@ -9,7 +9,7 @@ class NotificationItem extends Component {
     this.isRead =  this.isRead.bind(this);
   }
 
-  isRead = () => { this.setState({ read: true }) }
+  isRead = () => { if (!this.state.setState) this.setState({ read: true }) }
 
   render() {
     return (
