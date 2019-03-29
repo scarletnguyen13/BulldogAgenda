@@ -37,12 +37,6 @@ const styles = StyleSheet.create({
   label: {
     fontWeight: 'bold', 
     fontSize: 15
-  },
-  image: {
-    width: 60,
-    height: 60,
-    borderRadius: 50,
-    backgroundColor: 'black'
   }
 });
 

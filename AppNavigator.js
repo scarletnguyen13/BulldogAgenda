@@ -117,7 +117,7 @@ const TabNavigator = createBottomTabNavigator(
     inactiveTintColor: 'grey',
     activeBackgroundColor: '#d9d9d9'
   },
-  initialRouteName: 'Newsfeed'
+  initialRouteName: 'Timetable'
 }
 );
 
@@ -159,7 +159,7 @@ const AppNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: "Main",
+    initialRouteName: "Welcome",
     transitionConfig : () => ({
       transitionSpec: {
         duration: 0

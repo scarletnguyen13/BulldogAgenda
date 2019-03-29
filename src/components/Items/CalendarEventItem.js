@@ -21,11 +21,10 @@ class CalendarEventItem extends Component {
           <View style={styles.innerCircle}/>
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.courseText}>Biology</Text>
           <Text 
             style={styles.contentText}
             onLayout = {( value ) => this.changeHeight( value.nativeEvent.layout.height )}>
-              Researching about resistance bacteria</Text>
+              {this.props.content}</Text>
         </View>
       </View>
     );
@@ -37,8 +36,8 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 15,
+    marginBottom: 15,
   },
   outerCircle: {
     width: 20,
@@ -57,14 +56,13 @@ const styles = StyleSheet.create({
   textContainer: {
     marginLeft: 35,
     width: 230,
-    height: '100%'
+    justifyContent: 'center'
   },
   courseText: {
     fontSize: 12,
     color: '#6c6c6c'
   },
   contentText: {
-    marginTop: 15,
     fontWeight: 'bold'
   }
 });

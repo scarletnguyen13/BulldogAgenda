@@ -44,7 +44,7 @@ class CalendarStrip extends Component {
       if(dateObj.date === moment(date).format('DD-MM-YYYY')) {
         let day = JSON.stringify(dateObj.day).replace(/\"/g, "");
         let events = Array.from(dateObj.events);
-        this.props._onChangeDay(day, events)
+        this.props._onChangeDay(date, day, events)
         this.setState({ day : day })
         return day
       }
