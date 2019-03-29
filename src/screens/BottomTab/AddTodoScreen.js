@@ -250,8 +250,9 @@ class AddTodoScreen extends Component {
             </View>
           </TouchableOpacity>
 
+          {(this.state.id !== null) &&
           <TouchableOpacity 
-            style={[styles.removeButtonOpacityContainer, {opacity: this.state.id === null ? 0 : 1}]}
+            style={styles.removeButtonOpacityContainer}
             onPress={() => {
               this.props.removeTodo(this.state.id), 
               this.props.navigation.navigate('Agenda')}}>
@@ -259,7 +260,7 @@ class AddTodoScreen extends Component {
               <Icon name="ios-trash" size={30} color='red' />
               <Text style={styles.removeButtonText}>REMOVE</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity>}
 
         </View>
       </ScrollView>

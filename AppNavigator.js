@@ -9,12 +9,14 @@ import CourseDetailsScreen from './src/screens/Settings/CourseDetailsScreen';
 
 import AgendaScreen from './src/screens/BottomTab/AgendaScreen';
 import TimetableDailyScreen from "./src/screens/BottomTab/Timetable/TimetableDailyScreen";
-import NotificationScreen from "./src/screens/BottomTab/NotificationScreen";
+import NotificationScreen from "./src/screens/BottomTab/Notification/NotificationScreen";
 import CalendarScreen from "./src/screens/BottomTab/Timetable/CalendarScreen";
 import AddButton from './src/components/Buttons/AddButton';
 import IconButton from './src/components/Buttons/IconButton';
 import NewsfeedScreen from './src/screens/BottomTab/NewsfeedScreen';
 import AddTodoScreen from './src/screens/BottomTab/AddTodoScreen';
+import NotificationIconBadge from './src/components/NotificationIconBadge';
+import NotificationDetailsScreen from './src/screens/BottomTab/Notification/NotificationDetailsScreen';
 
 const timetableTopTab = createMaterialTopTabNavigator(
   {
@@ -70,7 +72,8 @@ const TabNavigator = createBottomTabNavigator(
   AddButton: {
 		screen: () => null,
 		navigationOptions: ({ navigation }) => ({
-			tabBarIcon: (<AddButton onPress={() => navigation.navigate('TodoDetails', {
+			tabBarIcon: (
+      <AddButton onPress={() => navigation.navigate('TodoDetails', {
         todoInfo: {
           id: null,
           description: '',
@@ -89,12 +92,15 @@ const TabNavigator = createBottomTabNavigator(
 	},
   Notification: {
     screen: NotificationScreen,
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-notifications" size={35} color={tintColor} />
-      )
+        <NotificationIconBadge tintColor={tintColor} />
+      ),
+      tabBarOnPress: ({ previousScene, scene, jumpToIndex }) => {
+        navigation.navigate('Notification');
+      }
     }
-  },
+  )},
   Newsfeed: {
     screen: NewsfeedScreen,
     navigationOptions: {
@@ -111,7 +117,7 @@ const TabNavigator = createBottomTabNavigator(
     inactiveTintColor: 'grey',
     activeBackgroundColor: '#d9d9d9'
   },
-  initialRouteName: 'Timetable'
+  initialRouteName: 'Notification'
 }
 );
 
@@ -121,6 +127,7 @@ const AppNavigator = createStackNavigator(
     Settings: SettingsScreen,
     CourseDetails: CourseDetailsScreen,
     TodoDetails: AddTodoScreen,
+    NotificationDetails: NotificationDetailsScreen,
     Main: {
       screen: TabNavigator,
       navigationOptions: ({ navigation }) => ({
@@ -152,7 +159,7 @@ const AppNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: "Settings",
+    initialRouteName: "Main",
     transitionConfig : () => ({
       transitionSpec: {
         duration: 0
