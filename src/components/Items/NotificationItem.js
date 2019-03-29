@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-
-const testText = 'You have a new friend suggestion: Nu NuYou have a new friend suggestion: Nu NuYou have a new friend suggestion: Nu NuYou have a new friend suggestion: Nu NuYou have a new friend suggestion: Nu NuYou have a new friend suggestion: Nu NuYou have a new friend suggestion: Nu NuYou have a new friend suggestion: Nu NuYou have a new friend suggestion: Nu NuYou have a new friend suggestion: Nu NuYou have a new friend suggestion: Nu NuYou have a new friend suggestion: Nu NuYou have a new friend suggestion: Nu NuYou have a new friend suggestion: Nu Nu'
+import { withNavigation } from 'react-navigation';
 
 class NotificationItem extends Component {
   constructor(props) {
@@ -14,7 +13,10 @@ class NotificationItem extends Component {
 
   render() {
     return (
-      <TouchableOpacity onPress={this.isRead} activeOpacity={0.7}>
+      <TouchableOpacity onPress={() => {
+          this.isRead();
+          this.props.navigation.navigate('NotificationDetails');
+        }} activeOpacity={0.7}>
         <View style={[styles.outerContainer, {backgroundColor: this.state.read ? 'white' : '#e2f1ff' }]}>
           <View style={styles.imageAndBadgeContainer}>
             <View style={styles.image} />
@@ -22,7 +24,7 @@ class NotificationItem extends Component {
           </View>
           <View style={styles.contentContainer}>
             <View style={styles.notiMessageContainer}>
-              <Text numberOfLines={3} ellipsizeMode="tail">{testText}</Text>
+              <Text numberOfLines={3} ellipsizeMode="tail"><Text style={{fontWeight: 'bold'}}>Bulldog Software Co. </Text>posted a new status on the wall</Text>
             </View>
             <Text style={[styles.timeText, { color: this.state.read ? 'black' : '#0c66f7' }]}>41 minutes ago</Text>
           </View>
@@ -81,4 +83,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NotificationItem;
+export default withNavigation(NotificationItem);

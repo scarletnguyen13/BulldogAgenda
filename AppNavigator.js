@@ -9,13 +9,14 @@ import CourseDetailsScreen from './src/screens/Settings/CourseDetailsScreen';
 
 import AgendaScreen from './src/screens/BottomTab/AgendaScreen';
 import TimetableDailyScreen from "./src/screens/BottomTab/Timetable/TimetableDailyScreen";
-import NotificationScreen from "./src/screens/BottomTab/NotificationScreen";
+import NotificationScreen from "./src/screens/BottomTab/Notification/NotificationScreen";
 import CalendarScreen from "./src/screens/BottomTab/Timetable/CalendarScreen";
 import AddButton from './src/components/Buttons/AddButton';
 import IconButton from './src/components/Buttons/IconButton';
 import NewsfeedScreen from './src/screens/BottomTab/NewsfeedScreen';
 import AddTodoScreen from './src/screens/BottomTab/AddTodoScreen';
 import NotificationIconBadge from './src/components/NotificationIconBadge';
+import NotificationDetailsScreen from './src/screens/BottomTab/Notification/NotificationDetailsScreen';
 
 const timetableTopTab = createMaterialTopTabNavigator(
   {
@@ -126,6 +127,7 @@ const AppNavigator = createStackNavigator(
     Settings: SettingsScreen,
     CourseDetails: CourseDetailsScreen,
     TodoDetails: AddTodoScreen,
+    NotificationDetails: NotificationDetailsScreen,
     Main: {
       screen: TabNavigator,
       navigationOptions: ({ navigation }) => ({
