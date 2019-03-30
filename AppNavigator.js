@@ -1,4 +1,6 @@
 import React from 'react';
+import { StyleSheet, Text } from 'react-native';
+import IconBadge from 'react-native-icon-badge';
 import { createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator } from "react-navigation";
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
@@ -15,8 +17,9 @@ import AddButton from './src/components/Buttons/AddButton';
 import IconButton from './src/components/Buttons/IconButton';
 import NewsfeedScreen from './src/screens/BottomTab/NewsfeedScreen';
 import AddTodoScreen from './src/screens/BottomTab/AddTodoScreen';
-import NotificationIconBadge from './src/components/NotificationIconBadge';
 import NotificationDetailsScreen from './src/screens/BottomTab/Notification/NotificationDetailsScreen';
+
+let badgeCount = 7;
 
 const timetableTopTab = createMaterialTopTabNavigator(
   {
@@ -39,7 +42,7 @@ const timetableTopTab = createMaterialTopTabNavigator(
         backgroundColor: 'white'
       }
     },
-    initialRouteName: 'Today',
+    initialRouteName: 'Calendar',
     transitionConfig : () => ({
       transitionSpec: {
         duration: 0
@@ -51,7 +54,7 @@ const timetableTopTab = createMaterialTopTabNavigator(
 
 
 
-const TabNavigator = createBottomTabNavigator(
+export const TabNavigator = createBottomTabNavigator(
 {
   Agenda: {
     screen: AgendaScreen,
@@ -94,11 +97,17 @@ const TabNavigator = createBottomTabNavigator(
     screen: NotificationScreen,
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ tintColor }) => (
-        <NotificationIconBadge tintColor={tintColor} />
+        <IconBadge
+          MainElement = { <Icon name="ios-notifications" size={35} color={tintColor} /> }
+          BadgeElement = { <Text style={styles.badgeElement}>{badgeCount}</Text> }
+          IconBadgeStyle = {styles.iconBadge}
+          Hidden={badgeCount === 0}
+        />
       ),
       tabBarOnPress: ({ previousScene, scene, jumpToIndex }) => {
+        badgeCount = 0;
         navigation.navigate('Notification');
-      }
+      },
     }
   )},
   Newsfeed: {
@@ -159,7 +168,7 @@ const AppNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: "Welcome",
+    initialRouteName: "Main",
     transitionConfig : () => ({
       transitionSpec: {
         duration: 0
@@ -167,6 +176,21 @@ const AppNavigator = createStackNavigator(
     })
   }
 );
+
+const styles = StyleSheet.create({
+  badgeElement: {
+    color:'#FFFFFF', 
+    fontSize: 11
+  },
+  iconBadge: {
+    width:20,
+    height:20,
+    borderRadius: 20,
+    marginRight: -8,
+    marginTop: -3,
+    backgroundColor: 'red'
+  }
+});
 
 function checkDefaultDaysLater() {
   const today = new Date()

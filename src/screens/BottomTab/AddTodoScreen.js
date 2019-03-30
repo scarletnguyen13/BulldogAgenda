@@ -231,18 +231,20 @@ class AddTodoScreen extends Component {
 
           <TouchableOpacity 
             onPress={() => {
-              this.props.addTodo({
-                id: this.state.id === null ? randomNumGenerator() : this.state.id,
-                description: this.state.description,
-                course: this.state.selectedCourse,
-                type: this.state.selectedTodoType,
-                dueDate: this.state.selectedDate,
-                dueTime: this.state.selectedTime,
-                priority: this.state.selectedPriority,
-                reminder: this.state.selectedReminder,
-                additionalNotes: this.state.additionalNotes,
-                check: this.state.check === null ? true : this.state.check
-              }),
+              if (this.state.description.length > 0 && this.state.selectedCourse > -1) {
+                this.props.addTodo({
+                  id: this.state.id === null ? randomNumGenerator() : this.state.id,
+                  description: this.state.description,
+                  course: this.state.selectedCourse,
+                  type: this.state.selectedTodoType,
+                  dueDate: this.state.selectedDate,
+                  dueTime: this.state.selectedTime,
+                  priority: this.state.selectedPriority,
+                  reminder: this.state.selectedReminder,
+                  additionalNotes: this.state.additionalNotes,
+                  check: this.state.check === null ? true : this.state.check
+                })
+              }
               this.props.navigation.navigate('Agenda')
             }}>
             <View style={styles.addButton}>

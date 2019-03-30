@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native';
 import NotificationItem from '../../../components/Items/NotificationItem';
+import { connect } from 'react-redux';
 
 class NotificationScreen extends Component {
+  componentDidMount() {
+    Object.values(this.props.notifications.notificationsList).map(notification => {
+      console.log(notification.user.name);
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -10,13 +17,15 @@ class NotificationScreen extends Component {
           <Text style={styles.label}>Notifications</Text>
         </View>
         <ScrollView style={{width: '100%'}}>
-          <NotificationItem />
-          <NotificationItem />
-          <NotificationItem />
-          <NotificationItem />
-          <NotificationItem />
-          <NotificationItem />
-          <NotificationItem />
+          <FlatList
+            data={Object.values(this.props.notifications.notificationsList)}
+            renderItem={({ item }) => {
+              return (
+                <NotificationItem notification={item}/>
+              )
+            }}
+            keyExtractor={(item) => {item}}
+          />
         </ScrollView>
       </View>
     );
@@ -41,4 +50,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NotificationScreen;
+const mapStateToProps = (state) => {
+  const { notifications } = state
+  return { notifications }
+};
+
+export default connect(mapStateToProps)(NotificationScreen);

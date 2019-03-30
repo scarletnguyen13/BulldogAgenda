@@ -3,34 +3,57 @@ import { View, StyleSheet, Text, ScrollView, FlatList } from 'react-native';
 import CalendarEventItem from '../../../components/Items/CalendarEventItem';
 import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
-import { connect } from 'react-redux';
+import firebase from 'react-native-firebase';
 
 class CalendarScreen extends Component {
   constructor(props) {
     super(props);
+    this.ref = firebase.firestore().collection('calendar');
     this.state = {
       selected: moment(new Date()).format('YYYY-MM-DD'),
+      calendar: [],
       events: [],
-      day: ''
+      day: '',
     };
     this.onDayPress = this.onDayPress.bind(this);
   }
-  
-  componentWillMount() {
-    this.onDayPress(this.state.selected);
+
+  componentWillUnmount() {
+    this.unsubscribe = null;
+  }
+
+  componentDidMount() {
+    this.unsubscribe = this.ref.onSnapshot((querySnapshot) => {
+      const calendarList = [];
+      querySnapshot.forEach((doc) => {
+        calendarList.push(doc.data());
+      });
+      this.setState({ calendar: calendarList })
+      this.initEvents(calendarList, this.state.selected);
+    }); 
   }
 
   onDayPress(date) {
-    console.log(date.dateString)
     this.setState({
       selected: date.dateString,
     });
 
-    this.props.calendar.calendar.map(dateObj => { 
+    this.state.calendar.map(dateObj => { 
       if(dateObj.date === moment(date.dateString).format('DD-MM-YYYY')) {
         this.setState({ 
-          day: JSON.stringify(dateObj.day).replace(/\"/g, ""),
-          events: Array.from(dateObj.events) 
+          day: dateObj.day,
+          events: dateObj.events
+        })
+      }
+    })
+  }
+
+  initEvents(calendar, date) {
+    calendar.map(dateObj => { 
+      if(dateObj.date === moment(date.dateString).format('DD-MM-YYYY')) {
+        this.setState({ 
+          day: dateObj.day,
+          events: dateObj.events
         })
       }
     })
@@ -53,7 +76,7 @@ class CalendarScreen extends Component {
               </View>
               <Text style={styles.eventText}>{this.state.events.length > 1 ? 'Events' : 'Event'}</Text>
             </View>
-            <View style={{width: 90, height: 30, justifyContent: 'center', alignItems: 'center', backgroundColor: '#e6e6e6', marginRight: 30, borderRadius: 100}}><Text style={{color: 'black'}}>{this.state.day}</Text></View>
+            <View style={{width: 90, height: 30, justifyContent: 'center', alignItems: 'center', backgroundColor: '#e6e6e6', marginRight: 30, borderRadius: 100}}><Text>{this.state.day}</Text></View>
           </View>
 
           <ScrollView>
@@ -114,9 +137,4 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = (state) => {
-  const { calendar } = state
-  return { calendar }
-};
-
-export default connect(mapStateToProps)(CalendarScreen);
+export default CalendarScreen;

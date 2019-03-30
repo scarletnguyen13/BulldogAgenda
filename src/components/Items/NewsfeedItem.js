@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ReadMore from 'react-native-read-more-text';
-import { blockOfText } from '../../constants/blockOfText';
+import moment from 'moment';
 
 class NewsfeedScreen extends Component {
   constructor(props) {
@@ -47,8 +47,8 @@ class NewsfeedScreen extends Component {
         <View style={styles.headerContainer}>
           <View style={styles.image} />
           <View style={styles.headerTextContainer}>
-            <Text style={styles.nameText}>Bulldog Software Co.</Text>
-            <Text style={styles.grayText}>2 hrs</Text>
+            <Text style={styles.nameText}>{this.props.notification.user.name}</Text>
+            <Text style={styles.grayText}>{moment(this.props.notification.sentAt).fromNow()}</Text>
           </View>
         </View>
         <ReadMore
@@ -56,7 +56,7 @@ class NewsfeedScreen extends Component {
           renderTruncatedFooter={this._renderTruncatedFooter}
           renderRevealedFooter={this._renderRevealedFooter}
           onReady={this._handleTextReady}>
-          <Text style={styles.contentText} ellipsizeMode="tail">{blockOfText}</Text>
+          <Text style={styles.contentText} ellipsizeMode="tail">{this.props.notification.content}</Text>
         </ReadMore>
 
         <View style={styles.reactionContainer}>
@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     padding: 15,
-    marginBottom: 20
+    marginBottom: 20,
+    paddingRight: 55
   },
   headerContainer: {
     flexDirection: 'row', 
@@ -97,7 +98,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontWeight: 'bold',
     fontSize: 15,
-    color: '#140bb9'
+    color: '#140bb9',
+    marginRight: 40
   },
   grayText: {
     color: '#666666'

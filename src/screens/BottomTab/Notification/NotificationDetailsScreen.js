@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { blockOfText } from '../../../constants/blockOfText';
+import moment from 'moment';
 
 class NotificationDetailsScreen extends Component {
   constructor(props) {
@@ -21,6 +21,8 @@ class NotificationDetailsScreen extends Component {
   }
 
   render() {
+    const { notificationInfo } = this.props.navigation.state.params;
+
     return(
       <ScrollView style={styles.scrollView}>
         <View style={styles.outerContainer}>
@@ -29,11 +31,11 @@ class NotificationDetailsScreen extends Component {
             <View style={styles.headerContainer}>
               <View style={styles.image} />
               <View style={styles.headerTextContainer}>
-                <Text style={styles.nameText}>Bulldog Software Co.</Text>
-                <Text style={styles.grayText}>2 hrs</Text>
+                <Text style={styles.nameText}>{notificationInfo.user.name}</Text>
+                <Text style={styles.grayText}>{moment(notificationInfo.sentAt).fromNow()}</Text>
               </View>
             </View>
-            <Text style={styles.contentText}>{blockOfText}</Text>
+            <Text style={styles.contentText}>{notificationInfo.content}</Text>
             <View style={styles.reactionContainer}>
               <TouchableOpacity activeOpacity={1} onPress={this.hasLiked}>
                 <Icon name={this.state.liked ? "ios-heart" : "ios-heart-empty"} size={25} color={this.state.liked ? "red" : "black"} style={styles.iconStyle}/>
@@ -82,7 +84,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontWeight: 'bold',
     fontSize: 15,
-    color: '#140bb9'
+    color: '#140bb9',
+    marginRight: 20
   },
   grayText: {
     color: '#666666'

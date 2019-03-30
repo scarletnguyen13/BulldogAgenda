@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import IconButton from './Buttons/IconButton';
 import moment from 'moment';
-import { connect } from 'react-redux';
+import firebase from 'react-native-firebase';
 
 class CalendarStrip extends Component {
   constructor(props) {
     super(props);
+    this.ref = firebase.firestore().collection('calendar');
     this.state = {
       currentDate: this.props.currentDate,
+      calendar: [],
       day: ''
     }
     this.prevDate = this.prevDate.bind(this);
@@ -17,8 +19,19 @@ class CalendarStrip extends Component {
     this.changeContent = this.changeContent.bind(this);
   }
 
+  componentWillUnmount() {
+    this.unsubscribe = null;
+  }
+
   componentDidMount() {
-    this.changeContent(this.props.currentDate);
+    this.unsubscribe = this.ref.onSnapshot((querySnapshot) => {
+      const calendarList = [];
+      querySnapshot.forEach((doc) => {
+        calendarList.push(doc.data());
+      });
+      this.setState({ calendar: calendarList })
+      this.initContent(calendarList, this.props.currentDate);
+    }); 
   }
 
   prevDate = () => {
@@ -40,10 +53,22 @@ class CalendarStrip extends Component {
   }
 
   changeContent(date) {
-    this.props.calendar.calendar.map(dateObj => { 
+    this.state.calendar.map(dateObj => { 
       if(dateObj.date === moment(date).format('DD-MM-YYYY')) {
-        let day = JSON.stringify(dateObj.day).replace(/\"/g, "");
-        let events = Array.from(dateObj.events);
+        let day = dateObj.day;
+        let events = dateObj.events;
+        this.props._onChangeDay(date, day, events)
+        this.setState({ day : day })
+        return day
+      }
+    })
+  }
+
+  initContent(calendar, date) {
+    calendar.map(dateObj => { 
+      if(dateObj.date === moment(date).format('DD-MM-YYYY')) {
+        let day = dateObj.day;
+        let events = dateObj.events;
         this.props._onChangeDay(date, day, events)
         this.setState({ day : day })
         return day
@@ -105,9 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state) => {
-  const { calendar } = state
-  return { calendar }
-};
-
-export default connect(mapStateToProps)(CalendarStrip);
+export default CalendarStrip;

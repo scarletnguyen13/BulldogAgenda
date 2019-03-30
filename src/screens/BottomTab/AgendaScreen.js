@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, FlatList } from 'react-native';
 import CollapsibleView from '../../components/CollapsibleView';
 import TodoItem from '../../components/Items/TodoItem';
 import { connect } from 'react-redux';
@@ -19,18 +19,21 @@ class AgendaScreen extends Component {
             courseBlock='Todo'
             expand={false}
             children={
-              this.props.todos.todoList.map((item) => {
-                if (item.check === true) {
-                  return (
-                    <TodoItem 
-                      key={item.id}
-                      item={item}
-                      onChange={(id) => this.props.toggleTodo(id)}/>
-                  )
-                } else {
-                  return null;
-                }
-              })
+              <FlatList
+                data={this.props.todos.todoList}
+                renderItem={({ item }) => {
+                  if (item.check === true) {
+                    return (
+                      <TodoItem 
+                        key={item.id}
+                        item={item}
+                        onChange={(id) => this.props.toggleTodo(id)}/>
+                    )
+                  } else {
+                    return null;
+                  }
+                }}
+              />
             }/>
         <CollapsibleView 
             courseColor='#3E3E3E'
@@ -38,18 +41,21 @@ class AgendaScreen extends Component {
             courseBlock='Completed'
             expand={false}
             children={
-              this.props.todos.todoList.map((item) => {
-                if (item.check === false) {
-                  return (
-                    <TodoItem 
-                      key={item.id}
-                      item={item}
-                      onChange={(id) => this.props.toggleTodo(id)}/>
-                  )
-                } else {
-                  return null;
-                }
-              })
+              <FlatList
+                data={this.props.todos.todoList}
+                renderItem={({ item }) => {
+                  if (item.check === false) {
+                    return (
+                      <TodoItem 
+                        key={item.id}
+                        item={item}
+                        onChange={(id) => this.props.toggleTodo(id)}/>
+                    )
+                  } else {
+                    return null;
+                  }
+                }}
+              />
             }/>
       </ScrollView>
     );
