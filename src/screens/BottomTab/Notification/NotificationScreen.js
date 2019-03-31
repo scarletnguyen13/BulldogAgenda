@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native';
 import NotificationItem from '../../../components/Items/NotificationItem';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { hasRead } from '../../../actions/NotificationActions';
 
 class NotificationScreen extends Component {
-  componentDidMount() {
-    Object.values(this.props.notifications.notificationsList).map(notification => {
-      console.log(notification.user.name);
-    });
+  componentWillMount() {
+    this.props.hasRead();
   }
 
   render() {
@@ -55,4 +55,10 @@ const mapStateToProps = (state) => {
   return { notifications }
 };
 
-export default connect(mapStateToProps)(NotificationScreen);
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    hasRead
+   }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(NotificationScreen);

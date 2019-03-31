@@ -1,7 +1,7 @@
 import { blockOfText } from '../constants/blockOfText';
 
 const INITIAL_STATE = {
-  latestNotificationCount: 0,
+  latestNotificationCount: 8,
   notificationsList: [
     { id: 0, 
       user: {
@@ -37,6 +37,12 @@ const INITIAL_STATE = {
 
 export default notificationReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case 'HAS_READ': {
+      return Object.assign({}, state, {
+        ...state,
+        latestNotificationCount: 0
+      })
+    }
     default:
       return state
   }
