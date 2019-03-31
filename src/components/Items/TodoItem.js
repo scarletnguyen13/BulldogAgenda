@@ -33,6 +33,9 @@ class TodoItem extends Component {
       });
     });
 
+    const formattedDuedate = moment(this.props.item.dueDate).format('ddd, MMM DD');
+    const isTomorrow = moment(moment().add(1, 'days').toDate()).format('ddd, MMM DD') === formattedDuedate;
+
     return (
       <View style={styles.outerContainer}>
         <View style={[styles.indicator, {backgroundColor: COURSES[this.props.item.course].color}]}></View>
@@ -49,7 +52,7 @@ class TodoItem extends Component {
           })}}>
           <View style={styles.textContainer}>
             <View style={{width: '60%'}}><Text style={crossedText(this.state.check)}>{this.props.item.description}</Text></View>
-            <Text style={[{color: '#ff6b00'}, crossedText(this.state.check)]}>{moment(this.props.item.dueDate).format('ddd, MMM DD')}</Text>
+            <Text style={[{color: isTomorrow ? '#ff6b00' : 'black'}, crossedText(this.state.check)]}>{isTomorrow ? 'Tomorrow' : formattedDuedate}</Text>
           </View>
           <View style={styles.textContainer}>
             <Text style={[styles.courseAndTypeTextColor, crossedText(this.state.check)]}>{COURSES[this.props.item.course].name}</Text>

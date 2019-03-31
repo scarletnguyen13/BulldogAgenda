@@ -10,7 +10,7 @@ const INITIAL_STATE = {
         avatar: ''
       },
       sentAt: new Date(2019, 1, 20),
-      action: 'posted a new status on the wall',
+      action: 'posted a new status',
       content: blockOfText
     },
     { id: 0, 
@@ -20,7 +20,7 @@ const INITIAL_STATE = {
         avatar: ''
       },
       sentAt: new Date(2019, 2, 15),
-      action: 'posted a new status on the wall',
+      action: 'posted a new status',
       content: blockOfText
     },
     { id: 0, 
@@ -29,11 +29,13 @@ const INITIAL_STATE = {
         name: 'Ms. Blair',
         avatar: ''
       },
-      sentAt: new Date(2018, 1, 20),
-      action: 'posted a new status on the wall',
+      sentAt: new Date(2018, 10, 20),
+      action: 'posted a new status',
       content: blockOfText
     },
-]}
+].sort(function(a,b){
+  return (new Date(b.sentAt) - new Date(a.sentAt));
+})}
 
 export default notificationReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {

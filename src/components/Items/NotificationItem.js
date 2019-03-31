@@ -27,7 +27,7 @@ class NotificationItem extends Component {
           </View>
           <View style={styles.contentContainer}>
             <View style={styles.notiMessageContainer}>
-              <Text numberOfLines={3} ellipsizeMode="tail"><Text style={{fontWeight: 'bold'}}>{this.props.notification.user.name} </Text>{this.props.notification.action}</Text>
+              <Text numberOfLines={3} ellipsizeMode="tail"><Text style={{fontWeight: 'bold'}}>{this.props.notification.user.name} </Text>{this.props.notification.action}: "{this.props.notification.content}"</Text>
             </View>
             <Text style={[styles.timeText, { color: this.state.read ? 'black' : '#0c66f7' }]}>{moment(this.props.notification.sentAt).fromNow()}</Text>
           </View>
