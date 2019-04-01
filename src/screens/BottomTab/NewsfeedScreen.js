@@ -18,7 +18,7 @@ class NewsfeedScreen extends Component {
                 <NewsfeedItem notification={item} />
               )
             }}
-            keyExtractor={(item) => {item}}
+            keyExtractor={(item) => item.id}
           />
         </View>
       </ScrollView>

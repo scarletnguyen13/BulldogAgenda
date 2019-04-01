@@ -5,11 +5,9 @@ import TodoItem from '../../components/Items/TodoItem';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleTodo } from '../../actions/TodoActions';
-import store from '../../store/index';
 
 class AgendaScreen extends Component {
   render() {
-    console.log(store.getState());
     return (
       <ScrollView 
           style={styles.scrollStyle}>
@@ -33,6 +31,7 @@ class AgendaScreen extends Component {
                     return null;
                   }
                 }}
+                keyExtractor={(item) => item.id}
               />
             }/>
         <CollapsibleView 
@@ -55,6 +54,7 @@ class AgendaScreen extends Component {
                     return null;
                   }
                 }}
+                keyExtractor={(item) => item.id}
               />
             }/>
       </ScrollView>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import moment from 'moment';
 
@@ -21,13 +21,12 @@ class NotificationItem extends Component {
           });
         }} activeOpacity={0.7}>
         <View style={[styles.outerContainer, {backgroundColor: this.state.read ? 'white' : '#e2f1ff' }]}>
-          <View style={styles.imageAndBadgeContainer}>
-            <View style={styles.image} />
-            <View style={styles.bagde}/>
-          </View>
+
+            <Image style={{width: 65, height: 65, borderRadius: 65/2, marginLeft: 10, marginRight: 15}} resizeMode='center' source={this.props.notification.user.avatar}/>
+            
           <View style={styles.contentContainer}>
             <View style={styles.notiMessageContainer}>
-              <Text numberOfLines={3} ellipsizeMode="tail"><Text style={{fontWeight: 'bold'}}>{this.props.notification.user.name} </Text>{this.props.notification.action}: "{this.props.notification.content}"</Text>
+              <Text numberOfLines={2} ellipsizeMode="tail"><Text style={{fontWeight: 'bold'}}>{this.props.notification.user.name} </Text>{this.props.notification.action}: "{this.props.notification.content}"</Text>
             </View>
             <Text style={[styles.timeText, { color: this.state.read ? 'black' : '#0c66f7' }]}>{moment(this.props.notification.sentAt).fromNow()}</Text>
           </View>
@@ -42,19 +41,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 100,
     flexDirection: 'row',
-    alignItems: 'center', 
-    paddingBottom: 10
+    alignItems: 'center'
  },
-
-  imageAndBadgeContainer: {
-    width: 80,
-    height: 80,
-    marginLeft: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 15
-  },
-  
   image: {
     width: 70,
     height: 70,
@@ -77,10 +65,9 @@ const styles = StyleSheet.create({
   },
   notiMessageContainer: {
     width: '100%',
-    height: 70,
+    height: 55,
     paddingRight: 10,
-    justifyContent: 'center',
-    marginBottom: 0
+    justifyContent: 'center'
   },
   timeText: {
     fontSize: 12

@@ -13,7 +13,7 @@ class CalendarScreen extends Component {
       selected: moment(new Date()).format('YYYY-MM-DD'),
       calendar: [],
       events: [],
-      day: '',
+      day: ''
     };
     this.onDayPress = this.onDayPress.bind(this);
   }
@@ -60,13 +60,55 @@ class CalendarScreen extends Component {
   }
 
   render() {
+    const markedDates = [];
+    const breakPeriod = [];
+
+    this.state.calendar.map(dateObj => { 
+      if(dateObj.events.length > 0) {
+        let formattedDate = dateObj.date.substring(6, 10) + '-' + dateObj.date.substring(3, 5) + '-' + dateObj.date.substring(0, 2);
+        
+        dateObj.events[0] === 'Spring Break' || dateObj.events[0].includes('Holiday:') || dateObj.events[0] === 'PRO-D DAY' ? 
+        breakPeriod.push(formattedDate)
+        :
+        markedDates.push(formattedDate);
+      }
+    })
+
+    let markedDatesObject = {};
+
+    markedDates.forEach((date) => {
+      markedDatesObject = {
+        ...markedDatesObject,
+        [date]: {
+          marked: true
+        }
+      };
+    });
+
+    breakPeriod.forEach((date) => {
+      markedDatesObject = {
+        ...markedDatesObject,
+        [date]: {
+          marked: true, dotColor: 'red'
+        }
+      };
+    });
+
+    markedDatesObject = {
+      ...markedDatesObject,
+      [this.state.selected]: {
+        selected: true
+      }
+    };
+
+
     return (
       <View>
         <Calendar
           onDayPress={this.onDayPress}
           style={styles.calendar}
           hideExtraDays
-          markedDates={{[this.state.selected]: {selected: true}}}
+          markedDates={ markedDatesObject }
         />
         <View style={styles.eventsContainer}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>

@@ -10,6 +10,7 @@ target 'BulldogAgenda' do
   pod 'Firebase/Firestore', '~> 5.15.0'
   pod 'Firebase/Messaging', '~> 5.15.0'
 
+
   target 'BulldogAgendaTests' do
     inherit! :search_paths
     # Pods for testing

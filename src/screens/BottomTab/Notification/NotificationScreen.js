@@ -24,7 +24,7 @@ class NotificationScreen extends Component {
                 <NotificationItem notification={item}/>
               )
             }}
-            keyExtractor={(item) => {item}}
+            keyExtractor={(item) => item.id}
           />
         </ScrollView>
       </View>

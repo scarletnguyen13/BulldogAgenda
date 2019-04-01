@@ -20,6 +20,7 @@
     "react-native-firebase": "^5.2.3",
     "react-native-gesture-handler": "^1.0.17",
     "react-native-icon-badge": "^1.1.3",
+    "react-native-link-preview": "^1.4.2",
     "react-native-modal": "^9.0.0",
     "react-native-paper": "^2.14.0",
     "react-native-picker-module": "^0.1.2",
