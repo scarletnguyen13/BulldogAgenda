@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { blockOfText } from '../../../constants/blockOfText';
+import { View, StyleSheet, Text, ScrollView } from 'react-native';
+import LinkPreview from 'react-native-link-preview';
+import NewsHeader from '../../../components/NewsHeader';
+import URLPreview from '../../../components/URLPreview';
+import HeartReactionBox from '../../../components/HeartReactionBox';
 
 class NotificationDetailsScreen extends Component {
   constructor(props) {
@@ -11,6 +13,12 @@ class NotificationDetailsScreen extends Component {
       count: 10
     }
     this.hasLiked = this.hasLiked.bind(this);
+    this.setLinkReviewData = this.setLinkReviewData.bind(this);
+  }
+
+  componentWillMount() {
+    const { notificationInfo } = this.props.navigation.state.params;
+    this.setLinkReviewData(notificationInfo.link);
   }
 
   hasLiked = () => { 
@@ -20,26 +28,42 @@ class NotificationDetailsScreen extends Component {
     }) 
   }
 
+  setLinkReviewData(link) {
+    LinkPreview
+    .getPreview(link)
+    .then(data => this.setState({
+        linkTitle: data.title,
+        linkDescription:  data.description
+      }));
+  }
+
   render() {
+    const { notificationInfo } = this.props.navigation.state.params;
+
     return(
       <ScrollView style={styles.scrollView}>
         <View style={styles.outerContainer}>
           <View style={styles.notificationContainer}>
             
-            <View style={styles.headerContainer}>
-              <View style={styles.image} />
-              <View style={styles.headerTextContainer}>
-                <Text style={styles.nameText}>Bulldog Software Co.</Text>
-                <Text style={styles.grayText}>2 hrs</Text>
-              </View>
-            </View>
-            <Text style={styles.contentText}>{blockOfText}</Text>
-            <View style={styles.reactionContainer}>
-              <TouchableOpacity activeOpacity={1} onPress={this.hasLiked}>
-                <Icon name={this.state.liked ? "ios-heart" : "ios-heart-empty"} size={25} color={this.state.liked ? "red" : "black"} style={styles.iconStyle}/>
-              </TouchableOpacity>
-              <Text style={styles.grayText}>{this.state.count}</Text>
-            </View>
+            <NewsHeader 
+              avatar={notificationInfo.user.avatar}
+              username={notificationInfo.user.name}
+              sentAt={notificationInfo.sentAt}/>
+
+            <Text style={styles.contentText}>{notificationInfo.content}</Text>
+
+            {notificationInfo.link !== '' && 
+            <URLPreview 
+              linkURL={notificationInfo.link}
+              linkTitle={this.state.linkTitle}
+              linkDescription={this.state.linkDescription}/>}
+
+            <HeartReactionBox 
+              linkURL={notificationInfo.link}
+              marginTop={{true: 30, false: 0}}
+              hasLiked={() => this.hasLiked}
+              liked={this.state.liked}
+              count={this.state.count}/>
 
           </View>
         </View>
@@ -62,41 +86,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20
   },
-  headerContainer: {
-    flexDirection: 'row',
-    marginBottom: 15
-  },
-  image: {
-    width: 60,
-    height: 60,
-    borderRadius: 50,
-    backgroundColor: 'black'
-  },
-  headerTextContainer: {
-    width: '90%',
-    height: 60,
-    justifyContent: 'center',
-    marginLeft: 10
-  },
-  nameText: {
-    marginBottom: 5,
-    fontWeight: 'bold',
-    fontSize: 15,
-    color: '#140bb9'
-  },
-  grayText: {
-    color: '#666666'
-  },
   contentText: {
     lineHeight: 23,
-    marginBottom: 15
-  },
-  reactionContainer: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  iconStyle: {
-    marginRight: 5
+    marginBottom: 20
   }
 });
 

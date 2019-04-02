@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator } from "react-navigation";
 import Icon from 'react-native-vector-icons/Ionicons';
+import NotificationIconBadge from './src/components/NotificationIconBadge';
 import moment from 'moment';
 
 import WelcomeScreen from './src/screens/WelcomeScreen';
@@ -15,7 +16,6 @@ import AddButton from './src/components/Buttons/AddButton';
 import IconButton from './src/components/Buttons/IconButton';
 import NewsfeedScreen from './src/screens/BottomTab/NewsfeedScreen';
 import AddTodoScreen from './src/screens/BottomTab/AddTodoScreen';
-import NotificationIconBadge from './src/components/NotificationIconBadge';
 import NotificationDetailsScreen from './src/screens/BottomTab/Notification/NotificationDetailsScreen';
 
 const timetableTopTab = createMaterialTopTabNavigator(
@@ -51,7 +51,7 @@ const timetableTopTab = createMaterialTopTabNavigator(
 
 
 
-const TabNavigator = createBottomTabNavigator(
+export const TabNavigator = createBottomTabNavigator(
 {
   Agenda: {
     screen: AgendaScreen,
@@ -94,11 +94,8 @@ const TabNavigator = createBottomTabNavigator(
     screen: NotificationScreen,
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ tintColor }) => (
-        <NotificationIconBadge tintColor={tintColor} />
-      ),
-      tabBarOnPress: ({ previousScene, scene, jumpToIndex }) => {
-        navigation.navigate('Notification');
-      }
+        <NotificationIconBadge color={tintColor}/>
+      )
     }
   )},
   Newsfeed: {

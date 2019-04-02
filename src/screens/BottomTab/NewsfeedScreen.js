@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, ScrollView, StyleSheet, Text } from 'react-native';
+import { View, ScrollView, StyleSheet, Text, FlatList } from 'react-native';
 import NewsfeedItem from '../../components/Items/NewsfeedItem';
+import { connect } from 'react-redux';
 
 class NewsfeedScreen extends Component {
   render() {
@@ -10,10 +11,17 @@ class NewsfeedScreen extends Component {
           <View style={styles.labelContainer}>
             <Text style={styles.label}>Recent</Text>
           </View>
-          <NewsfeedItem />
-          <NewsfeedItem />
-          <NewsfeedItem />
-          <NewsfeedItem />
+          <View style={{flex: 1}}>
+          <FlatList
+            data={Object.values(this.props.notifications.notificationsList)}
+            renderItem={({ item }) => {
+              return (
+                <NewsfeedItem notification={item} />
+              )
+            }}
+            keyExtractor={(item) => item.id}
+          />
+          </View>
         </View>
       </ScrollView>
     );
@@ -40,4 +48,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NewsfeedScreen;
+const mapStateToProps = (state) => {
+  const { notifications } = state
+  return { notifications }
+};
+
+export default connect(mapStateToProps)(NewsfeedScreen);

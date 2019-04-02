@@ -3,6 +3,7 @@ package com.bulldogagenda;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
 import com.taluttasgiran.pickermodule.ReactNativePickerModulePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFirebasePackage(),
             new ReactNativePickerModulePackage(),
             new VectorIconsPackage(),
             new AsyncStoragePackage(),

@@ -1,35 +1,25 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import IconBadge from 'react-native-icon-badge';
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class NotificationIconBadge extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      badgeCount: 7
-    }
-    this.resetBadgeCount = this.resetBadgeCount.bind(this);
-  }
-
-  resetBadgeCount = () => { this.setState({ badgeCount: 0 }) }
 
   render() {
-    return(
-      <View>
+    return (
         <IconBadge
-          MainElement = { <Icon name="ios-notifications" size={35} color={this.props.tintColor} /> }
-          BadgeElement = { <Text style={styles.BadgeElement}>{this.state.badgeCount}</Text> }
+          MainElement = { <Icon name="ios-notifications" size={35} color={this.props.color} /> }
+          BadgeElement = { <Text style={styles.badgeElement}>{this.props.notifications.latestNotificationCount}</Text> }
           IconBadgeStyle = {styles.iconBadge}
-          Hidden={this.state.badgeCount === 0}
+          Hidden={this.props.notifications.latestNotificationCount === 0}
         />
-      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  BadgeElement: {
+  badgeElement: {
     color:'#FFFFFF', 
     fontSize: 11
   },
@@ -43,4 +33,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NotificationIconBadge;
+const mapStateToProps = (state) => {
+  const { notifications } = state
+  return { notifications }
+};
+
+export default connect(mapStateToProps)(NotificationIconBadge);

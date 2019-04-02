@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import BlueButton from '../../components/Buttons/BlueButton';
 import TextField from '../../components/InputFields/TextField';
 import TextArea from '../../components/InputFields/TextArea';
@@ -32,54 +32,56 @@ class CourseDetailsScreen extends Component {
     const { courseInfo } = this.props.navigation.state.params;
 
     return (
-      <View style={styles.courseDetailsContainer}>
-        <TextField
-          label="Course"
-          placeholder="e.g. Calculus 12"
-          _change={(block, courseName) => this.props.changeName(block, courseName)}
-          block={courseInfo.courseBlock}
-          value={courseInfo.courseName}
-        />
+      <ScrollView>
+        <View style={styles.courseDetailsContainer}>
+          <TextField
+            label="Course"
+            placeholder="e.g. Calculus 12"
+            _change={(block, courseName) => this.props.changeName(block, courseName)}
+            block={courseInfo.courseBlock}
+            value={courseInfo.courseName}
+          />
 
-        <TextField
-          label="Room"
-          placeholder="e.g. Rm. 109"
-          _change={(block, courseRoom) => this.props.changeRoom(block, courseRoom)}
-          block={courseInfo.courseBlock}
-          value={courseInfo.courseRoom}
-        />
+          <TextField
+            label="Room"
+            placeholder="e.g. Rm. 109"
+            _change={(block, courseRoom) => this.props.changeRoom(block, courseRoom)}
+            block={courseInfo.courseBlock}
+            value={courseInfo.courseRoom}
+          />
 
-        <TextField
-          label="Teacher"
-          placeholder="e.g. Mr. Smith"
-          _change={(block, courseTeacher) => this.props.changeTeacher(block, courseTeacher)}
-          block={courseInfo.courseBlock}
-          value={courseInfo.courseTeacher}
-        />
+          <TextField
+            label="Teacher"
+            placeholder="e.g. Mr. Smith"
+            _change={(block, courseTeacher) => this.props.changeTeacher(block, courseTeacher)}
+            block={courseInfo.courseBlock}
+            value={courseInfo.courseTeacher}
+          />
 
-        <ColorField 
-          label="Color"
-          _toggleColorChooser = {this._toggleColorChooser}
-          isColorChooserVisible={this.state.isColorChooserVisible}
-          _change={(block, courseColor) => this.props.changeColor(block, courseColor)}
-          block={courseInfo.courseBlock}
-          value={courseInfo.courseColor}
-        />
+          <ColorField 
+            label="Color"
+            _toggleColorChooser = {this._toggleColorChooser}
+            isColorChooserVisible={this.state.isColorChooserVisible}
+            _change={(block, courseColor) => this.props.changeColor(block, courseColor)}
+            block={courseInfo.courseBlock}
+            value={courseInfo.courseColor}
+          />
 
-        <TextArea
-          placeholder="Additional Notes"
-          _change={(block, courseNotes) => this.props.changeNotes(block, courseNotes)}
-          block={courseInfo.courseBlock}
-          value={courseInfo.courseNotes}
-        />
+          <TextArea
+            placeholder="Additional Notes"
+            _change={(block, courseNotes) => this.props.changeNotes(block, courseNotes)}
+            block={courseInfo.courseBlock}
+            value={courseInfo.courseNotes}
+          />
 
-        <BlueButton 
-          routeName='Settings'
-          width={70}
-          height={50}
-          margin={25}
-          content='DONE'/>
-      </View>
+          <BlueButton 
+            routeName='Settings'
+            width={70}
+            height={50}
+            margin={25}
+            content='DONE'/>
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -88,7 +90,9 @@ const styles = StyleSheet.create({
   courseDetailsContainer: {
     flex: 1, 
     alignItems: "center", 
-    justifyContent: "center"
+    justifyContent: "center",
+    marginTop: 20,
+    marginBottom: 20
   },
   textInputStyle: {
     width: '80%', 

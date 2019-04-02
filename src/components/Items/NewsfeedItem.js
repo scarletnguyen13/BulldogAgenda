@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { View, StyleSheet, Text } from 'react-native';
 import ReadMore from 'react-native-read-more-text';
-import { blockOfText } from '../../constants/blockOfText';
+import LinkPreview from 'react-native-link-preview';
+import NewsHeader from '../NewsHeader';
+import URLPreview from '../URLPreview';
+import HeartReactionBox from '../HeartReactionBox';
 
 class NewsfeedScreen extends Component {
   constructor(props) {
@@ -12,6 +14,7 @@ class NewsfeedScreen extends Component {
       count: 10
     }
     this.hasLiked = this.hasLiked.bind(this);
+    this.setLinkReviewData = this.setLinkReviewData.bind(this);
   }
 
   hasLiked = () => { 
@@ -19,6 +22,19 @@ class NewsfeedScreen extends Component {
       liked: !this.state.liked,
       count: this.state.liked ? (this.state.count - 1) : (this.state.count + 1)
     }) 
+  }
+
+  componentWillMount() {
+    this.setLinkReviewData(this.props.notification.link);
+  }
+
+  setLinkReviewData(link) {
+    LinkPreview
+    .getPreview(link)
+    .then(data => this.setState({
+      linkTitle: data.title,
+      linkDescription:  data.description
+    }));
   }
 
   _renderTruncatedFooter = (handlePress) => {
@@ -44,27 +60,37 @@ class NewsfeedScreen extends Component {
   render() {
     return (
       <View style={styles.outerContainer}>
-        <View style={styles.headerContainer}>
-          <View style={styles.image} />
-          <View style={styles.headerTextContainer}>
-            <Text style={styles.nameText}>Bulldog Software Co.</Text>
-            <Text style={styles.grayText}>2 hrs</Text>
-          </View>
-        </View>
+        <NewsHeader 
+          avatar={this.props.notification.user.avatar}
+          username={this.props.notification.user.name}
+          sentAt={this.props.notification.sentAt}/>
+
         <ReadMore
           numberOfLines={10}
           renderTruncatedFooter={this._renderTruncatedFooter}
           renderRevealedFooter={this._renderRevealedFooter}
           onReady={this._handleTextReady}>
-          <Text style={styles.contentText} ellipsizeMode="tail">{blockOfText}</Text>
+          <Text style={styles.contentText} ellipsizeMode="tail">
+            {this.props.notification.content}
+          </Text>
         </ReadMore>
 
-        <View style={styles.reactionContainer}>
-          <TouchableOpacity activeOpacity={1} onPress={this.hasLiked}>
-            <Icon name={this.state.liked ? "ios-heart" : "ios-heart-empty"} size={25} color={this.state.liked ? "red" : "black"} style={{marginRight: 5}}/>
-          </TouchableOpacity>
-          <Text style={styles.grayText}>{this.state.count}</Text>
-        </View>
+        {this.props.notification.link !== '' && 
+        <View> 
+          <View style={{height: 20}}/>
+          <URLPreview 
+            linkURL={this.props.notification.link}
+            linkTitle={this.state.linkTitle}
+            linkDescription={this.state.linkDescription}/>
+        </View>}
+
+        <HeartReactionBox 
+          linkURL={this.props.notification.link}
+          marginTop={{true: 25, false: 15}}
+          hasLiked={() => this.hasLiked}
+          liked={this.state.liked}
+          count={this.state.count}/>
+
       </View>
     );
   }
@@ -77,40 +103,10 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 20
   },
-  headerContainer: {
-    flexDirection: 'row', 
-    marginBottom: 15
-  },
-  image: {
-    width: 60,
-    height: 60,
-    borderRadius: 50,
-    backgroundColor: 'black'
-  },
-  headerTextContainer: {
-    width: '90%',
-    height: 60,
-    justifyContent: 'center',
-    marginLeft: 10
-  },
-  nameText: {
-    marginBottom: 5,
-    fontWeight: 'bold',
-    fontSize: 15,
-    color: '#140bb9'
-  },
-  grayText: {
-    color: '#666666'
-  }, 
   contentText: {
     lineHeight: 23, 
     marginBottom: 15
   },
-  reactionContainer: {
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    marginTop: 15
-  }
 });
 
 export default NewsfeedScreen;

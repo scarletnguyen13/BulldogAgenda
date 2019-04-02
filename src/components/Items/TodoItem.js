@@ -23,6 +23,20 @@ class TodoItem extends Component {
     this.props.onChange(this.props.item.id);
   }
 
+  getColorByDate() {
+    const dueDate = this.props.item.dueDate;
+    const formattedDuedate = moment(dueDate).format('ddd, MMM DD');
+    const tomorrow = moment(moment().add(1, 'days').toDate()).format('ddd, MMM DD');
+    const isTomorrow = (tomorrow === formattedDuedate)
+    if (moment(dueDate).isBefore(moment())) {
+      return 'red'
+    } else if (moment(dueDate).isSame(moment()) || isTomorrow) {
+      return '#ff6b00'
+    } else {
+      return 'black'
+    }
+  }
+
   render() {
     const values = Object.values(this.props.blocks);
     let COURSES = [] 
@@ -32,6 +46,12 @@ class TodoItem extends Component {
         color: blockObj.courseColor
       });
     });
+
+    const formattedDuedate = moment(this.props.item.dueDate).format('ddd, MMM DD');
+    const tomorrow = moment(moment().add(1, 'days').toDate()).format('ddd, MMM DD');
+    const today = moment().format('ddd, MMM DD');
+    const isComingSoon = (tomorrow === formattedDuedate) || (today === formattedDuedate);
+    const comingDateText = today === formattedDuedate ? 'Today' : 'Tomorrow'
 
     return (
       <View style={styles.outerContainer}>
@@ -49,7 +69,7 @@ class TodoItem extends Component {
           })}}>
           <View style={styles.textContainer}>
             <View style={{width: '60%'}}><Text style={crossedText(this.state.check)}>{this.props.item.description}</Text></View>
-            <Text style={[{color: '#ff6b00'}, crossedText(this.state.check)]}>{moment(this.props.item.dueDate).format('ddd, MMM DD')}</Text>
+            <Text style={[{color: this.getColorByDate()}, crossedText(this.state.check)]}>{isComingSoon ? comingDateText : formattedDuedate}</Text>
           </View>
           <View style={styles.textContainer}>
             <Text style={[styles.courseAndTypeTextColor, crossedText(this.state.check)]}>{COURSES[this.props.item.course].name}</Text>
@@ -105,7 +125,8 @@ function crossedText(bool) {
     });
   } else {
     return ({
-      textDecorationLine: 'line-through'
+      textDecorationLine: 'line-through',
+      color: 'black'
     });
   }
 }

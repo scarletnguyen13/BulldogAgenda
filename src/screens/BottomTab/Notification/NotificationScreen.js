@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native';
 import NotificationItem from '../../../components/Items/NotificationItem';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { hasRead } from '../../../actions/NotificationActions';
 
 class NotificationScreen extends Component {
+  componentWillMount() {
+    this.props.hasRead();
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -10,13 +17,15 @@ class NotificationScreen extends Component {
           <Text style={styles.label}>Notifications</Text>
         </View>
         <ScrollView style={{width: '100%'}}>
-          <NotificationItem />
-          <NotificationItem />
-          <NotificationItem />
-          <NotificationItem />
-          <NotificationItem />
-          <NotificationItem />
-          <NotificationItem />
+          <FlatList
+            data={Object.values(this.props.notifications.notificationsList)}
+            renderItem={({ item }) => {
+              return (
+                <NotificationItem notification={item}/>
+              )
+            }}
+            keyExtractor={(item) => item.id}
+          />
         </ScrollView>
       </View>
     );
@@ -41,4 +50,15 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NotificationScreen;
+const mapStateToProps = (state) => {
+  const { notifications } = state
+  return { notifications }
+};
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+    hasRead
+   }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(NotificationScreen);

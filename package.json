@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "ios": "open ios/BulldogAgenda.xcworkspace"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.2.1",
@@ -16,8 +17,10 @@
     "react-native-calendar-picker": "^6.0.0",
     "react-native-calendars": "^1.22.0",
     "react-native-color-picker": "^0.4.0",
+    "react-native-firebase": "^5.2.3",
     "react-native-gesture-handler": "^1.0.17",
     "react-native-icon-badge": "^1.1.3",
+    "react-native-link-preview": "^1.4.2",
     "react-native-modal": "^9.0.0",
     "react-native-paper": "^2.14.0",
     "react-native-picker-module": "^0.1.2",
@@ -27,7 +30,8 @@
     "react-navigation-material-bottom-tabs": "^1.0.0",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^5.10.0"
   },
   "devDependencies": {
     "@babel/core": "7.3.4",
