@@ -39,7 +39,7 @@ const timetableTopTab = createMaterialTopTabNavigator(
         backgroundColor: 'white'
       }
     },
-    initialRouteName: 'Calendar',
+    initialRouteName: 'Today',
     transitionConfig : () => ({
       transitionSpec: {
         duration: 0
@@ -156,7 +156,7 @@ const AppNavigator = createStackNavigator(
     }
   },
   {
-    initialRouteName: "Main",
+    initialRouteName: "Welcome",
     transitionConfig : () => ({
       transitionSpec: {
         duration: 0
