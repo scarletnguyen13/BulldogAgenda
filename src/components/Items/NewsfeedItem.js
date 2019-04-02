@@ -60,12 +60,13 @@ class NewsfeedScreen extends Component {
     return (
       <View style={styles.outerContainer}>
         <View style={styles.headerContainer}>
-          <Image style={{width: 60, height: 60, borderRadius: 60/2 }} resizeMode='center' source={this.props.notification.user.avatar}/>
+          <Image style={styles.image} resizeMode='contain' source={this.props.notification.user.avatar}/>
           <View style={styles.headerTextContainer}>
             <Text style={styles.nameText}>{this.props.notification.user.name}</Text>
             <Text style={styles.grayText}>{moment(this.props.notification.sentAt).format('MMMM DD, LT')}</Text>
           </View>
         </View>
+
         <ReadMore
           numberOfLines={10}
           renderTruncatedFooter={this._renderTruncatedFooter}
@@ -78,16 +79,16 @@ class NewsfeedScreen extends Component {
 
         {this.props.notification.link !== '' && 
         <View> 
-          <View style={{width: '100%', height: 20}}/>
+          <View style={{height: 20}}/>
           <TouchableOpacity 
-            style={{width: '100%', backgroundColor: '#efefef', paddingRight: 20, paddingLeft: 20, paddingTop: 10, paddingBottom: 10, borderBottomWidth: 3, borderBottomColor: '#6b6a6a'}}
+            style={styles.linkContainer}
             onPress={() => Linking.openURL(this.props.notification.link)}>
-            <View style={{justifyContent: 'center'}}>
-              <Text style={{textTransform: 'uppercase', fontSize: 12, color: '#6b6a6a'}} numberOfLines={1} ellipsizeMode="tail">{this.props.notification.link.replace(/(^\w+:|^)\/\//,'').trim()}</Text>
+            <View style={styles.horizontallyCentered}>
+              <Text style={styles.linkURL} numberOfLines={1} ellipsizeMode="tail">{this.props.notification.link.replace(/(^\w+:|^)\/\//,'').trim()}</Text>
 
-              {this.state.linkTitle !== undefined && <Text style={{fontWeight: 'bold', fontSize: 17, marginTop: 10}} numberOfLines={1} ellipsizeMode="tail">{this.state.linkTitle}</Text>}
+              {this.state.linkTitle !== undefined && <Text style={styles.linkTitle} numberOfLines={1} ellipsizeMode="tail">{this.state.linkTitle}</Text>}
 
-              {this.state.linkDescription !== undefined && <Text style={{fontSize: 14, marginTop: 10, color: '#6b6a6a'}} numberOfLines={1} ellipsizeMode="tail">{this.state.linkDescription}</Text>}
+              {this.state.linkDescription !== undefined && <Text style={styles.linkDescription} numberOfLines={1} ellipsizeMode="tail">{this.state.linkDescription}</Text>}
             </View>
           </TouchableOpacity>
         </View>}
@@ -108,8 +109,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     padding: 15,
-    marginBottom: 20,
-    paddingRight: 55
+    marginBottom: 20
   },
   headerContainer: {
     flexDirection: 'row', 
@@ -120,6 +120,11 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 30,
     backgroundColor: 'black'
+  },
+  image: {
+    width: 60, 
+    height: 60, 
+    borderRadius: 60/2 
   },
   headerTextContainer: {
     width: '90%',
@@ -144,6 +149,33 @@ const styles = StyleSheet.create({
   reactionContainer: {
     flexDirection: 'row', 
     alignItems: 'center'
+  },
+  linkContainer: {
+    backgroundColor: '#efefef', 
+    paddingRight: 20, 
+    paddingLeft: 20, 
+    paddingTop: 10, 
+    paddingBottom: 10, 
+    borderBottomWidth: 3, 
+    borderBottomColor: '#6b6a6a'
+  }, 
+  horizontallyCentered: {
+    justifyContent: 'center'
+  },
+  linkURL: {
+    textTransform: 'uppercase', 
+    fontSize: 12, 
+    color: '#6b6a6a'
+  },
+  linkTitle: {
+    fontWeight: 'bold', 
+    fontSize: 17, 
+    marginTop: 10
+  },
+  linkDescription: {
+    fontSize: 14, 
+    marginTop: 10, 
+    color: '#6b6a6a'
   }
 });
 

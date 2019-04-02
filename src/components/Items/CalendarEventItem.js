@@ -18,9 +18,13 @@ class CalendarEventItem extends Component {
     return (
       <View style={styles.container}>
         <View style={[styles.outerCircle, setBackgroundColor(this.props.courseColor)]}>
-          <View style={styles.innerCircle}/>
+         <View style={styles.innerCircle}>
+          {this.props.completed === false && <View style={[styles.checkCircle, setBackgroundColor(this.props.courseColor)]}/>}
+         </View>
         </View>
         <View style={styles.textContainer}>
+          {this.props.course !== undefined && 
+          <Text style={{marginBottom: 10}}>{this.props.course}</Text>}
           <Text 
             style={styles.contentText}
             onLayout = {( value ) => this.changeHeight( value.nativeEvent.layout.height )}>
@@ -51,7 +55,9 @@ const styles = StyleSheet.create({
     width: 13,
     height: 13,
     borderRadius: 100,
-    backgroundColor: '#f7f7f7'
+    backgroundColor: '#f7f7f7',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   textContainer: {
     marginLeft: 35,
@@ -64,7 +70,14 @@ const styles = StyleSheet.create({
   },
   contentText: {
     fontWeight: 'bold'
-  }
+  },
+  checkCircle: {
+    width: 6,
+    height: 6,
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 });
 
 function setBackgroundColor(color) {

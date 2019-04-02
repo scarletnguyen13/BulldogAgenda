@@ -11,6 +11,7 @@ class NewsfeedScreen extends Component {
           <View style={styles.labelContainer}>
             <Text style={styles.label}>Recent</Text>
           </View>
+          <View style={{flex: 1}}>
           <FlatList
             data={Object.values(this.props.notifications.notificationsList)}
             renderItem={({ item }) => {
@@ -20,6 +21,7 @@ class NewsfeedScreen extends Component {
             }}
             keyExtractor={(item) => item.id}
           />
+          </View>
         </View>
       </ScrollView>
     );

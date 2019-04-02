@@ -22,7 +22,7 @@ class NotificationItem extends Component {
         }} activeOpacity={0.7}>
         <View style={[styles.outerContainer, {backgroundColor: this.state.read ? 'white' : '#e2f1ff' }]}>
 
-            <Image style={{width: 65, height: 65, borderRadius: 65/2, marginLeft: 10, marginRight: 15}} resizeMode='center' source={this.props.notification.user.avatar}/>
+            <Image style={{width: 65, height: 65, borderRadius: 65/2, marginLeft: 10, marginRight: 15}} resizeMode='contain' source={this.props.notification.user.avatar}/>
             
           <View style={styles.contentContainer}>
             <View style={styles.notiMessageContainer}>

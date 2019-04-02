@@ -4,6 +4,7 @@ import CalendarEventItem from '../../../components/Items/CalendarEventItem';
 import { Calendar } from 'react-native-calendars';
 import moment from 'moment';
 import firebase from 'react-native-firebase';
+import { connect } from 'react-redux';
 
 class CalendarScreen extends Component {
   constructor(props) {
@@ -67,7 +68,7 @@ class CalendarScreen extends Component {
       if(dateObj.events.length > 0) {
         let formattedDate = dateObj.date.substring(6, 10) + '-' + dateObj.date.substring(3, 5) + '-' + dateObj.date.substring(0, 2);
         
-        dateObj.events[0] === 'Spring Break' || dateObj.events[0].includes('Holiday:') || dateObj.events[0] === 'PRO-D DAY' ? 
+        dateObj.day === 'Break' || dateObj.day === 'Day Off' ? 
         breakPeriod.push(formattedDate)
         :
         markedDates.push(formattedDate);
@@ -101,6 +102,18 @@ class CalendarScreen extends Component {
       }
     };
 
+    const values = Object.values(this.props.blocks);
+    let COURSES = [] 
+    values.forEach(blockObj => {
+      COURSES.push({[blockObj.courseName] : blockObj.courseColor});
+    });
+
+    const currentDayTodos = [];
+    this.props.todos.todoList.map((todo) => {
+      if (moment(todo.dueDate).format('YYYY-MM-DD') === this.state.selected) {
+        currentDayTodos.push(todo)
+      }
+    })
 
     return (
       <View>
@@ -126,12 +139,25 @@ class CalendarScreen extends Component {
               <FlatList
                 data={this.state.events}
                 renderItem={({ item }) => (
-                  <CalendarEventItem courseColor = '#140bb9' content={item}/>
+                  <CalendarEventItem courseColor = '#140bb9' content={item} completed={false}/>
                 )}
                 keyExtractor={item => item}
               />
-          </ScrollView>
+              {currentDayTodos.length > 0 && this.state.events.length > 0 &&
+              <View style={{height: 5, backgroundColor: '#3E3E3E'}}/>}
+              {
+                currentDayTodos.map((todo) => {
+                  if (moment(todo.dueDate).format('YYYY-MM-DD') === this.state.selected) {
+                    return (
+                      <CalendarEventItem key={todo.id} courseColor={Object.values(COURSES[todo.course])} course = {Object.keys(COURSES[todo.course])} content={todo.description} completed={todo.check}/>
+                    )
+                  } else {
+                    return null;
+                  }
+                })
+              }
 
+          </ScrollView>
         </View>
       </View>
     );
@@ -141,7 +167,7 @@ class CalendarScreen extends Component {
 const styles = StyleSheet.create({
   calendar: {
     borderWidth: 0,
-    height: '50%',
+    height: '48%',
     width: '100%',
     marginBottom: '15%'
   },
@@ -155,7 +181,7 @@ const styles = StyleSheet.create({
     height: 30,
     backgroundColor: '#e6e6e6',
     borderRadius: 100,
-    margin: 20,
+    margin: 10,
     marginLeft: 30,
     flexDirection: 'row',
     alignItems: 'center',
@@ -179,4 +205,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CalendarScreen;
+const mapStateToProps = (state) => {
+  const { blocks, todos } = state
+  return { blocks, todos }
+};
+
+export default connect(mapStateToProps)(CalendarScreen);

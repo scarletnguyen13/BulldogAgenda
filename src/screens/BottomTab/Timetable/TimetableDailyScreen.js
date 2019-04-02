@@ -71,16 +71,20 @@ class TimetableDailyScreen extends Component {
 
     const todayCurrentTime = moment(today + " " + this.state.currentTime);
     let block1, block2, block3, block4;
+
+    const initRotationOrder = Object.values(this.props.blocks);
+    const block_rotation = moment(this.state.currentDate).isBefore('2019-04-17') ? [1,0,3,2] : [3,2,1,0]
+
     if (this.state.day === 'Day 1') { 
-      block1 = this.props.blocks.block1_1;
-      block2 = this.props.blocks.block1_2;
-      block3 = this.props.blocks.block1_3;
-      block4 = this.props.blocks.block1_4;
+      block1 = initRotationOrder[block_rotation[0]];
+      block2 = initRotationOrder[block_rotation[1]];
+      block3 = initRotationOrder[block_rotation[2]];
+      block4 = initRotationOrder[block_rotation[3]];
     } else if (this.state.day === 'Day 2') {
-      block1 = this.props.blocks.block2_1;
-      block2 = this.props.blocks.block2_2;
-      block3 = this.props.blocks.block2_3;
-      block4 = this.props.blocks.block2_4;
+      block1 = initRotationOrder[block_rotation[0] + 4];
+      block2 = initRotationOrder[block_rotation[1] + 4];
+      block3 = initRotationOrder[block_rotation[2] + 4];
+      block4 = initRotationOrder[block_rotation[3] + 4];
     } else {
       block1 = DailyConstants.EMPTY_BLOCK;
       block2 = DailyConstants.EMPTY_BLOCK;
@@ -133,11 +137,11 @@ class TimetableDailyScreen extends Component {
               isVisible={block_1_range.contains(todayCurrentTime)}
               expand={true}
               borderWidth={10}
-              children={
+              children = {
                 this.props.todos.todoList.map((todo) => {
                   if (moment(todo.dueDate).format('DD-MM-YYYY') === moment(this.state.currentDate).format('DD-MM-YYYY') && COURSES[todo.course] === block1.courseName) {
                     return (
-                      <CalendarEventItem key={todo.id} courseColor={block1.courseColor} content={todo.description}/>
+                      <CalendarEventItem key={todo.id} courseColor={block1.courseColor} content={todo.description} completed={todo.check}/>
                     )
                   } else {
                     return null;
@@ -167,7 +171,7 @@ class TimetableDailyScreen extends Component {
                 this.props.todos.todoList.map((todo) => {
                   if (moment(todo.dueDate).format('DD-MM-YYYY') === moment(this.state.currentDate).format('DD-MM-YYYY') && COURSES[todo.course] === block2.courseName) {
                     return (
-                      <CalendarEventItem key={todo.id} courseColor={block2.courseColor} content={todo.description}/>
+                      <CalendarEventItem key={todo.id} courseColor={block2.courseColor} content={todo.description} completed={todo.check}/>
                     )
                   } else {
                     return null;
@@ -197,7 +201,7 @@ class TimetableDailyScreen extends Component {
                 this.props.todos.todoList.map((todo) => {
                   if (moment(todo.dueDate).format('DD-MM-YYYY') === moment(this.state.currentDate).format('DD-MM-YYYY') && COURSES[todo.course] === block3.courseName) {
                     return (
-                      <CalendarEventItem key={todo.id} courseColor={block3.courseColor} content={todo.description}/>
+                      <CalendarEventItem key={todo.id} courseColor={block3.courseColor} content={todo.description} completed={todo.check}/>
                     )
                   } else {
                     return null;
@@ -218,7 +222,7 @@ class TimetableDailyScreen extends Component {
                 this.props.todos.todoList.map((todo) => {
                   if (moment(todo.dueDate).format('DD-MM-YYYY') === moment(this.state.currentDate).format('DD-MM-YYYY') && COURSES[todo.course] === block4.courseName) {
                     return (
-                      <CalendarEventItem key={todo.id} courseColor={block4.courseColor} content={todo.description}/>
+                      <CalendarEventItem key={todo.id} courseColor={block4.courseColor} content={todo.description} completed={todo.check}/>
                     )
                   } else {
                     return null;

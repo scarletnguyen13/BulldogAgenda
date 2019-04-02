@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     paddingRight: 20
   },
   nextButton: {
-    width: 70, 
-    height: 70, 
+    width: 50, 
+    height: 50, 
     borderRadius: 100, 
     backgroundColor: '#140bb9', 
     margin: 15,
@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   nextButtonImage: {
-    width: 30, 
-    height: 30
+    width: 20, 
+    height: 20
   }
 });
 

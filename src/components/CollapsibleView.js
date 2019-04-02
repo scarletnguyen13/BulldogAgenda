@@ -26,7 +26,7 @@ class CollapsibleView extends Component {
 
   changeHeight(height) {
     var CustomLayoutLinear = {
-      duration: 20,
+      duration: 50,
       create: {
         type: LayoutAnimation.Types.linear,
         property: LayoutAnimation.Properties.opacity,
