@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView, Linking, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import LinkPreview from 'react-native-link-preview';
-import moment from 'moment';
+import NewsHeader from '../../../components/NewsHeader';
+import URLPreview from '../../../components/URLPreview';
+import HeartReactionBox from '../../../components/HeartReactionBox';
 
 class NotificationDetailsScreen extends Component {
   constructor(props) {
@@ -44,33 +45,25 @@ class NotificationDetailsScreen extends Component {
         <View style={styles.outerContainer}>
           <View style={styles.notificationContainer}>
             
-            <View style={styles.headerContainer}>
-              <Image style={styles.image} resizeMode='contain' source={notificationInfo.user.avatar}/>
-              <View style={styles.headerTextContainer}>
-                <Text style={styles.nameText}>{notificationInfo.user.name}</Text>
-                <Text style={styles.grayText}>{moment(notificationInfo.sentAt).format('MMMM DD, LT')}</Text>
-              </View>
-            </View>
+            <NewsHeader 
+              avatar={notificationInfo.user.avatar}
+              username={notificationInfo.user.name}
+              sentAt={notificationInfo.sentAt}/>
+
             <Text style={styles.contentText}>{notificationInfo.content}</Text>
 
-            {notificationInfo.link !== '' && <TouchableOpacity 
-              style={styles.linkContainer}
-              onPress={() => Linking.openURL(notificationInfo.link)}>
-              <View style={styles.horizontallyCentered}>
-                <Text style={styles.linkURL} numberOfLines={1} ellipsizeMode="tail">{notificationInfo.link.replace(/(^\w+:|^)\/\//,'').trim()}</Text>
+            {notificationInfo.link !== '' && 
+            <URLPreview 
+              linkURL={notificationInfo.link}
+              linkTitle={this.state.linkTitle}
+              linkDescription={this.state.linkDescription}/>}
 
-                {this.state.linkTitle !== undefined && <Text style={styles.linkTitle} numberOfLines={1} ellipsizeMode="tail">{this.state.linkTitle}</Text>}
-
-                {this.state.linkDescription !== undefined && <Text style={styles.linkDescription} numberOfLines={1} ellipsizeMode="tail">{this.state.linkDescription}</Text>}
-              </View>
-            </TouchableOpacity>}
-
-            <View style={[styles.reactionContainer, { marginTop: notificationInfo.link !== '' ? 30 : 0}]}>
-              <TouchableOpacity activeOpacity={1} onPress={this.hasLiked}>
-                <Icon name={this.state.liked ? "ios-heart" : "ios-heart-empty"} size={25} color={this.state.liked ? "red" : "black"} style={styles.iconStyle}/>
-              </TouchableOpacity>
-              <Text style={styles.grayText}>{this.state.count}</Text>
-            </View>
+            <HeartReactionBox 
+              linkURL={notificationInfo.link}
+              marginTop={{true: 30, false: 0}}
+              hasLiked={() => this.hasLiked}
+              liked={this.state.liked}
+              count={this.state.count}/>
 
           </View>
         </View>
@@ -93,69 +86,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20
   },
-  headerContainer: {
-    flexDirection: 'row',
-    marginBottom: 15
-  },
-  image: {
-    width: 60,
-    height: 60,
-    borderRadius: 60/2
-  },
-  headerTextContainer: {
-    width: '90%',
-    height: 60,
-    justifyContent: 'center',
-    marginLeft: 10
-  },
-  nameText: {
-    marginBottom: 5,
-    fontWeight: 'bold',
-    fontSize: 15,
-    color: '#140bb9',
-    marginRight: 20
-  },
-  grayText: {
-    color: '#666666'
-  },
   contentText: {
     lineHeight: 23,
     marginBottom: 20
-  },
-  reactionContainer: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  iconStyle: {
-    marginRight: 5
-  },
-  linkContainer: {
-    width: '100%', 
-    backgroundColor: '#efefef', 
-    paddingRight: 20, 
-    paddingLeft: 20,
-     paddingTop: 10, 
-    paddingBottom: 10, 
-    borderBottomWidth: 3, 
-    borderBottomColor: '#6b6a6a'
-  }, 
-  horizontallyCentered: {
-    justifyContent: 'center'
-  },
-  linkURL: {
-    textTransform: 'uppercase', 
-    fontSize: 12, 
-    color: '#6b6a6a'
-  },
-  linkTitle: {
-    fontWeight: 'bold', 
-    fontSize: 17, 
-    marginTop: 10
-  },
-  linkDescription: {
-    fontSize: 14, 
-    marginTop: 10, 
-    color: '#6b6a6a'
   }
 });
 

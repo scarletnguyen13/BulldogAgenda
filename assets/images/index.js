@@ -10,6 +10,7 @@ const images = {
     grad_opportunity_avatar: require('./grad_opportunity.png'),
     program_opportunity_avatar: require('./program_opportunity.jpg'),
     churchill_avatar: require('./churchill.jpg'),
+    grad_committee_avatar: require('./grad_committee.jpg'),
   }
 };
 

@@ -66,7 +66,7 @@ const INITIAL_STATE = {
       user: {
         id: randomNumGenerator(),        
         name: 'Grad Committee',
-        avatar: ''
+        avatar: Images.avatar.grad_committee_avatar
       },
       sentAt: new Date(2019, 0, 10, 15, 32, 48),
       action: 'posted a new status',
@@ -132,7 +132,7 @@ const INITIAL_STATE = {
       user: {
         id: randomNumGenerator(),
         name: 'Grad Committee',
-        avatar: ''
+        avatar: Images.avatar.grad_committee_avatar
       },
       sentAt: new Date(2019, 0, 16, 15, 26, 2),
       action: 'posted a new status',
@@ -176,7 +176,7 @@ const INITIAL_STATE = {
       user: {
         id: randomNumGenerator(),
         name: 'Grad Committee',
-        avatar: ''
+        avatar: Images.avatar.grad_committee_avatar
       },
       sentAt: new Date(2019, 0, 22, 14, 37, 28),
       action: 'posted a new status',
