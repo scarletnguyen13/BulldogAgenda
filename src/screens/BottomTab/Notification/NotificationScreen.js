@@ -1,30 +1,32 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView, FlatList } from 'react-native';
-import NotificationItem from '../../../components/Items/NotificationItem';
+import {
+  View, Text, StyleSheet, ScrollView, FlatList
+} from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { hasRead } from '../../../actions/NotificationActions';
+import NotificationItem from '../../../components/Items/NotificationItem';
+import hasRead from '../../../actions/NotificationActions';
 
 class NotificationScreen extends Component {
   componentWillMount() {
+    // eslint-disable-next-line react/destructuring-assignment
     this.props.hasRead();
   }
 
   render() {
+    const { notifications } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.labelContainer}>
           <Text style={styles.label}>Notifications</Text>
         </View>
-        <ScrollView style={{width: '100%'}}>
+        <ScrollView style={{ width: '100%' }}>
           <FlatList
-            data={Object.values(this.props.notifications.notificationsList)}
-            renderItem={({ item }) => {
-              return (
-                <NotificationItem notification={item}/>
-              )
-            }}
-            keyExtractor={(item) => item.id}
+            data={Object.values(notifications.notificationsList)}
+            renderItem={({ item }) => (
+              <NotificationItem notification={item} />
+            )}
+            keyExtractor={item => item.id}
           />
         </ScrollView>
       </View>
@@ -34,9 +36,9 @@ class NotificationScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    flexDirection: 'column', 
-    alignItems: "center"
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   labelContainer: {
     width: '100%',
@@ -45,20 +47,20 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1
   },
   label: {
-    fontWeight: 'bold', 
+    fontWeight: 'bold',
     fontSize: 15
   }
 });
 
 const mapStateToProps = (state) => {
-  const { notifications } = state
-  return { notifications }
+  const { notifications } = state;
+  return { notifications };
 };
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
     hasRead
-   }, dispatch)
+  }, dispatch)
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotificationScreen);

@@ -1,21 +1,21 @@
-const addTodo = (todo) => (
+const addTodo = todo => (
   {
     type: 'ADD_TODO',
-    payload: {todo}
+    payload: { todo }
   }
 );
 
-const removeTodo = (id) => (
+const removeTodo = id => (
   {
     type: 'REMOVE_TODO',
-    payload: {id}
+    payload: { id }
   }
 );
 
-const toggleTodo = (id) => (
+const toggleTodo = id => (
   {
     type: 'TOGGLE_TODO',
-    payload: {id}
+    payload: { id }
   }
 );
 

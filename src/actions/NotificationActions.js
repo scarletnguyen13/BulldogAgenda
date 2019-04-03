@@ -5,6 +5,4 @@ const hasRead = () => (
   }
 );
 
-export {
-  hasRead
-};
+export default hasRead;

@@ -1,15 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 
-class CheckBox extends Component {
-  render() {
-    return (
-      <TouchableOpacity style={styles.outerContainer} onPress={this.props.handleClick}>
-        {this.props.boxImage}
-      </TouchableOpacity>
-    );
-  }
-}
+const CheckBox = ({ handleClick, boxImage }) => (
+  <TouchableOpacity style={styles.outerContainer} onPress={handleClick}>
+    {boxImage}
+  </TouchableOpacity>
+);
 
 const styles = StyleSheet.create({
   outerContainer: {

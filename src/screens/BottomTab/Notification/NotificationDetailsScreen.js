@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, ScrollView } from 'react-native';
+import {
+  View, StyleSheet, Text, ScrollView
+} from 'react-native';
 import LinkPreview from 'react-native-link-preview';
 import NewsHeader from '../../../components/NewsHeader';
 import URLPreview from '../../../components/URLPreview';
@@ -11,59 +13,69 @@ class NotificationDetailsScreen extends Component {
     this.state = {
       liked: false,
       count: 10
-    }
+    };
     this.hasLiked = this.hasLiked.bind(this);
     this.setLinkReviewData = this.setLinkReviewData.bind(this);
   }
 
   componentWillMount() {
-    const { notificationInfo } = this.props.navigation.state.params;
+    const { navigation } = this.props;
+    const { notificationInfo } = navigation.state.params;
     this.setLinkReviewData(notificationInfo.link);
-  }
-
-  hasLiked = () => { 
-    this.setState({
-      liked: !this.state.liked,
-      count: this.state.liked ? (this.state.count - 1) : (this.state.count + 1)
-    }) 
   }
 
   setLinkReviewData(link) {
     LinkPreview
-    .getPreview(link)
-    .then(data => this.setState({
+      .getPreview(link)
+      .then(data => this.setState({
         linkTitle: data.title,
-        linkDescription:  data.description
+        linkDescription: data.description
       }));
   }
 
-  render() {
-    const { notificationInfo } = this.props.navigation.state.params;
+  hasLiked = () => {
+    const { liked, count } = this.state;
+    this.setState({
+      liked: !liked,
+      count: liked ? (count - 1) : (count + 1)
+    });
+  }
 
-    return(
+  render() {
+    const { navigation } = this.props;
+    const {
+      linkTitle, linkDescription, liked, count
+    } = this.state;
+    const { notificationInfo } = navigation.state.params;
+
+    return (
       <ScrollView style={styles.scrollView}>
         <View style={styles.outerContainer}>
           <View style={styles.notificationContainer}>
-            
-            <NewsHeader 
+            <NewsHeader
               avatar={notificationInfo.user.avatar}
               username={notificationInfo.user.name}
-              sentAt={notificationInfo.sentAt}/>
+              sentAt={notificationInfo.sentAt}
+            />
 
             <Text style={styles.contentText}>{notificationInfo.content}</Text>
 
-            {notificationInfo.link !== '' && 
-            <URLPreview 
+            {notificationInfo.link !== ''
+            && (
+            <URLPreview
               linkURL={notificationInfo.link}
-              linkTitle={this.state.linkTitle}
-              linkDescription={this.state.linkDescription}/>}
+              linkTitle={linkTitle}
+              linkDescription={linkDescription}
+            />
+            )}
 
-            <HeartReactionBox 
+            <HeartReactionBox
               linkURL={notificationInfo.link}
-              marginTop={{true: 30, false: 0}}
+              marginTop={{ true: 30, false: 0 }}
               hasLiked={() => this.hasLiked}
-              liked={this.state.liked}
-              count={this.state.count}/>
+              liked={liked}
+              count={count}
+            />
 
           </View>
         </View>

@@ -1,24 +1,23 @@
-import React,  { Component } from 'react';
+import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-class IconButton extends Component {
-  render() {
-    return (
-      <TouchableOpacity 
-        style={changeMargin(this.props.margin)}
-        onPress={this.props.onPress}>
-        <Icon name={this.props.name} size={this.props.size} color={this.props.color} />
-      </TouchableOpacity>
-    );
-  }
-}
+const IconButton = ({
+  margin, onPress, name, size, color
+}) => (
+  <TouchableOpacity
+    style={changeMargin(margin)}
+    onPress={onPress}
+  >
+    <Icon name={name} size={size} color={color} />
+  </TouchableOpacity>
+);
 
 function changeMargin(number) {
-    return {
-      marginLeft: number,
-      marginRight: number
-    }
+  return {
+    marginLeft: number,
+    marginRight: number
+  };
 }
 
 export default IconButton;
