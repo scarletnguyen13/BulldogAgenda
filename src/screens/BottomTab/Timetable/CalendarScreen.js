@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     marginBottom: '15%'
   },
   eventsContainer: {
-    height: '41%',
+    height: '43%',
     width: '100%',
     backgroundColor: '#f7f7f7'
   },
