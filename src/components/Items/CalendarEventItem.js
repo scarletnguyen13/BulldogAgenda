@@ -1,39 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-class CalendarEventItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      containerHeight: 0
-    }
-    this.changeHeight = this.changeHeight.bind(this);
-  }
-
-  changeHeight(height) {
-    this.setState({containerHeight: height});
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={[styles.outerCircle, setBackgroundColor(this.props.courseColor)]}>
-         <View style={styles.innerCircle}>
-          {this.props.completed === false && <View style={[styles.checkCircle, setBackgroundColor(this.props.courseColor)]}/>}
-         </View>
-        </View>
-        <View style={styles.textContainer}>
-          {this.props.course !== undefined && 
-          <Text style={{marginBottom: 10}}>{this.props.course}</Text>}
-          <Text 
-            style={styles.contentText}
-            onLayout = {( value ) => this.changeHeight( value.nativeEvent.layout.height )}>
-              {this.props.content}</Text>
-        </View>
+const CalendarEventItem = ({
+  courseColor, completed, course, content
+}) => (
+  <View style={styles.container}>
+    <View style={[styles.outerCircle, setBackgroundColor(courseColor)]}>
+      <View style={styles.innerCircle}>
+        {completed === false && (
+        <View style={[styles.checkCircle, setBackgroundColor(courseColor)]} />
+        )}
       </View>
-    );
-  }
-}
+    </View>
+    <View style={styles.textContainer}>
+      {course !== undefined && <Text style={{ marginBottom: 10 }}>{course}</Text>}
+      <Text style={styles.contentText}>
+        {content}
+      </Text>
+    </View>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -81,9 +67,7 @@ const styles = StyleSheet.create({
 });
 
 function setBackgroundColor(color) {
-  return {
-    backgroundColor: color
-  };
+  return { backgroundColor: color };
 }
 
 export default CalendarEventItem;

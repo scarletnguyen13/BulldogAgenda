@@ -1,24 +1,22 @@
-import React, { Component } from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import {
+  View, Image, Text, StyleSheet
+} from 'react-native';
 import moment from 'moment';
 
-class NewsHeader extends Component {
-  render() {
-    return(
-      <View style={styles.headerContainer}>
-        <Image style={styles.image} resizeMode='contain' source={this.props.avatar}/>
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.nameText}>{this.props.username}</Text>
-          <Text style={styles.grayText}>{moment(this.props.sentAt).format('MMMM DD, LT')}</Text>
-        </View>
-      </View>
-    );
-  }
-}
+const NewsHeader = ({ avatar, username, sentAt }) => (
+  <View style={styles.headerContainer}>
+    <Image style={styles.image} resizeMode="contain" source={avatar} />
+    <View style={styles.headerTextContainer}>
+      <Text style={styles.nameText}>{username}</Text>
+      <Text style={styles.grayText}>{moment(sentAt).format('MMMM DD, LT')}</Text>
+    </View>
+  </View>
+);
 
 const styles = StyleSheet.create({
   headerContainer: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     marginBottom: 15
   },
   imageContainer: {
@@ -28,9 +26,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'black'
   },
   image: {
-    width: 60, 
-    height: 60, 
-    borderRadius: 60/2 
+    width: 60,
+    height: 60,
+    borderRadius: 60 / 2
   },
   headerTextContainer: {
     width: '90%',

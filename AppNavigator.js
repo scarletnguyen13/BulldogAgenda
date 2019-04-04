@@ -1,17 +1,19 @@
 import React from 'react';
-import { createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator } from "react-navigation";
+import {
+  createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator
+} from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
-import NotificationIconBadge from './src/components/NotificationIconBadge';
 import moment from 'moment';
+import NotificationIconBadge from './src/components/NotificationIconBadge';
 
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import SettingsScreen from './src/screens/Settings/SettingsScreen';
 import CourseDetailsScreen from './src/screens/Settings/CourseDetailsScreen';
 
 import AgendaScreen from './src/screens/BottomTab/AgendaScreen';
-import TimetableDailyScreen from "./src/screens/BottomTab/Timetable/TimetableDailyScreen";
-import NotificationScreen from "./src/screens/BottomTab/Notification/NotificationScreen";
-import CalendarScreen from "./src/screens/BottomTab/Timetable/CalendarScreen";
+import TimetableDailyScreen from './src/screens/BottomTab/Timetable/TimetableDailyScreen';
+import NotificationScreen from './src/screens/BottomTab/Notification/NotificationScreen';
+import CalendarScreen from './src/screens/BottomTab/Timetable/CalendarScreen';
 import AddButton from './src/components/Buttons/AddButton';
 import IconButton from './src/components/Buttons/IconButton';
 import NewsfeedScreen from './src/screens/BottomTab/NewsfeedScreen';
@@ -40,7 +42,7 @@ const timetableTopTab = createMaterialTopTabNavigator(
       }
     },
     initialRouteName: 'Today',
-    transitionConfig : () => ({
+    transitionConfig: () => ({
       transitionSpec: {
         duration: 0
       },
@@ -50,72 +52,74 @@ const timetableTopTab = createMaterialTopTabNavigator(
 );
 
 
-
 export const TabNavigator = createBottomTabNavigator(
-{
-  Agenda: {
-    screen: AgendaScreen,
-    navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-checkbox" size={35} color={tintColor} />
+  {
+    Agenda: {
+      screen: AgendaScreen,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name="ios-checkbox" size={35} color={tintColor} />
+        )
+      }
+    },
+    Timetable: {
+      screen: timetableTopTab,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name="ios-journal" size={35} color={tintColor} />
+        )
+      }
+    },
+    AddButton: {
+      screen: () => null,
+      navigationOptions: ({ navigation }) => ({
+        tabBarIcon: (
+          <AddButton onPress={() => navigation.navigate('TodoDetails', {
+            todoInfo: {
+              id: null,
+              description: '',
+              course: -1,
+              type: -1,
+              dueDate: checkDefaultDaysLater(),
+              dueTime: undefined,
+              priority: -1,
+              reminder: -1,
+              additionalNotes: '',
+              check: true
+            }
+          })}
+          />
+        ),
+        tabBarOnPress: () => {}
+      })
+    },
+    Notification: {
+      screen: NotificationScreen,
+      navigationOptions: () => ({
+        tabBarIcon: ({ tintColor }) => (
+          <NotificationIconBadge color={tintColor} />
+        )
+      }
       )
+    },
+    Newsfeed: {
+      screen: NewsfeedScreen,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => (
+          <Icon name="ios-paper" size={35} color={tintColor} />
+        )
+      }
     }
   },
-  Timetable: {
-    screen: timetableTopTab,
-    navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-journal" size={35} color={tintColor} />
-      )
-    }
-  },
-  AddButton: {
-		screen: () => null,
-		navigationOptions: ({ navigation }) => ({
-			tabBarIcon: (
-      <AddButton onPress={() => navigation.navigate('TodoDetails', {
-        todoInfo: {
-          id: null,
-          description: '',
-          course: -1,
-          type: -1,
-          dueDate: checkDefaultDaysLater(),
-          dueTime: undefined,
-          priority: -1,
-          reminder: -1,
-          additionalNotes: '',
-          check: true
-        }
-      })}/>),
-			tabBarOnPress: () => {}
-		})
-	},
-  Notification: {
-    screen: NotificationScreen,
-    navigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ tintColor }) => (
-        <NotificationIconBadge color={tintColor}/>
-      )
-    }
-  )},
-  Newsfeed: {
-    screen: NewsfeedScreen,
-    navigationOptions: {
-      tabBarIcon: ({ tintColor }) => (
-        <Icon name="ios-paper" size={35} color={tintColor} />
-      )
-    }
+  {
+    tabBarOptions: {
+      showLabel: false,
+      activeTintColor: '#140bb9',
+      inactiveTintColor: 'grey',
+      activeBackgroundColor: '#d9d9d9'
+    },
+    initialRouteName: 'Timetable'
   }
-},
-{
-  tabBarOptions: {
-    showLabel: false,
-    activeTintColor: '#140bb9',
-    inactiveTintColor: 'grey',
-    activeBackgroundColor: '#d9d9d9'
-  },
-  initialRouteName: 'Timetable'
-}
 );
 
 const AppNavigator = createStackNavigator(
@@ -129,7 +133,7 @@ const AppNavigator = createStackNavigator(
       screen: TabNavigator,
       navigationOptions: ({ navigation }) => ({
         headerLeft: null,
-        title: "",
+        title: '',
         headerStyle: {
           backgroundColor: '#140bb9',
         },
@@ -138,26 +142,29 @@ const AppNavigator = createStackNavigator(
           fontWeight: 'normal',
         },
         headerRight: (
-          <IconButton 
+          <IconButton
             name="ios-settings"
             margin={20}
-            size={27} 
-            color='white'
-            onPress={() => navigation.navigate('Settings')}/>
+            size={27}
+            color="white"
+            onPress={() => navigation.navigate('Settings')}
+          />
         ),
+        // eslint-disable-next-line no-dupe-keys
         headerLeft: (
-          <IconButton 
+          <IconButton
             name="ios-menu"
             margin={15}
-            size={40} 
-            color='white' />
+            size={40}
+            color="white"
+          />
         ),
       })
     }
   },
   {
-    initialRouteName: "Welcome",
-    transitionConfig : () => ({
+    initialRouteName: 'Welcome',
+    transitionConfig: () => ({
       transitionSpec: {
         duration: 0
       },
@@ -166,11 +173,11 @@ const AppNavigator = createStackNavigator(
 );
 
 function checkDefaultDaysLater() {
-  const today = new Date()
+  const today = new Date();
   if (moment(today).format('dddd') === 'Friday') {
-    return moment(moment(new Date()).add(4, 'days').toDate()).format("YYYY-MM-DD");
+    return moment(moment(new Date()).add(4, 'days').toDate()).format('YYYY-MM-DD');
   }
-  return moment(moment(new Date()).add(2, 'days').toDate()).format("YYYY-MM-DD");
+  return moment(moment(new Date()).add(2, 'days').toDate()).format('YYYY-MM-DD');
 }
 
 export default createAppContainer(AppNavigator);

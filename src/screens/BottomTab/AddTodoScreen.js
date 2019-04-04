@@ -1,17 +1,18 @@
-import React, { Component } from "react";
-import { View, StyleSheet, TextInput, TouchableOpacity, ScrollView, DatePickerIOS, Text } from "react-native";
+/* eslint-disable no-underscore-dangle */
+import React, { Component } from 'react';
+import {
+  View, StyleSheet, TextInput, TouchableOpacity, ScrollView, DatePickerIOS, Text
+} from 'react-native';
 import ReactNativePickerModule from 'react-native-picker-module';
-import Modal from "react-native-modal";
-import CloseButton from '../../components/Buttons/CloseButton';
+import Modal from 'react-native-modal';
 import { Calendar } from 'react-native-calendars';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
-import {  TODO_TYPES,
-          PRIORITY_TYPES,
-          REMINDER_TYPES } from '../../constants/todoDefaults';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { TODO_TYPES, PRIORITY_TYPES, REMINDER_TYPES } from '../../constants/todoDefaults';
+import CloseButton from '../../components/Buttons/CloseButton';
 import { addTodo, removeTodo } from '../../actions/TodoActions';
 
 function randomNumGenerator() {
@@ -19,6 +20,17 @@ function randomNumGenerator() {
 }
 
 class AddTodoScreen extends Component {
+  static navigationOptions = {
+    title: 'Add Todo',
+    headerStyle: {
+      backgroundColor: '#140bb9',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'normal',
+    },
+  }
+
   constructor(props) {
     super(props);
 
@@ -36,16 +48,13 @@ class AddTodoScreen extends Component {
       selectedReminder: todoInfo.reminder,
       additionalNotes: todoInfo.additionalNotes,
       check: todoInfo.check
-    }
+    };
     this._toggleCalendar = this._toggleCalendar.bind(this);
     this.onDayPress = this.onDayPress.bind(this);
     this.setTime = this.setTime.bind(this);
     this.setDescription = this.setDescription.bind(this);
     this.setAdditionalNotes = this.setAdditionalNotes.bind(this);
   }
-
-  _toggleCalendar = () =>
-  this.setState({ isCalendarVisible: !this.state.isCalendarVisible });
 
   onDayPress(day) {
     this.setState({
@@ -54,35 +63,43 @@ class AddTodoScreen extends Component {
   }
 
   setTime(newTime) {
-    this.setState({selectedTime: moment(newTime).format('LT')});
+    this.setState({ selectedTime: moment(newTime).format('LT') });
   }
 
   setDescription(newDescription) {
-    this.setState({description: newDescription});
+    this.setState({ description: newDescription });
   }
 
   setAdditionalNotes(newNotes) {
-    this.setState({additionalNotes: newNotes});
+    this.setState({ additionalNotes: newNotes });
   }
-  
-  static navigationOptions = {
-    title: 'Add Todo',
-    headerStyle: {
-      backgroundColor: '#140bb9',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'normal',
-    },
-  }   
+
+  _toggleCalendar = () => {
+    const { isCalendarVisible } = this.state;
+    this.setState({ isCalendarVisible: !isCalendarVisible });
+  }
 
   render() {
-    const values = Object.values(this.props.blocks);
-    let COURSES = [] 
-    values.forEach(blockObj => {
+    const { blocks, navigation } = this.props;
+    const {
+      id,
+      description,
+      selectedCourse,
+      selectedTodoType,
+      isCalendarVisible,
+      selectedDate,
+      selectedTime,
+      selectedPriority,
+      selectedReminder,
+      additionalNotes,
+      check
+    } = this.state;
+    const values = Object.values(blocks);
+    const COURSES = [];
+    values.forEach((blockObj) => {
       COURSES.push(blockObj.courseName);
     });
-    
+
     return (
       <ScrollView>
         <View style={styles.todoDetailsContainer}>
@@ -90,75 +107,84 @@ class AddTodoScreen extends Component {
             style={styles.textInputStyle}
             placeholder="Homework Description"
             onChangeText={this.setDescription}
-            value={this.state.description}
+            value={description}
           />
-          
-          <TouchableOpacity style={styles.TouchableOpacity} onPress={() => {this.coursePicker.show()}}>
-            <View pointerEvents='none'>
+
+          <TouchableOpacity
+            style={styles.TouchableOpacity}
+            onPress={() => { this.coursePicker.show(); }}
+          >
+            <View pointerEvents="none">
               <TextInput
                 style={styles.textInputStyle}
                 placeholder="Course"
-                value={COURSES[this.state.selectedCourse]}
-                editable={false} 
+                value={COURSES[selectedCourse]}
+                editable={false}
                 selectTextOnFocus={false}
               />
             </View>
           </TouchableOpacity>
 
           <ReactNativePickerModule
-            pickerRef={e => this.coursePicker = e}
-            value={this.state.selectedCourse}
-            title={"Select Course"}
+            pickerRef={(e) => { this.coursePicker = e; }}
+            value={selectedCourse}
+            title="Select Course"
             items={COURSES}
             onValueChange={(index) => {
               this.setState({
                 selectedCourse: index
-              })
-          }}/>
+              });
+            }}
+          />
 
-          <TouchableOpacity style={styles.TouchableOpacity} onPress={() => {this.todoTypePicker.show()}}>
-            <View pointerEvents='none'>
+          <TouchableOpacity
+            style={styles.TouchableOpacity}
+            onPress={() => { this.todoTypePicker.show(); }}
+          >
+            <View pointerEvents="none">
               <TextInput
                 style={styles.textInputStyle}
                 placeholder="Type"
-                value={TODO_TYPES[this.state.selectedTodoType]}
-                editable={false} 
+                value={TODO_TYPES[selectedTodoType]}
+                editable={false}
                 selectTextOnFocus={false}
               />
             </View>
           </TouchableOpacity>
 
           <ReactNativePickerModule
-            pickerRef={e => this.todoTypePicker = e}
-            value={this.state.selectedTodoType}
-            title={"Select Todo Type"}
+            pickerRef={(e) => { this.todoTypePicker = e; }}
+            value={selectedTodoType}
+            title="Select Todo Type"
             items={TODO_TYPES}
             onValueChange={(index) => {
               this.setState({
                 selectedTodoType: index
-              })
-          }}/>
+              });
+            }}
+          />
 
           <TouchableOpacity style={styles.TouchableOpacity} onPress={this._toggleCalendar}>
-            <View pointerEvents='none'> 
+            <View pointerEvents="none">
               <TextInput
                 style={[styles.textInputStyle, styles.dueDate]}
                 placeholder="Due Date & Time"
-                value={"Due: " + moment(this.state.selectedDate).format('dddd, MMM DD') + " | " + (this.state.selectedTime === undefined ? moment(new Date()).format('LT') : this.state.selectedTime)}
-                editable={false} 
+                value={`Due: ${moment(selectedDate).format('dddd, MMM DD')} | ${selectedTime === undefined ? moment(new Date()).format('LT') : selectedTime}`}
+                editable={false}
                 selectTextOnFocus={false}
               />
             </View>
           </TouchableOpacity>
 
-          <Modal 
-            isVisible={this.state.isCalendarVisible}
-            style={styles.modal}>
+          <Modal
+            isVisible={isCalendarVisible}
+            style={styles.modal}
+          >
             <View style={styles.calendarContainer}>
               <View style={styles.closeButtonContainer}>
                 <CloseButton
                   _toggle={this._toggleCalendar}
-                  marginLeft='85%'
+                  marginLeft="85%"
                   marginTop={15}
                 />
               </View>
@@ -166,103 +192,118 @@ class AddTodoScreen extends Component {
                 onDayPress={this.onDayPress}
                 style={styles.calendar}
                 hideExtraDays
-                markedDates={{[this.state.selectedDate]: {selected: true}}}
+                markedDates={{ [selectedDate]: { selected: true } }}
               />
-              <DatePickerIOS date={new Date()} mode='time' style={styles.timePicker} onDateChange={this.setTime}/>
+              <DatePickerIOS date={new Date()} mode="time" style={styles.timePicker} onDateChange={this.setTime} />
             </View>
           </Modal>
 
-          <TouchableOpacity style={styles.TouchableOpacity} onPress={() => {this.priorityePicker.show()}}>
-            <View pointerEvents='none'>
+          <TouchableOpacity
+            style={styles.TouchableOpacity}
+            onPress={() => { this.priorityePicker.show(); }}
+          >
+            <View pointerEvents="none">
               <TextInput
                 style={styles.textInputStyle}
                 placeholder="Priority"
-                value={PRIORITY_TYPES[this.state.selectedPriority]}
-                editable={false} 
+                value={PRIORITY_TYPES[selectedPriority]}
+                editable={false}
                 selectTextOnFocus={false}
               />
             </View>
           </TouchableOpacity>
 
           <ReactNativePickerModule
-            pickerRef={e => this.priorityePicker = e}
-            value={this.state.selectedPriority}
-            title={"Select Priority"}
+            pickerRef={(e) => { this.priorityePicker = e; }}
+            value={selectedPriority}
+            title="Select Priority"
             items={PRIORITY_TYPES}
             onValueChange={(index) => {
               this.setState({
                 selectedPriority: index
-              })
-          }}/>
+              });
+            }}
+          />
 
-          <TouchableOpacity style={styles.TouchableOpacity} onPress={() => {this.reminderPicker.show()}}>
-            <View pointerEvents='none'>
+          <TouchableOpacity
+            style={styles.TouchableOpacity}
+            onPress={() => { this.reminderPicker.show(); }}
+          >
+            <View pointerEvents="none">
               <TextInput
                 style={styles.textInputStyle}
                 placeholder="Reminder"
-                value={REMINDER_TYPES[this.state.selectedReminder]}
-                editable={false} 
+                value={REMINDER_TYPES[selectedReminder]}
+                editable={false}
                 selectTextOnFocus={false}
               />
             </View>
           </TouchableOpacity>
 
           <ReactNativePickerModule
-            pickerRef={e => this.reminderPicker = e}
-            value={this.state.selectedReminder}
-            title={"Select Reminder"}
+            pickerRef={(e) => { this.reminderPicker = e; }}
+            value={selectedReminder}
+            title="Select Reminder"
             items={REMINDER_TYPES}
             onValueChange={(index) => {
               this.setState({
                 selectedReminder: index
-              })
-          }}/>
+              });
+            }}
+          />
 
           <View style={styles.textAreaContainer}>
             <TextInput
               style={styles.textArea}
               placeholder="Additional Notes"
               numberOfLines={10}
-              multiline={true}
+              multiline
               onChangeText={this.setAdditionalNotes}
-              value={this.state.additionalNotes}
+              value={additionalNotes}
             />
           </View>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() => {
-              if (this.state.description.length > 0 && this.state.selectedCourse > -1) {
+              if (description.length > 0 && selectedCourse > -1 && selectedTodoType > -1) {
+                // eslint-disable-next-line react/destructuring-assignment
                 this.props.addTodo({
-                  id: this.state.id === null ? randomNumGenerator() : this.state.id,
-                  description: this.state.description,
-                  course: this.state.selectedCourse,
-                  type: this.state.selectedTodoType,
-                  dueDate: this.state.selectedDate,
-                  dueTime: this.state.selectedTime,
-                  priority: this.state.selectedPriority,
-                  reminder: this.state.selectedReminder,
-                  additionalNotes: this.state.additionalNotes,
-                  check: this.state.check === null ? true : this.state.check
-                })
+                  id: id === null ? randomNumGenerator() : id,
+                  description,
+                  course: selectedCourse,
+                  type: selectedTodoType,
+                  dueDate: selectedDate,
+                  dueTime: selectedTime,
+                  priority: selectedPriority,
+                  reminder: selectedReminder,
+                  additionalNotes,
+                  check: check === null ? true : check
+                });
+                navigation.navigate('Agenda');
               }
-              this.props.navigation.navigate('Agenda')
-            }}>
+            }}
+          >
             <View style={styles.addButton}>
-                <Text style={styles.addButtonText}>OK</Text>
+              <Text style={styles.addButtonText}>OK</Text>
             </View>
           </TouchableOpacity>
 
-          {(this.state.id !== null) &&
-          <TouchableOpacity 
+          {(id !== null)
+          && (
+          <TouchableOpacity
             style={styles.removeButtonOpacityContainer}
             onPress={() => {
-              this.props.removeTodo(this.state.id), 
-              this.props.navigation.navigate('Agenda')}}>
+              // eslint-disable-next-line react/destructuring-assignment
+              this.props.removeTodo(id);
+              navigation.navigate('Agenda');
+            }}
+          >
             <View style={styles.removeButton}>
-              <Icon name="ios-trash" size={30} color='red' />
+              <Icon name="ios-trash" size={30} color="red" />
               <Text style={styles.removeButtonText}>REMOVE</Text>
             </View>
-          </TouchableOpacity>}
+          </TouchableOpacity>
+          )}
 
         </View>
       </ScrollView>
@@ -272,43 +313,43 @@ class AddTodoScreen extends Component {
 
 const styles = StyleSheet.create({
   TouchableOpacity: {
-    width: '80%', 
-    height: 40, 
-    borderColor: 'gray', 
-    borderBottomWidth: 2, 
+    width: '80%',
+    height: 40,
+    borderColor: 'gray',
+    borderBottomWidth: 2,
     marginBottom: 40
   },
   todoDetailsContainer: {
-    flex: 1, 
-    alignItems: "center", 
-    justifyContent: "center",
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 40,
     marginBottom: 40
   },
   textInputStyle: {
-    width: '80%', 
-    height: 40, 
-    borderColor: 'gray', 
-    borderBottomWidth: 2, 
+    width: '80%',
+    height: 40,
+    borderColor: 'gray',
+    borderBottomWidth: 2,
     marginBottom: 40,
   },
   dueDate: {
     color: '#ff6b00'
   },
   closeButtonContainer: {
-    alignItems: 'flex-end', 
+    alignItems: 'flex-end',
     flex: 1
   },
   modal: {
-    alignItems: "center", 
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   calendarContainer: {
-    width: 320, 
-    height: 620, 
-    backgroundColor: 'white', 
-    alignItems: "center", 
-    justifyContent: "center", 
+    width: 320,
+    height: 620,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 20
   },
   calendar: {
@@ -327,31 +368,31 @@ const styles = StyleSheet.create({
   textAreaContainer: {
     width: '80%',
     borderBottomWidth: 2,
-    paddingBottom: 10 ,
+    paddingBottom: 10,
     marginTop: 10
   },
   textArea: {
     height: 150,
-    justifyContent: "flex-start"
+    justifyContent: 'flex-start'
   },
   addButton: {
-    width: 70, 
-    height: 50, 
-    borderRadius: 10, 
-    backgroundColor: '#140bb9', 
-    margin: 35, 
-    justifyContent: 'center', 
+    width: 70,
+    height: 50,
+    borderRadius: 10,
+    backgroundColor: '#140bb9',
+    margin: 35,
+    justifyContent: 'center',
     alignItems: 'center'
   },
   addButtonText: {
-    fontSize: 16, 
-    color: "white"
-  }, 
+    fontSize: 16,
+    color: 'white'
+  },
   removeButtonOpacityContainer: {
     width: '100%',
     height: 40,
     backgroundColor: '#ffc1c1'
-  }, 
+  },
   removeButton: {
     flex: 1,
     justifyContent: 'center',
@@ -364,15 +405,15 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  const { todos, blocks } = state
-  return { todos, blocks }
+  const { todos, blocks } = state;
+  return { todos, blocks };
 };
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
     addTodo,
     removeTodo
-   }, dispatch)
+  }, dispatch)
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddTodoScreen);

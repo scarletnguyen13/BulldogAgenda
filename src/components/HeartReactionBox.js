@@ -1,25 +1,21 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React from 'react';
+import {
+  View, Text, StyleSheet, TouchableOpacity
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-class HeartReactionBox extends Component {
-  render() {
-    return(
-      <View style={[
-        styles.reactionContainer, 
-        { marginTop: this.props.linkURL !== '' ? 
-          this.props.marginTop.true : this.props.marginTop.false}
-        ]}>
-        <TouchableOpacity activeOpacity={1} onPress={this.props.hasLiked}>
-          <Icon name={this.props.liked ? "ios-heart" : "ios-heart-empty"} size={25} color={this.props.liked ? "red" : "black"} style={styles.iconStyle}/>
-        </TouchableOpacity>
-        <Text style={styles.grayText}>{this.props.count}</Text>
-      </View>
-    );
-  }
-}
-
-
+const HeartReactionBox = ({
+  linkURL, marginTop, hasLiked, liked, count
+}) => (
+  <View style={[
+    styles.reactionContainer, { marginTop: linkURL !== '' ? marginTop.true : marginTop.false }]}
+  >
+    <TouchableOpacity activeOpacity={1} onPress={hasLiked}>
+      <Icon name={liked ? 'ios-heart' : 'ios-heart-empty'} size={25} color={liked ? 'red' : 'black'} style={styles.iconStyle} />
+    </TouchableOpacity>
+    <Text style={styles.grayText}>{count}</Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
   reactionContainer: {
