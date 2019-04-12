@@ -35,7 +35,7 @@ class CollapsibleView extends Component {
         property: LayoutAnimation.Properties.opacity,
       },
       update: {
-        type: LayoutAnimation.Types.curveEaseInEaseOut,
+        type: LayoutAnimation.Types.easeInEaseOut,
       },
     };
     LayoutAnimation.configureNext(CustomLayoutLinear);
