@@ -1,13 +1,14 @@
 /* eslint-disable no-underscore-dangle */
 import React, { Component } from 'react';
 import {
-  View, StyleSheet, TextInput, TouchableOpacity, ScrollView, DatePickerIOS, Text
+  View, StyleSheet, TextInput, TouchableOpacity, ScrollView, Text
 } from 'react-native';
 import ReactNativePickerModule from 'react-native-picker-module';
 import Modal from 'react-native-modal';
 import { Calendar } from 'react-native-calendars';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
+import DatePicker from 'react-native-datepicker';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -63,7 +64,7 @@ class AddTodoScreen extends Component {
   }
 
   setTime(newTime) {
-    this.setState({ selectedTime: moment(newTime).format('LT') });
+    this.setState({ selectedTime: newTime });
   }
 
   setDescription(newDescription) {
@@ -185,7 +186,7 @@ class AddTodoScreen extends Component {
                 <CloseButton
                   _toggle={this._toggleCalendar}
                   marginLeft="85%"
-                  marginTop={15}
+                  marginTop={30}
                 />
               </View>
               <Calendar
@@ -194,13 +195,7 @@ class AddTodoScreen extends Component {
                 hideExtraDays
                 markedDates={{ [selectedDate]: { selected: true } }}
               />
-              <DatePickerIOS date={new Date()} mode="time" style={styles.timePicker} onDateChange={this.setTime} />
-              {/* <DatePicker
-                date={new Date()}
-                onDateChange={this.setTime}
-                mode="time"
-                style={styles.timePicker}
-              /> */}
+              <DatePicker date={selectedTime} mode="time" style={styles.timePicker} onDateChange={time => this.setTime(time)} confirmBtnText="Confirm" cancelBtnText="Cancel" />
             </View>
           </Modal>
 
@@ -352,7 +347,7 @@ const styles = StyleSheet.create({
   },
   calendarContainer: {
     width: 320,
-    height: 620,
+    height: 450,
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
@@ -367,7 +362,7 @@ const styles = StyleSheet.create({
   },
   timePicker: {
     height: '10%',
-    width: '100%',
+    width: '90%',
     justifyContent: 'center',
     marginBottom: '18%'
   },
