@@ -195,6 +195,12 @@ class AddTodoScreen extends Component {
                 markedDates={{ [selectedDate]: { selected: true } }}
               />
               <DatePickerIOS date={new Date()} mode="time" style={styles.timePicker} onDateChange={this.setTime} />
+              {/* <DatePicker
+                date={new Date()}
+                onDateChange={this.setTime}
+                mode="time"
+                style={styles.timePicker}
+              /> */}
             </View>
           </Modal>
 

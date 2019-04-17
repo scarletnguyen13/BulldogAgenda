@@ -6,7 +6,7 @@ const DayText = ({ day }) => (<Text style={styles.dayText}>{day}</Text>);
 const styles = StyleSheet.create({
   dayText: {
     fontSize: 16,
-    margin: 40,
+    margin: '10%',
     marginBottom: 30
   }
 });

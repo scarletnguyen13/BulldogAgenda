@@ -1,9 +1,14 @@
 import React from 'react';
 import {
-  createStackNavigator, createBottomTabNavigator, createAppContainer, createMaterialTopTabNavigator
+  createStackNavigator,
+  createBottomTabNavigator,
+  createAppContainer,
+  createMaterialTopTabNavigator,
+  SafeAreaView
 } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
+import { Platform } from 'react-native';
 import NotificationIconBadge from './src/components/NotificationIconBadge';
 
 import WelcomeScreen from './src/screens/WelcomeScreen';
@@ -20,6 +25,10 @@ import NewsfeedScreen from './src/screens/BottomTab/NewsfeedScreen';
 import AddTodoScreen from './src/screens/BottomTab/AddTodoScreen';
 import NotificationDetailsScreen from './src/screens/BottomTab/Notification/NotificationDetailsScreen';
 
+if (Platform.OS === 'android') {
+  SafeAreaView.setStatusBarHeight(0);
+}
+
 const timetableTopTab = createMaterialTopTabNavigator(
   {
     Today: {
@@ -35,7 +44,6 @@ const timetableTopTab = createMaterialTopTabNavigator(
       upperCaseLabel: false,
       style: {
         backgroundColor: 'black',
-        height: '7%'
       },
       indicatorStyle: {
         backgroundColor: 'white'
@@ -58,7 +66,7 @@ export const TabNavigator = createBottomTabNavigator(
       screen: AgendaScreen,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="ios-checkbox" size={35} color={tintColor} />
+          <Icon name="ios-checkbox" size={27} color={tintColor} />
         )
       }
     },
@@ -66,7 +74,7 @@ export const TabNavigator = createBottomTabNavigator(
       screen: timetableTopTab,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="ios-journal" size={35} color={tintColor} />
+          <Icon name="ios-journal" size={27} color={tintColor} />
         )
       }
     },
@@ -106,7 +114,7 @@ export const TabNavigator = createBottomTabNavigator(
       screen: NewsfeedScreen,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="ios-paper" size={35} color={tintColor} />
+          <Icon name="ios-paper" size={27} color={tintColor} />
         )
       }
     }
@@ -116,6 +124,9 @@ export const TabNavigator = createBottomTabNavigator(
       showLabel: false,
       activeTintColor: '#140bb9',
       inactiveTintColor: 'grey',
+      style: {
+        height: 45
+      },
       activeBackgroundColor: '#d9d9d9'
     },
     initialRouteName: 'Timetable'
@@ -136,6 +147,7 @@ const AppNavigator = createStackNavigator(
         title: '',
         headerStyle: {
           backgroundColor: '#140bb9',
+          height: 30
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -145,7 +157,7 @@ const AppNavigator = createStackNavigator(
           <IconButton
             name="ios-settings"
             margin={20}
-            size={27}
+            size={20}
             color="white"
             onPress={() => navigation.navigate('Settings')}
           />
@@ -155,7 +167,7 @@ const AppNavigator = createStackNavigator(
           <IconButton
             name="ios-menu"
             margin={15}
-            size={40}
+            size={25}
             color="white"
           />
         ),

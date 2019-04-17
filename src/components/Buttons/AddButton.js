@@ -19,8 +19,8 @@ const AddButton = ({ onPress }) => (
 const styles = StyleSheet.create({
   addButton: {
     margin: 10,
-    width: 60,
-    height: 60,
+    width: 45,
+    height: 45,
     borderRadius: 100,
     backgroundColor: '#140bb9',
     alignItems: 'center',
@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     marginBottom: 30
   },
   addButtonImage: {
-    width: 27,
-    height: 27
+    width: 23,
+    height: 23
   }
 });
 
