@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const NotificationIconBadge = ({ color, notifications }) => (
   <IconBadge
-    MainElement={<Icon name="ios-notifications" size={35} color={color} />}
+    MainElement={<Icon name="ios-notifications" size={27} color={color} />}
     BadgeElement={<Text style={styles.badgeElement}>{notifications.latestNotificationCount}</Text>}
     IconBadgeStyle={styles.iconBadge}
     Hidden={notifications.latestNotificationCount === 0}
@@ -16,14 +16,14 @@ const NotificationIconBadge = ({ color, notifications }) => (
 const styles = StyleSheet.create({
   badgeElement: {
     color: '#FFFFFF',
-    fontSize: 11
+    fontSize: 10
   },
   iconBadge: {
     width: 20,
     height: 20,
-    borderRadius: 20,
+    borderRadius: 10,
     marginRight: -8,
-    marginTop: -3,
+    marginTop: -7,
     backgroundColor: 'red'
   }
 });

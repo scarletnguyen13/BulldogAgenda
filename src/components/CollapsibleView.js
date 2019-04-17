@@ -35,7 +35,7 @@ class CollapsibleView extends Component {
         property: LayoutAnimation.Properties.opacity,
       },
       update: {
-        type: LayoutAnimation.Types.curveEaseInEaseOut,
+        type: LayoutAnimation.Types.easeInEaseOut,
       },
     };
     LayoutAnimation.configureNext(CustomLayoutLinear);
@@ -68,7 +68,7 @@ class CollapsibleView extends Component {
             />
             <Text style={[styles.blockText, setContrastColor(courseColor)]}>{courseBlock}</Text>
             <View style={styles.centerContainer}>
-              <Text style={[styles.courseText, setContrastColor(courseColor)]}>
+              <Text style={[styles.courseText, setContrastColor(courseColor), { fontSize: typeof courseName === 'string' && courseName.length > 13 ? 19 : 23 }]}>
                 {courseName}
               </Text>
               <Text style={setContrastColor(courseColor)}>{courseRoom}</Text>
@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
   },
   courseText: {
     marginBottom: 20,
-    fontSize: 23
   }
 });
 

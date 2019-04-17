@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 import com.taluttasgiran.pickermodule.ReactNativePickerModulePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
@@ -32,7 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactNativePickerModulePackage(),
             new VectorIconsPackage(),
             new AsyncStoragePackage(),
-            new RNGestureHandlerPackage()
+            new RNGestureHandlerPackage(),
+            new RNFirebaseFirestorePackage()
       );
     }
 

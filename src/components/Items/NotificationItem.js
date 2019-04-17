@@ -46,7 +46,7 @@ class NotificationItem extends Component {
                 <Text style={{ fontWeight: 'bold' }}>
                   {notification.user.name}
                 </Text>
-                {`${notification.action}: "${notification.content}"`}
+                {` ${notification.action}: "${notification.content}"`}
               </Text>
             </View>
             <Text style={[styles.timeText, { color: read ? 'black' : '#0c66f7' }]}>{moment(notification.sentAt).fromNow()}</Text>

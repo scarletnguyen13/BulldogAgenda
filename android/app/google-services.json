@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "912083850131",
+    "firebase_url": "https://bulldog-agenda.firebaseio.com",
+    "project_id": "bulldog-agenda",
+    "storage_bucket": "bulldog-agenda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912083850131:android:675e86c42399cc58",
+        "android_client_info": {
+          "package_name": "com.bulldogagenda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "912083850131-3mlsslaar3iss9qdknish368autocq86.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBh0DgYQRORg4HGTrQthxBGyIXCsw_9SE0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "912083850131-3mlsslaar3iss9qdknish368autocq86.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "912083850131-6fouh0u5nej46hopeq4vltv2mrjn5tgc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.scarletnguyen13.BulldogAgenda"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
