@@ -44,6 +44,7 @@ const timetableTopTab = createMaterialTopTabNavigator(
       upperCaseLabel: false,
       style: {
         backgroundColor: 'black',
+        height: 40
       },
       indicatorStyle: {
         backgroundColor: 'white'

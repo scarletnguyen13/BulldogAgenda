@@ -127,7 +127,7 @@ class CalendarScreen extends Component {
     });
 
     return (
-      <View>
+      <ScrollView style={{ backgroundColor: '#f7f7f7' }}>
         <Calendar
           onDayPress={this.onDayPress}
           style={styles.calendar}
@@ -175,7 +175,7 @@ class CalendarScreen extends Component {
             }
           </ScrollView>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -183,13 +183,11 @@ class CalendarScreen extends Component {
 const styles = StyleSheet.create({
   calendar: {
     borderWidth: 0,
-    height: '48%',
-    width: '100%',
-    marginBottom: '15%'
+    flex: 1,
+    paddingBottom: 20
   },
   eventsContainer: {
-    height: '43%',
-    width: '100%',
+    flex: 1,
     backgroundColor: '#f7f7f7'
   },
   indicatorContainer: {
